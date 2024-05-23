@@ -1,5 +1,5 @@
 Main screen -- Sazid ( Done )
-Issue Book  -- Partheev ( Done )
+Issue Book  -- Partheev 
 Available Books
 Add new Book
 Append Books
