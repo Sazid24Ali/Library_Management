@@ -16,8 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="183.0" prefWidth="436.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lib.library_management.Controller.MainController">
+<AnchorPane minHeight="540.0" minWidth="744.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lib.library_management.Controller.MainController">
    <children>
       <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="510.0" prefWidth="734.0">
          <children>
@@ -41,18 +40,18 @@
                      </children>
                   </HBox>
                   <GridPane alignment="CENTER" hgap="10.0" prefHeight="140.0" prefWidth="570.0" style="-fx-alignment: center; -fx-border-color: black; -fx-border-width: 2;" vgap="10.0">
-                    <columnConstraints>
+                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="139.20000305175782" minWidth="10.0" prefWidth="116.40003662109376" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.00000000000001" minWidth="10.0" prefWidth="100.59998779296876" />
-                      <ColumnConstraints hgrow="ALWAYS" maxWidth="207.19997558593747" minWidth="10.0" prefWidth="183.3999755859375" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.00000000000001" minWidth="10.0" prefWidth="100.59998779296876" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="207.19997558593747" minWidth="10.0" prefWidth="183.3999755859375" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="139.20001220703125" minWidth="10.0" prefWidth="97.00002441406252" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </columnConstraints>
+                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
                      <children>
                         <Label fx:id="Stu_Name_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Student Name" GridPane.columnIndex="1" />
                         <TextField fx:id="Stu_Name_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#edit_stu_details" GridPane.columnIndex="2" />
@@ -68,14 +67,14 @@
                      </padding>
                   </GridPane>
                   <TableView fx:id="Std_BooksDisplay_Table" prefHeight="166.0" prefWidth="570.0" tableMenuButtonVisible="true">
-                    <columns>
-                      <TableColumn editable="false" prefWidth="75.20001602172852" text="Book Code" />
-                      <TableColumn editable="false" prefWidth="84.0" text="Book Id" />
+                     <columns>
+                        <TableColumn editable="false" prefWidth="75.20001602172852" text="Book Code" />
+                        <TableColumn editable="false" prefWidth="84.0" text="Book Id" />
                         <TableColumn editable="false" prefWidth="93.60002136230469" text="Author" />
                         <TableColumn editable="false" prefWidth="149.5999755859375" text="Book Name" />
                         <TableColumn editable="false" prefWidth="61.5999755859375" text="Edition" />
                         <TableColumn editable="false" prefWidth="114.39990234375" text="Date Of Allotment" />
-                    </columns>
+                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
