@@ -3,6 +3,8 @@ package com.lib.library_management.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.lib.library_management.Entity.StudentEntity;
+import com.lib.library_management.Services.StudentService;
 import com.lib.library_management.Utility.OpenWindow;
 
 import javafx.fxml.FXML;
@@ -20,6 +22,9 @@ public class MainController {
     // To open New Windows
     @Autowired
     private OpenWindow openWindow;
+
+    @Autowired
+    StudentService studentService;
 
     @FXML
     private Button Admin_AddNewBookIds_Btn;
@@ -110,6 +115,11 @@ public class MainController {
 
     @FXML
     void getStudentData(MouseEvent event) {
+        StudentEntity data = studentService.getStudentDataByRollNo(Integer.valueOf(Student_RollNo_Field.getText()));
+        // System.out.println("\n\n\n\n" + data.getStudentName());
+        Stu_Name_La_Field.setText(data.getStudentName());
+        Stu_PhNo_La_Field.setText(String.valueOf(data.getPhoneNumber()));
+        Stu_YOP_La_Field.setText(String.valueOf(data.getYearOfPassing()));
 
     }
 
