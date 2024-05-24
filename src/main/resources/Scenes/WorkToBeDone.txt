@@ -1,0 +1,8 @@
+Main screen -- Sazid ( Done )
+Issue Book  -- Partheev 
+Available Books -- Sazid (Done)
+Add new Book
+Append Books
+Remove Books
+
+Multi purpose Ui(To show the success or confirmation or unable to transact thing)

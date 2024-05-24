@@ -1,6 +1,9 @@
 package com.lib.library_management.Controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.lib.library_management.Utility.OpenWindow;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,9 +12,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 @Component
 public class MainController {
+
+    //To open New Windows
+    @Autowired
+    private OpenWindow openWindow;
 
     @FXML
     private Button Admin_AddNewBookIds_Btn;
@@ -90,6 +98,8 @@ public class MainController {
 
     @FXML
     void availableBooks(MouseEvent event) {
+        Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        openWindow.openScene("AvailableBooks", "Available Books", primaryStage);
 
     }
 
