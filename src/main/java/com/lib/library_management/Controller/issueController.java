@@ -2,12 +2,16 @@ package com.lib.library_management.Controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import org.springframework.stereotype.Component;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+@Component
 public class issueController {
 
     @FXML
@@ -47,17 +51,7 @@ public class issueController {
 
     }
 
-    @FXML
-    void initialize() {
-        assert addButton != null : "fx:id=\"addButton\" was not injected: check your FXML file 'IssueController.fxml'.";
-        assert addingBookId != null : "fx:id=\"addingBookId\" was not injected: check your FXML file 'IssueController.fxml'.";
-        assert issueButton != null : "fx:id=\"issueButton\" was not injected: check your FXML file 'IssueController.fxml'.";
-        assert studentId != null : "fx:id=\"studentId\" was not injected: check your FXML file 'IssueController.fxml'.";
-        assert takenBookEdition != null : "fx:id=\"takenBookEdition\" was not injected: check your FXML file 'IssueController.fxml'.";
-        assert takenBookId != null : "fx:id=\"takenBookId\" was not injected: check your FXML file 'IssueController.fxml'.";
-        assert takenBookTitle != null : "fx:id=\"takenBookTitle\" was not injected: check your FXML file 'IssueController.fxml'.";
-
-    }
+    
 
 }
 
