@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
 <AnchorPane prefHeight="615.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lib.library_management.Controller.issueController">
    <children>
       <GridPane layoutX="80.0" layoutY="48.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="110.0" prefWidth="611.0">
@@ -33,14 +32,14 @@
                   <TextField fx:id="addingBookId" prefHeight="54.0" prefWidth="203.0" />
                </children>
             </HBox>
-            <Button fx:id="addButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#addBook" prefHeight="46.0" prefWidth="168.0" text="Add" textOverrun="CENTER_WORD_ELLIPSIS" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Button fx:id="addButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#addBook" prefHeight="54.0" prefWidth="164.0" text="Add" textOverrun="CENTER_WORD_ELLIPSIS" GridPane.columnIndex="2" GridPane.rowIndex="1" />
          </children>
       </GridPane>
-      <TableView editable="true" fixedCellSize="3.0" layoutX="77.0" layoutY="235.0" prefHeight="282.0" prefWidth="611.0">
+      <TableView accessibleRole="MENU" editable="true" fixedCellSize="3.0" layoutX="77.0" layoutY="235.0" prefHeight="282.0" prefWidth="611.0" tableMenuButtonVisible="true">
         <columns>
           <TableColumn fx:id="takenBookId" prefWidth="216.7999496459961" text="Book Id" />
           <TableColumn fx:id="takenBookTitle" prefWidth="216.79998779296875" text="Book Title" />
-            <TableColumn fx:id="takenBookEdition" prefWidth="178.39999389648438" text="Book Edition" />
+            <TableColumn fx:id="takenBookEdition" prefWidth="179.20003051757817" text="Book Edition" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
