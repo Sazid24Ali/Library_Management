@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 @Component
 public class MainController {
 
-    //To open New Windows
+    // To open New Windows
     @Autowired
     private OpenWindow openWindow;
 
@@ -115,6 +115,8 @@ public class MainController {
 
     @FXML
     void issueBook(MouseEvent event) {
+        Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        openWindow.openScene("Issue", "Isuue Books", primaryStage);
 
     }
 
