@@ -1,6 +1,5 @@
 package com.lib.library_management.Utility;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -8,6 +7,7 @@ import org.springframework.stereotype.Component;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -47,4 +47,14 @@ public class OpenWindow {
         }
     }
 
+    public void openDialogue(String title, String dialogue) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(dialogue);
+
+        // Show the dialog and wait for a response
+        alert.showAndWait();
+
+    }
 }
