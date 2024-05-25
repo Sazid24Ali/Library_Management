@@ -2,12 +2,16 @@ package com.lib.library_management.Controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import org.springframework.stereotype.Component;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
+@Component
 public class AppendBooksController {
 
     @FXML
