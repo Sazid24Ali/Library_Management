@@ -11,11 +11,28 @@ import lombok.Data;
 public class StudentEntity {
 
     @Id
-    Integer StudentRollNo;
+    String StudentRollNo;
     String StudentName;
-    Integer PhoneNumber;
+    String PhoneNumber;
     String Branch;
     Year YearOfPassing;
 
-    
+    public StudentEntity() {
+    }
+
+    public StudentEntity(String studentRollNo, String studentName, String phoneNumber, String branch,
+            Year yearOfPassing) {
+        StudentRollNo = studentRollNo;
+        StudentName = studentName;
+        PhoneNumber = phoneNumber;
+        Branch = branch;
+        YearOfPassing = yearOfPassing;
+    }
+
+    @Override
+    public String toString() {
+        return "\nStudentRollNo=" + StudentRollNo + "\nStudentName=" + StudentName + "\nPhoneNumber="
+                + PhoneNumber + "\nBranch=" + Branch + "\nYearOfPassing=" + YearOfPassing + "\n";
+    }
+
 }
