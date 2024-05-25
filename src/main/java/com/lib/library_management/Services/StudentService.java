@@ -12,11 +12,26 @@ public class StudentService {
     @Autowired
     StudentRepo studentRepo;
 
-    public StudentEntity getStudentDataByRollNo(Integer RollNo) {
+    public StudentEntity getStudentDataByRollNo(String RollNo) {
+        try {
+            StudentEntity studentEntity = studentRepo.findById(RollNo).get();
+            return studentEntity;
+        } catch (Exception e) {
+            // e.printStackTrace();
+            // System.out.println("Element not found");
+        }
+        return null;
 
-        return studentRepo.findById(RollNo).get();
-        // return null;
+    }
 
+    public boolean addStudentData(StudentEntity StudentData){
+        try {
+            studentRepo.save(StudentData);
+            return true;
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        return false;
     }
 
 }
