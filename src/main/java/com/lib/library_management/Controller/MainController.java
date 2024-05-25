@@ -149,7 +149,8 @@ public class MainController {
 
     @FXML
     void addNewBookIDs(MouseEvent event) {
-
+        Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        openWindow.openScene("AppendBooks", "Isuue Books", primaryStage);
     }
 
     @FXML
