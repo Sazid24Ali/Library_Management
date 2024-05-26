@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import com.lib.library_management.Controller.issueController;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,29 +19,51 @@ public class OpenWindow {
     @Autowired
     private ApplicationContext context;
 
+    Stage intisizethestage(FXMLLoader loader, Stage parent, String Title) throws Exception {
+        loader.setControllerFactory(context::getBean);
+        Parent root = loader.load();
+        Stage stage = new Stage();
+
+        // Change the Size here for the main screen
+        double minWidth = root.minWidth(-1); // Passing -1 to get the computed value
+        double minHeight = root.minHeight(-1); // Passing -1 to get the computed value
+
+        // Set the minimum width and height for the stage
+        stage.setMinWidth(minWidth);
+        stage.setMinHeight(minHeight);
+
+        stage.setMaxWidth(minWidth);
+        stage.setMaxHeight(minHeight);
+
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(parent);
+
+        stage.setTitle(Title);
+        stage.setScene(new Scene(root));
+        return stage;
+
+    }
+
     public void openScene(String FileName, String Title, Stage parent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/" + FileName + ".fxml"));
-            loader.setControllerFactory(context::getBean);
-            Parent root = loader.load();
-            Stage stage = new Stage();
+            Stage stage = intisizethestage(loader, parent, Title);
 
-            // Change the Size here for the main screen
-            double minWidth = root.minWidth(-1); // Passing -1 to get the computed value
-            double minHeight = root.minHeight(-1); // Passing -1 to get the computed value
+            stage.show();
 
-            // Set the minimum width and height for the stage
-            stage.setMinWidth(minWidth);
-            stage.setMinHeight(minHeight);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-            stage.setMaxWidth(minWidth);
-            stage.setMaxHeight(minHeight);
+    public void openScene(String FileName, String Title, Stage parent, String RollNo) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/" + FileName + ".fxml"));
+            Stage stage = intisizethestage(loader, parent, Title);
 
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(parent);
+            issueController controller = loader.getController();
+            controller.setRollNo(RollNo);
 
-            stage.setTitle(Title);
-            stage.setScene(new Scene(root));
             stage.show();
 
         } catch (Exception e) {

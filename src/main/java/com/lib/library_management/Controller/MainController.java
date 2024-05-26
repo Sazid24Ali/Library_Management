@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.lib.library_management.Entity.StudentEntity;
 import com.lib.library_management.Services.StudentService;
 import com.lib.library_management.Utility.OpenWindow;
+import com.lib.library_management.Utility.utilityClass;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,7 +18,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
@@ -139,23 +139,10 @@ public class MainController {
         // Stu_EditDetails_Btn.setVisible(false);
         ObservableList<String> observableCourses = FXCollections.observableArrayList(courseMap.values());
         Student_Course_CBox.setItems(observableCourses);
-        setIntegerLimiter(Student_Year_Field, 2);
-        setIntegerLimiter(Student_RollNo_Field, 4);
-        setIntegerLimiter(Stu_PhNo_La_Field, 10);
-        setIntegerLimiter(Stu_YOP_La_Field, 4);
-    }
-
-    private void setIntegerLimiter(TextField textField, int maxLength) {
-        UnaryOperator<TextFormatter.Change> filter = change -> {
-            String newText = change.getControlNewText();
-            if (newText.matches("\\d*") && newText.length() <= maxLength) {
-                return change;
-            }
-            return null;
-        };
-
-        TextFormatter<Integer> textFormatter = new TextFormatter<>(filter);
-        textField.setTextFormatter(textFormatter);
+        utilityClass.setIntegerLimiter(Student_Year_Field, 2);
+        utilityClass.setIntegerLimiter(Student_RollNo_Field, 4);
+        utilityClass.setIntegerLimiter(Stu_PhNo_La_Field, 10);
+        utilityClass.setIntegerLimiter(Stu_YOP_La_Field, 4);
     }
 
     @FXML
@@ -271,8 +258,11 @@ public class MainController {
 
     @FXML
     void issueBook(MouseEvent event) {
+        String course = Student_Course_CBox.getValue();
+        String RollNo = 1007 + Student_Year_Field.getText() + course.substring(1, 4)
+                + Student_RollNo_Field.getText();
         Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        openWindow.openScene("Issue", "Issue Books", primaryStage);
+        openWindow.openScene("Issue", "Issue Books", primaryStage, RollNo);
 
     }
 
