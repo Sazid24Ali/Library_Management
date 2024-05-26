@@ -27,7 +27,7 @@
                         <HBox spacing="15.0" style="-fx-border-radius: 20; -fx-border-color: black; -fx-border-width: 2;">
                            <children>
                               <TextField fx:id="Student_Year_Field" prefHeight="26.0" prefWidth="50.0" promptText="Year" />
-                              <ComboBox fx:id="Student_Course_CBox" prefHeight="26.0" prefWidth="210.0" promptText="Course" />
+                              <ComboBox fx:id="Student_Course_CBox" prefHeight="26.0" prefWidth="210.0" promptText="Select the Course" />
                               <TextField fx:id="Student_RollNo_Field" prefHeight="26.0" prefWidth="86.0" promptText="RollNo" />
                               <Button fx:id="Student_Search_Btn" mnemonicParsing="false" onMouseClicked="#getStudentData" prefHeight="20.0" prefWidth="102.0" text="Search" />
                            </children>

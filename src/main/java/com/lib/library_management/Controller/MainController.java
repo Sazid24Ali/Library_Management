@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
@@ -30,6 +31,7 @@ public class MainController {
 
     static {
         courseMap = new LinkedHashMap<>();
+        // courseMap.put(504, "Course ");
         courseMap.put(504, "(504) Computer Science ");
         courseMap.put(123, "(123) Applied Maths");
         courseMap.put(231, "(231) Pure Maths");
@@ -115,6 +117,21 @@ public class MainController {
 
     }
 
+    void defaultSettings() {
+        VisibilitySetter(false);
+        Stu_Add_Btn.setVisible(false);
+        Student_RollNo_Field.clear();
+        Student_Year_Field.clear();
+        // Need to Work on this
+        Student_Course_CBox.setValue("Select the course ");
+        Student_RollNo_Field.setPromptText("Roll No");
+        Student_Year_Field.setPromptText("Year");
+        Stu_Name_La_Field.clear();
+        Stu_PhNo_La_Field.clear();
+        Stu_YOP_La_Field.clear();
+
+    }
+
     @FXML
     void initialize() {
         VisibilitySetter(false);
@@ -148,8 +165,9 @@ public class MainController {
 
     @FXML
     void addNewBookIDs(MouseEvent event) {
+        defaultSettings();
         Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        openWindow.openScene("AppendBooks", "Isuue Books", primaryStage);
+        openWindow.openScene("AppendBooks", "Append New Books ", primaryStage);
     }
 
     @FXML
@@ -189,6 +207,7 @@ public class MainController {
 
     @FXML
     void availableBooks(MouseEvent event) {
+        defaultSettings();
         Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         openWindow.openScene("AvailableBooks", "Available Books", primaryStage);
 

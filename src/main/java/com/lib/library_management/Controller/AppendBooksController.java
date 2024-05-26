@@ -1,8 +1,5 @@
 package com.lib.library_management.Controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import org.springframework.stereotype.Component;
 
 import javafx.fxml.FXML;
@@ -15,19 +12,13 @@ import javafx.scene.control.TextField;
 public class AppendBooksController {
 
     @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
     private TextField bookCode;
 
     @FXML
     private TextArea disclaimer;
 
     @FXML
-    private TextField inputOfBookIds;
+    private TextArea inputOfBookIds;
 
     @FXML
     private Button saveButtonForScene;
@@ -38,16 +29,4 @@ public class AppendBooksController {
     @FXML
     private TableView<?> tableToShowBook;
 
-    @FXML
-    void initialize() {
-        assert bookCode != null : "fx:id=\"bookCode\" was not injected: check your FXML file 'AppendBooks.fxml'.";
-        assert disclaimer != null : "fx:id=\"disclaimer\" was not injected: check your FXML file 'AppendBooks.fxml'.";
-        assert inputOfBookIds != null : "fx:id=\"inputOfBookIds\" was not injected: check your FXML file 'AppendBooks.fxml'.";
-        assert saveButtonForScene != null : "fx:id=\"saveButtonForScene\" was not injected: check your FXML file 'AppendBooks.fxml'.";
-        assert searchWithBookCode != null : "fx:id=\"searchWithBookCode\" was not injected: check your FXML file 'AppendBooks.fxml'.";
-        assert tableToShowBook != null : "fx:id=\"tableToShowBook\" was not injected: check your FXML file 'AppendBooks.fxml'.";
-
-    }
-
 }
-
