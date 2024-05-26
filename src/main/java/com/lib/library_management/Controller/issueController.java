@@ -1,24 +1,20 @@
 package com.lib.library_management.Controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import org.springframework.stereotype.Component;
+import org.yaml.snakeyaml.events.Event;
+
+import com.lib.library_management.Utility.utilityClass;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 @Component
 public class issueController {
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private Button addButton;
@@ -41,6 +37,17 @@ public class issueController {
     @FXML
     private TableColumn<?, ?> takenBookTitle;
 
+    public void setRollNo(String RollNo) {
+        studentId.setText(RollNo);
+        studentId.setEditable(false);
+    }
+
+    @FXML
+    void initialize() {
+        utilityClass.setIntegerLimiter(addingBookId, 7);
+
+    }
+
     @FXML
     void addBook(MouseEvent event) {
 
@@ -51,9 +58,4 @@ public class issueController {
 
     }
 
-    
-
 }
-
-
-
