@@ -9,6 +9,18 @@ import com.lib.library_management.Repository.BooksRepo;
 public class BooksService {
 
     @Autowired
-    BooksRepo booksRepo;
+    BooksRepo booksRepository;
+
+    public long countTotalBooks(Integer bookCode) {
+        return booksRepository.countTotalBooks(bookCode);
+    }
+
+    public long countAvailableBooks(Integer bookCode) {
+        return booksRepository.countAvailableBooks(bookCode);
+    }
+
+    public long countBorrowedBooks(Integer bookCode) {
+        return booksRepository.countBorrowedBooks(bookCode);
+    }
 
 }
