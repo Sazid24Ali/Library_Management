@@ -29,7 +29,7 @@ public class StudentService {
             studentRepo.save(StudentData);
             return true;
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
         return false;
     }
