@@ -1,25 +1,33 @@
 package com.lib.library_management.Controller;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.lib.library_management.Entity.BooksEntity;
 import com.lib.library_management.Entity.StudentEntity;
+import com.lib.library_management.Services.BooksService;
 import com.lib.library_management.Services.StudentService;
 import com.lib.library_management.Utility.OpenWindow;
 import com.lib.library_management.Utility.utilityClass;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.time.Year;
 
@@ -41,6 +49,9 @@ public class MainController {
     @Autowired
     StudentService studentService;
 
+    @Autowired
+    BooksService booksService;
+
     @FXML
     private Button Admin_AddNewBookIds_Btn;
 
@@ -55,9 +66,6 @@ public class MainController {
 
     @FXML
     private Button Admin_RemoveBooks_Btn;
-
-    @FXML
-    private TableView<?> Stu_BooksDisplay_Table;
 
     @FXML
     private Button Student_Search_Btn;
@@ -104,6 +112,27 @@ public class MainController {
     @FXML
     private Button returnBook_Btn;
 
+    @FXML
+    private TableView<BooksEntity> Stu_BooksDisplay_Table;
+
+    @FXML
+    private TableColumn<BooksEntity, String> BookNameColumn;
+
+    @FXML
+    private TableColumn<BooksEntity, String> DateOfAllotmentColumn;
+
+    @FXML
+    private TableColumn<BooksEntity, String> authorColumn;
+
+    @FXML
+    private TableColumn<BooksEntity, Integer> bookCodeColumn;
+
+    @FXML
+    private TableColumn<BooksEntity, String> bookIdColumn;
+
+    @FXML
+    private TableColumn<BooksEntity, String> editionColumn;
+
     void VisibilitySetter(boolean value) {
         Stu_Add_Btn.setVisible(!value);
         Stu_Remove_Btn.setVisible(value);
@@ -111,6 +140,9 @@ public class MainController {
         Stu_EditDetails_Btn.setVisible(value);
         issueBook_Btn.setVisible(value);
         returnBook_Btn.setVisible(value);
+        issueBook_Btn.setDisable(value);
+        returnBook_Btn.setDisable(value);
+        Stu_Remove_Btn.setDisable(value);
 
     }
 
@@ -130,6 +162,29 @@ public class MainController {
 
     @FXML
     void initialize() {
+        // Mapping the Table Columns to the BooksEntity
+        Stu_BooksDisplay_Table.setPlaceholder(new Label("No Books Taken "));
+
+        bookCodeColumn.setCellValueFactory(cellData -> {
+            BooksEntity booksEntity = cellData.getValue();
+            return new SimpleIntegerProperty(booksEntity.getBookDetailsEntity().getBookCode()).asObject();
+        });
+        bookIdColumn.setCellValueFactory(new PropertyValueFactory<>("BookId"));
+        authorColumn.setCellValueFactory(cellData -> {
+            BooksEntity booksEntity = cellData.getValue();
+            return new SimpleStringProperty(booksEntity.getBookDetailsEntity().getAuthor());
+        });
+        BookNameColumn.setCellValueFactory(cellData -> {
+            BooksEntity booksEntity = cellData.getValue();
+            return new SimpleStringProperty(booksEntity.getBookDetailsEntity().getBookName());
+        });
+        editionColumn.setCellValueFactory(cellData -> {
+            BooksEntity booksEntity = cellData.getValue();
+            return new SimpleStringProperty(booksEntity.getBookDetailsEntity().getEdition());
+        });
+
+        DateOfAllotmentColumn.setCellValueFactory(new PropertyValueFactory<>("dateOfAllotment"));
+
         // To get the default select "Select the Course" when any admin btn is clicked
         Student_Course_CBox.setButtonCell(new ListCell<>() {
             @Override
@@ -151,22 +206,23 @@ public class MainController {
         utilityClass.setIntegerLimiter(Student_RollNo_Field, 4);
         utilityClass.setIntegerLimiter(Stu_PhNo_La_Field, 10);
         utilityClass.setIntegerLimiter(Stu_YOP_La_Field, 4);
-    }
-
-    @FXML
-    void addNewBook(MouseEvent event) {
 
     }
 
     @FXML
-    void addNewBookIDs(MouseEvent event) {
+    void addNewBook(ActionEvent event) {
+
+    }
+
+    @FXML
+    void addNewBookIDs(ActionEvent event) {
         defaultSettings();
         Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         openWindow.openScene("AppendBooks", "Append New Books ", primaryStage);
     }
 
     @FXML
-    void addStudent(MouseEvent event) {
+    void addStudent(ActionEvent event) {
         boolean condition = Student_Course_CBox.getValue() != null && Student_RollNo_Field.getLength() >= 3
                 && Student_Year_Field.getLength() >= 2 && Stu_Name_La_Field.getLength() >= 5
                 && Stu_PhNo_La_Field.getLength() >= 10 && Stu_YOP_La_Field.getLength() >= 4;
@@ -201,7 +257,7 @@ public class MainController {
     }
 
     @FXML
-    void availableBooks(MouseEvent event) {
+    void availableBooks(ActionEvent event) {
         defaultSettings();
         Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         openWindow.openScene("AvailableBooks", "Available Books", primaryStage);
@@ -209,7 +265,7 @@ public class MainController {
     }
 
     @FXML
-    void getStudentData(MouseEvent event) {
+    void getStudentData(ActionEvent event) {
         if (Student_Course_CBox.getValue() != null && Student_RollNo_Field.getLength() >= 3
                 && Student_Year_Field.getLength() >= 2) {
             String course = Student_Course_CBox.getValue();
@@ -223,6 +279,7 @@ public class MainController {
                 Stu_Name_La_Field.setText(data.getStudentName());
                 Stu_PhNo_La_Field.setText(String.valueOf(data.getPhoneNumber()));
                 Stu_YOP_La_Field.setText(String.valueOf(data.getYearOfPassing()));
+                setIssuedbooks(RollNo);
             } else {
                 openWindow.openDialogue("Information", "Student Details Not Found \n Add Student");
                 VisibilitySetter(false);
@@ -235,8 +292,17 @@ public class MainController {
         }
     }
 
+    private void setIssuedbooks(String RollNo) {
+        List<BooksEntity> booksData = booksService.getBooksFromStudentRollNo(RollNo);
+        // System.out.println(booksData);
+        ObservableList<BooksEntity> observableBooksList = FXCollections.observableArrayList(booksData);
+
+        Stu_BooksDisplay_Table.setItems(observableBooksList);
+
+    }
+
     @FXML
-    void editStudentData(MouseEvent event) {
+    void editStudentData(ActionEvent event) {
         edit_Student_Data(true);
 
     }
@@ -252,6 +318,9 @@ public class MainController {
         Stu_YOP_La_Field.setEditable(value);
         Stu_Add_Btn.setVisible(value);
         Stu_EditDetails_Btn.setVisible(!value);
+        issueBook_Btn.setDisable(value);
+        returnBook_Btn.setDisable(value);
+        Stu_Remove_Btn.setDisable(value);
 
     }
 
@@ -265,7 +334,10 @@ public class MainController {
     }
 
     @FXML
-    void issueBook(MouseEvent event) {
+    void issueBook(ActionEvent event) {
+        // if the edit is clicked and then the issue is clicked then the felids are
+        // forever in edit mode
+        // edit_Student_Data(false);
         String course = Student_Course_CBox.getValue();
         String RollNo = 1007 + Student_Year_Field.getText() + course.substring(1, 4)
                 + Student_RollNo_Field.getText();
@@ -275,17 +347,33 @@ public class MainController {
     }
 
     @FXML
-    void removeBooks(MouseEvent event) {
+    void removeBooks(ActionEvent event) {
 
     }
 
     @FXML
-    void removeStudent(MouseEvent event) {
+    void removeStudent(ActionEvent event) {
+        String course = Student_Course_CBox.getValue();
+        String RollNo = 1007 + Student_Year_Field.getText() + course.substring(1, 4)
+                + Student_RollNo_Field.getText();
 
+        // TODO : Need to ask the user if he is sure he wants to remove the student
+
+        StudentEntity removeStudent = studentService.deleteById(RollNo);
+        if (removeStudent != null) {
+            openWindow.openDialogue("Deleted Successfully", "Student Record Removed Successfully \n" + removeStudent);
+            defaultSettings();
+
+        } else {
+            openWindow.openDialogue("Deletion Unsuccessful", "Student With " + RollNo + " Roll Number Cannot Be removed \nThere are books to be Returned ");
+        }
+        
     }
 
+    
+
     @FXML
-    void returnBook(MouseEvent event) {
+    void returnBook(ActionEvent event) {
 
     }
 

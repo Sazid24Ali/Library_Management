@@ -34,4 +34,16 @@ public class StudentService {
         return false;
     }
 
+    public StudentEntity deleteById(String rollNo) {
+        StudentEntity data = getStudentDataByRollNo(rollNo);
+        try {
+            studentRepo.deleteById(rollNo);
+            return data;
+            
+        } catch (Exception e) {
+            return null;
+        }
+        
+    }
+
 }
