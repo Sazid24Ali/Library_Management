@@ -1,5 +1,7 @@
 package com.lib.library_management.Services;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,10 @@ public class BooksService {
 
     public long countBorrowedBooks(Integer bookCode) {
         return booksRepository.countBorrowedBooks(bookCode);
+    }
+
+    public ArrayList<String> getBookIds(Integer bookCode) {
+        return booksRepository.getBookIds(bookCode);
     }
 
 }

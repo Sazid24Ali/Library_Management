@@ -1,5 +1,7 @@
 package com.lib.library_management.Entity;
 
+import java.util.ArrayList;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Transient;
@@ -23,6 +25,8 @@ public class BookDetailsEntity {
     Long availableBooks;
     @Transient
     Long borrowedBooks;
+    @Transient
+    ArrayList<String> bookIds;
 
 
 }

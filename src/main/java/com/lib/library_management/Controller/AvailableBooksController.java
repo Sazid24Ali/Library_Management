@@ -1,5 +1,6 @@
 package com.lib.library_management.Controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,8 @@ public class AvailableBooksController {
     private TableColumn<BookDetailsEntity, Long> availableBooksColumn;
     @FXML
     private TableColumn<BookDetailsEntity, Long> borrowedBooksColumn;
+    @FXML
+    private TableColumn<BookDetailsEntity, ArrayList<String>> bookIDsColumn;
 
     private FilteredList<BookDetailsEntity> filteredList;
 
@@ -71,6 +74,7 @@ public class AvailableBooksController {
         totalBooksColumn.setCellValueFactory(new PropertyValueFactory<>("totalBooks"));
         availableBooksColumn.setCellValueFactory(new PropertyValueFactory<>("availableBooks"));
         borrowedBooksColumn.setCellValueFactory(new PropertyValueFactory<>("borrowedBooks"));
+        bookIDsColumn.setCellValueFactory(new PropertyValueFactory<>("bookIds"));
 
         loadBookData();
         setupFiltering();
@@ -85,6 +89,7 @@ public class AvailableBooksController {
             book.setTotalBooks(booksService.countTotalBooks(bookCode));
             book.setAvailableBooks(booksService.countAvailableBooks(bookCode));
             book.setBorrowedBooks(booksService.countBorrowedBooks(bookCode));
+            book.setBookIds(booksService.getBookIds(bookCode));
         });
 
         filteredList = new FilteredList<>(observableBookList, p -> true);
@@ -107,11 +112,15 @@ public class AvailableBooksController {
                         || (book.getEdition() != null && book.getEdition().toLowerCase().contains(lowerCaseFilter))
                         || (book.getSubjectCategory() != null
                                 && book.getSubjectCategory().toLowerCase().contains(lowerCaseFilter))
-                        || (book.getTotalBooks() != null && book.getTotalBooks().toString().contains(lowerCaseFilter))
-                        || (book.getAvailableBooks() != null
-                                && book.getAvailableBooks().toString().contains(lowerCaseFilter))
-                        || (book.getBorrowedBooks() != null
-                                && book.getBorrowedBooks().toString().contains(lowerCaseFilter));
+                        || (book.getBookIds() != null && book.getBookIds().toString().contains(lowerCaseFilter));
+                // the below line are commented Because we don't want to filter the books based
+                // on the Number of books available , borrowed and available.
+                // || (book.getTotalBooks() != null &&
+                // book.getTotalBooks().toString().contains(lowerCaseFilter))
+                // || (book.getAvailableBooks() != null
+                // && book.getAvailableBooks().toString().contains(lowerCaseFilter))
+                // || (book.getBorrowedBooks() != null
+                // && book.getBorrowedBooks().toString().contains(lowerCaseFilter))
             });
         });
     }
