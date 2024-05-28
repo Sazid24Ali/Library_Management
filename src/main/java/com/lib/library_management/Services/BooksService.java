@@ -1,10 +1,12 @@
 package com.lib.library_management.Services;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lib.library_management.Entity.BooksEntity;
 import com.lib.library_management.Repository.BooksRepo;
 
 @Service
@@ -27,6 +29,11 @@ public class BooksService {
 
     public ArrayList<String> getBookIds(Integer bookCode) {
         return booksRepository.getBookIds(bookCode);
+    }
+
+    public List<BooksEntity> getBooksFromStudentRollNo(String RollNo){
+        return booksRepository.findBooksEntitiesByStudent_StudentRollNo(RollNo);
+        // booksRepository.f
     }
 
 }

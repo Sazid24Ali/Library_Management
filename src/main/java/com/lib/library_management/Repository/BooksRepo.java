@@ -1,6 +1,8 @@
 package com.lib.library_management.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
+
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,10 +23,14 @@ public interface BooksRepo extends JpaRepository<BooksEntity, Integer> {
     @Query("SELECT COUNT(b) FROM BooksEntity b WHERE b.bookDetailsEntity.BookCode = :bookCode AND b.status = 'Borrowed'")
     long countBorrowedBooks(@Param("bookCode") Integer bookCode);
 
-    // @Query("SELECT b.BookId FROM BooksEntity b WHERE b.bookDetailsEntity.BookCode = :bookCode AND b.status = 'Available' ")
-    // Add the uncommented above line if we want to only display the Available books Ids
+    // @Query("SELECT b.BookId FROM BooksEntity b WHERE b.bookDetailsEntity.BookCode
+    // = :bookCode AND b.status = 'Available' ")
+    // Add the uncommented above line if we want to only display the Available books
+    // Ids
     // the Below Query display all the book ids
     @Query("SELECT b.BookId FROM BooksEntity b WHERE b.bookDetailsEntity.BookCode = :bookCode ")
     ArrayList<String> getBookIds(Integer bookCode);
 
+    @Query("SELECT b FROM BooksEntity b WHERE b.student.StudentRollNo = :StudentRollNo")
+    List<BooksEntity> findBooksEntitiesByStudent_StudentRollNo(String StudentRollNo);
 }
