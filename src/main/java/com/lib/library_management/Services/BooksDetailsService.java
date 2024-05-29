@@ -1,5 +1,7 @@
 package com.lib.library_management.Services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,10 @@ public class BooksDetailsService {
 
     @Autowired
     BookDetailsRepo bookDetailsRepo;
+
+    public List<BookDetailsEntity> getAllBooks() {
+        return bookDetailsRepo.findAll();
+    }
     
     public BookDetailsEntity getBookDetailsByBookCode(Integer bcode){
         try{
