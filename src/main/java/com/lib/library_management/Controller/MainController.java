@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.lib.library_management.Entity.BooksEntity;
 import com.lib.library_management.Entity.StudentEntity;
-import com.lib.library_management.Services.BooksService;
+import com.lib.library_management.Services.BooksEntityService;
 import com.lib.library_management.Services.StudentService;
 import com.lib.library_management.Utility.OpenWindow;
 import com.lib.library_management.Utility.utilityClass;
@@ -50,7 +50,7 @@ public class MainController {
     StudentService studentService;
 
     @Autowired
-    BooksService booksService;
+    BooksEntityService booksService;
 
     @FXML
     private Button Admin_AddNewBookIds_Btn;
