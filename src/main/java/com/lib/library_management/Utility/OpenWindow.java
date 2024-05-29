@@ -1,5 +1,7 @@
 package com.lib.library_management.Utility;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -10,6 +12,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -80,5 +84,18 @@ public class OpenWindow {
         // Show the dialog and wait for a response
         alert.showAndWait();
 
+    }
+    public boolean openConfirmation(String title,String message){
+        // ButtonType Yes = new ButtonType("Yes",);
+        Alert alert= new Alert(Alert.AlertType.CONFIRMATION,
+        message,ButtonType.YES,ButtonType.NO
+        );
+        
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.get() == ButtonType.YES){
+            return true;
+        }
+
+        return false;
     }
 }
