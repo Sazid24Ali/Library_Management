@@ -1,5 +1,7 @@
 package com.lib.library_management.Utility;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -10,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -19,7 +22,7 @@ public class OpenWindow {
     @Autowired
     private ApplicationContext context;
 
-    Stage intisizethestage(FXMLLoader loader, Stage parent, String Title) throws Exception {
+    Stage initializeTheStage(FXMLLoader loader, Stage parent, String Title) throws Exception {
         loader.setControllerFactory(context::getBean);
         Parent root = loader.load();
         Stage stage = new Stage();
@@ -47,7 +50,7 @@ public class OpenWindow {
     public void openScene(String FileName, String Title, Stage parent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/" + FileName + ".fxml"));
-            Stage stage = intisizethestage(loader, parent, Title);
+            Stage stage = initializeTheStage(loader, parent, Title);
 
             stage.show();
 
@@ -59,7 +62,7 @@ public class OpenWindow {
     public void openScene(String FileName, String Title, Stage parent, String RollNo) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/" + FileName + ".fxml"));
-            Stage stage = intisizethestage(loader, parent, Title);
+            Stage stage = initializeTheStage(loader, parent, Title);
 
             issueController controller = loader.getController();
             controller.setRollNo(RollNo);
@@ -80,5 +83,18 @@ public class OpenWindow {
         // Show the dialog and wait for a response
         alert.showAndWait();
 
+    }
+    public boolean openConfirmation(String title,String message){
+        // ButtonType Yes = new ButtonType("Yes",);
+        Alert alert= new Alert(Alert.AlertType.CONFIRMATION,
+        message,ButtonType.YES,ButtonType.NO
+        );
+        
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.get() == ButtonType.YES){
+            return true;
+        }
+
+        return false;
     }
 }

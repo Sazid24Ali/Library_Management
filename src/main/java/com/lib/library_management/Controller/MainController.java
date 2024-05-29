@@ -357,18 +357,20 @@ public class MainController {
         String RollNo = 1007 + Student_Year_Field.getText() + course.substring(1, 4)
                 + Student_RollNo_Field.getText();
 
-        // TODO : Need to ask the user if he is sure he wants to remove the student
+        
+        if (openWindow.openConfirmation("Remove",   "Are you sure want to Remove the Student With Roll No \""+RollNo+"\"")){
+            StudentEntity removeStudent = studentService.deleteById(RollNo);
 
-        StudentEntity removeStudent = studentService.deleteById(RollNo);
-        if (removeStudent != null) {
-            openWindow.openDialogue("Deleted Successfully", "Student Record Removed Successfully \n" + removeStudent);
-            defaultSettings();
-
-        } else {
-            openWindow.openDialogue("Deletion Unsuccessful",
-                    "Student With " + RollNo + " Roll Number Cannot Be removed \nThere are books to be Returned ");
+            if (removeStudent != null) {
+                openWindow.openDialogue("Deleted Successfully", "Student Record Removed Successfully \n" + removeStudent);
+                defaultSettings();
+    
+            } else {
+                openWindow.openDialogue("Deletion Unsuccessful", "Student With " + RollNo + " Roll Number Cannot Be removed \nThere are books to be Returned ");
+            }
         }
-
+        
+        
     }
 
     @FXML
