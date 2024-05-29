@@ -30,16 +30,18 @@
                   <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                </padding>
             </HBox>
-            <Button fx:id="searchWithBookCode" mnemonicParsing="false" prefHeight="35.0" prefWidth="127.0" text="Search">
+            <Button fx:id="searchWithBookCode" mnemonicParsing="false" onMouseClicked="#searchForBook" prefHeight="35.0" prefWidth="127.0" text="Search">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
             <TableView fx:id="tableToShowBook" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="119.0" prefWidth="492.0" tableMenuButtonVisible="true">
               <columns>
-                <TableColumn prefWidth="75.0" text="Book Title" />
-                <TableColumn prefWidth="75.0" text="Author" />
-                  <TableColumn prefWidth="167.19998168945312" text="Edition" />
+                  <TableColumn fx:id="BookCode" prefWidth="75.0" text="Book Code" />
+                <TableColumn fx:id="author" prefWidth="142.39999389648438" text="Author" />
+                <TableColumn fx:id="bookTitle" prefWidth="260.0" text="Book Title" />
+                  <TableColumn fx:id="edition" minWidth="0.0" prefWidth="59.20001220703125" text="Edition" />
+                  <TableColumn fx:id="sub_category" prefWidth="127.2000732421875" text="Subject Category" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -69,7 +71,7 @@
                   <Font name="System Bold Italic" size="14.0" />
                </font>
             </TextArea>
-            <Button fx:id="saveButtonForScene" mnemonicParsing="false" prefHeight="53.0" prefWidth="140.0" text="Save">
+            <Button fx:id="saveButtonForScene" mnemonicParsing="false" onMouseClicked="#getBookId" prefHeight="53.0" prefWidth="140.0" text="Save">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
