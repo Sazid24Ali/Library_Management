@@ -1,7 +1,6 @@
 package com.lib.library_management.Controller;
 
 import org.springframework.stereotype.Component;
-import org.yaml.snakeyaml.events.Event;
 
 import com.lib.library_management.Utility.utilityClass;
 
@@ -10,8 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 @Component
 public class issueController {
