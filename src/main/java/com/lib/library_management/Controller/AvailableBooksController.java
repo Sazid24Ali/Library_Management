@@ -13,6 +13,7 @@ import com.lib.library_management.Services.BooksService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -93,8 +94,12 @@ public class AvailableBooksController {
         });
 
         filteredList = new FilteredList<>(observableBookList, p -> true);
-        DisplayAvailBooks_Table.setItems(filteredList);
+        // To add the functionality of Sorting the value in columns
+        SortedList<BookDetailsEntity> sortableData = new SortedList<>(filteredList);
+        DisplayAvailBooks_Table.setItems(sortableData);
+        sortableData.comparatorProperty().bind(DisplayAvailBooks_Table.comparatorProperty());
 
+        // DisplayAvailBooks_Table.setItems(filteredList);
         // DisplayAvailBooks_Table.setItems(observableBookList);
     }
 
