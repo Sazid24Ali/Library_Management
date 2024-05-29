@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.lib.library_management.Entity.BookDetailsEntity;
 import com.lib.library_management.Services.BookDetailsService;
-import com.lib.library_management.Services.BooksService;
+import com.lib.library_management.Services.BooksEntityService;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,7 +28,7 @@ public class AvailableBooksController {
     private BookDetailsService bookDetailsService;
 
     @Autowired
-    private BooksService booksService;
+    private BooksEntityService booksService;
 
     @FXML
     private Label AvailableBooks_Label;

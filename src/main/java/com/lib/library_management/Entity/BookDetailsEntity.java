@@ -13,7 +13,6 @@ public class BookDetailsEntity {
 
     @Id
     Integer BookCode;//Change it to Sting If Needed 
-
     String BookName;
     String Author;
     String SubjectCategory;
