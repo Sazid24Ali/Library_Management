@@ -28,7 +28,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import java.time.Year;
 
@@ -366,12 +365,11 @@ public class MainController {
             defaultSettings();
 
         } else {
-            openWindow.openDialogue("Deletion Unsuccessful", "Student With " + RollNo + " Roll Number Cannot Be removed \nThere are books to be Returned ");
+            openWindow.openDialogue("Deletion Unsuccessful",
+                    "Student With " + RollNo + " Roll Number Cannot Be removed \nThere are books to be Returned ");
         }
-        
-    }
 
-    
+    }
 
     @FXML
     void returnBook(ActionEvent event) {
