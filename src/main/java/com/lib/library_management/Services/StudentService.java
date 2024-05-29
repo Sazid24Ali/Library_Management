@@ -29,9 +29,21 @@ public class StudentService {
             studentRepo.save(StudentData);
             return true;
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
         return false;
+    }
+
+    public StudentEntity deleteById(String rollNo) {
+        StudentEntity data = getStudentDataByRollNo(rollNo);
+        try {
+            studentRepo.deleteById(rollNo);
+            return data;
+            
+        } catch (Exception e) {
+            return null;
+        }
+        
     }
 
 }
