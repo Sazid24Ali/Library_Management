@@ -38,9 +38,9 @@ public class MainController {
     static {
         courseMap = new LinkedHashMap<>();
         courseMap.put(504, "(504) Computer Science ");
-        courseMap.put(123, "(123) Applied Maths");
-        courseMap.put(231, "(231) Pure Maths");
-        courseMap.put(405, "(405) Maths With CS");
+        courseMap.put(231, "(505) Pure Maths");
+        courseMap.put(123, "(506) Applied Maths");
+        courseMap.put(405, "(586) Maths With CS");
     }
     // To open New Windows
     @Autowired
@@ -157,6 +157,9 @@ public class MainController {
         Stu_Name_La_Field.clear();
         Stu_PhNo_La_Field.clear();
         Stu_YOP_La_Field.clear();
+        Stu_Name_La_Field.setEditable(false);
+        Stu_PhNo_La_Field.setEditable(false);
+        Stu_YOP_La_Field.setEditable(false);
 
     }
 
@@ -357,23 +360,22 @@ public class MainController {
         String RollNo = 1007 + Student_Year_Field.getText() + course.substring(1, 4)
                 + Student_RollNo_Field.getText();
 
-        
-        if (openWindow.openConfirmation("Remove",   "Are you sure want to Remove the Student With Roll No \""+RollNo+"\"")){
+        if (openWindow.openConfirmation("Remove",
+                "Are you sure want to Remove the Student With Roll No \"" + RollNo + "\"")) {
             StudentEntity removeStudent = studentService.deleteById(RollNo);
 
             if (removeStudent != null) {
-                openWindow.openDialogue("Deleted Successfully", "Student Record Removed Successfully \n" + removeStudent);
+                openWindow.openDialogue("Deleted Successfully",
+                        "Student Record Removed Successfully \n" + removeStudent);
                 defaultSettings();
-    
+
             } else {
-                openWindow.openDialogue("Deletion Unsuccessful", "Student With " + RollNo + " Roll Number Cannot Be removed \nThere are books to be Returned ");
+                openWindow.openDialogue("Deletion Unsuccessful",
+                        "Student With " + RollNo + " Roll Number Cannot Be removed \nThere are books to be Returned ");
             }
         }
-        
-        
-    }
 
-    
+    }
 
     @FXML
     void returnBook(ActionEvent event) {
