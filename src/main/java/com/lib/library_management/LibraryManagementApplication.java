@@ -15,5 +15,4 @@ public class LibraryManagementApplication {
 		// SpringApplication.run(LibraryManagementApplication.class, args);
 		Application.launch(javafx_main.class,args);
 	}
-
 }
