@@ -1,0 +1,4 @@
+.table-row-cell:selected .tissue-cell {
+    -fx-background-color: #F5AD11;
+    -fx-text-fill: white;
+}
