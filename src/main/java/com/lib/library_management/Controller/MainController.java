@@ -28,6 +28,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.time.Year;
 
@@ -45,6 +47,8 @@ public class MainController {
     // To open New Windows
     @Autowired
     private OpenWindow openWindow;
+
+    private BooksEntity booksEntity=new BooksEntity();
 
     @Autowired
     StudentService studentService;
@@ -167,6 +171,7 @@ public class MainController {
     void initialize() {
         // Mapping the Table Columns to the BooksEntity
         Stu_BooksDisplay_Table.setPlaceholder(new Label("No Books Taken "));
+        Stu_BooksDisplay_Table.setEditable(true);
 
         bookCodeColumn.setCellValueFactory(cellData -> {
             BooksEntity booksEntity = cellData.getValue();
@@ -378,8 +383,18 @@ public class MainController {
     }
 
     @FXML
-    void returnBook(ActionEvent event) {
+    void selectedBook(MouseEvent event) {
+        booksEntity = Stu_BooksDisplay_Table.getSelectionModel().getSelectedItem();
+        openWindow.openDialogue("Info", "You have selected a Book from List of issued Books.");
+    }
 
+    @FXML
+    void returnBook(MouseEvent event) {
+        Boolean b=openWindow.openConfirmation("Warning", "Do you want to declare Returning of the Selected Book?");
+        if(b){
+            Stu_BooksDisplay_Table.getItems().remove(booksEntity);
+            booksEntity.setStatus("Available");
+        }
     }
 
 }
