@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.lib.library_management.Entity.BookDetailsEntity;
 import com.lib.library_management.Entity.BooksEntity;
 import com.lib.library_management.Entity.StudentEntity;
 import com.lib.library_management.Services.BooksEntityService;
@@ -29,12 +30,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.time.Year;
 
 @Component
 public class MainController {
+
     private static Map<Integer, String> courseMap;
 
     static {
@@ -48,8 +49,8 @@ public class MainController {
     @Autowired
     private OpenWindow openWindow;
 
-    private BooksEntity booksEntity=new BooksEntity();
-
+    private BooksEntity booksEntity;
+    
     @Autowired
     StudentService studentService;
 
@@ -380,17 +381,38 @@ public class MainController {
 
     @FXML
     void selectedBook(MouseEvent event) {
+        booksEntity=new BooksEntity();
         booksEntity = Stu_BooksDisplay_Table.getSelectionModel().getSelectedItem();
-        openWindow.openDialogue("Info", "You have selected a Book from List of issued Books.");
-    }
-
-    @FXML
-    void returnBook(MouseEvent event) {
-        Boolean b=openWindow.openConfirmation("Warning", "Do you want to declare Returning of the Selected Book?");
-        if(b){
-            Stu_BooksDisplay_Table.getItems().remove(booksEntity);
-            booksEntity.setStatus("Available");
+        Stu_BooksDisplay_Table.setStyle("-fx-selection-bar: blue; -fx-selection-bar-non-focused: blue;");
+        Boolean bool=false;
+        if(booksEntity!=null){
+            bool=openWindow.openConfirmation("Info", "You have selected a Book from List of issued Books. To unselect, choose No. Else, choose yes to proceed to return.");
+        }
+        if(!bool){
+            Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
         }
     }
 
+    @FXML
+    public void returnBook(MouseEvent event) {
+        if(booksEntity!=null){
+            BookDetailsEntity bookDetailsEntity=new BookDetailsEntity();
+            bookDetailsEntity=booksEntity.getBookDetailsEntity();
+            String bookTitle=bookDetailsEntity.getBookName();
+            String bookEdition=bookDetailsEntity.getEdition();
+            String bookAuthor=bookDetailsEntity.getAuthor();
+            //String subjectCategory=bookDetailsEntity.getSubjectCategory();
+            Boolean boolean1=openWindow.openConfirmation("Warning", "Do you want to return the Selected Book?"+ "\n"+"Book Name: "+bookTitle+"\n"+
+            "Book Edition: "+bookEdition+"\n"+"Book Author"+bookAuthor);
+            if(boolean1){
+                Stu_BooksDisplay_Table.getItems().remove(booksEntity);
+                booksEntity.setStatus("Available");
+                booksEntity.setStudent(null);
+                booksService.saveReturningBook(booksEntity);
+            }
+        }
+        else{
+            openWindow.openDialogue("Info", "Please select any of the reocrd(s) to perform return option.");
+        }
+    }
 }

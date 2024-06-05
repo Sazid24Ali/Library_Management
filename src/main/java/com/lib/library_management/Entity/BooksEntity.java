@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
 import lombok.Data;
 
 @Entity
@@ -30,9 +29,5 @@ public class BooksEntity {
 
     private LocalDate dateOfAllotment;
 
-    @PrePersist
-    protected void onCreate() {
-        dateOfAllotment = LocalDate.now();
-    }
-
+    
 }
