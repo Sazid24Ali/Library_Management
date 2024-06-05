@@ -146,7 +146,7 @@ public class AppendBooksController {
             }
             else if(boolForValidRange){
                 openWindow.openDialogue("Warning", "You have entered invalid range of Ids.");
-
+                inputOfBookIds.requestFocus();
             }
             else{
                 BooksEntity booksEntity=new BooksEntity();
