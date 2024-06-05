@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.lib.library_management.Entity.BookDetailsEntity;
 import com.lib.library_management.Entity.BooksEntity;
 import com.lib.library_management.Entity.StudentEntity;
 import com.lib.library_management.Services.BooksEntityService;
@@ -386,8 +387,14 @@ public class MainController {
 
     @FXML
     public void returnBook(MouseEvent event) {
-        Boolean b=openWindow.openConfirmation("Warning", "Do you want to declare Returning of the Selected Book?");
-        if(b){
+        BookDetailsEntity bookDetailsEntity=new BookDetailsEntity();
+        bookDetailsEntity=booksEntity.getBookDetailsEntity();
+        String bookTitle=bookDetailsEntity.getBookName();
+        String bookEdition=bookDetailsEntity.getEdition();
+        String bookAuthor=bookDetailsEntity.getAuthor();
+        String subjectCategory=bookDetailsEntity.getSubjectCategory();
+        Boolean boolean1=openWindow.openConfirmation("Warning", "Do you want to return the Selected Book?"+ "\n"+bookTitle+"\n"+bookEdition+"\n"+bookAuthor+"\n"+subjectCategory);
+        if(boolean1){
             Stu_BooksDisplay_Table.getItems().remove(booksEntity);
             booksEntity.setStatus("Available");
             booksEntity.setStudent(null);

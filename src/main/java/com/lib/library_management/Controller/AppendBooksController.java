@@ -100,15 +100,20 @@ public class AppendBooksController {
         String inputIds=inputOfBookIds.getText();
         String[] ArrayOfIds;
         ArrayList<Integer> Ids=new ArrayList<>();
-        int j=0;
+        Boolean boolForValidRange=false;
         if(inputIds.contains(",") && inputIds.contains("-")){
             ArrayOfIds = inputIds.split(","); 
             for(String myStr: ArrayOfIds){
                 if(myStr.contains("-")){
                     String s[]=myStr.split("-");
                     int lowerRangeOfId=Integer.parseInt(s[0]),upperRangeOfId=Integer.parseInt(s[1]);
-                    for(int i=lowerRangeOfId;i<upperRangeOfId+1;i++)
-                        Ids.add(i);
+                    if(lowerRangeOfId>=upperRangeOfId){
+                        boolForValidRange=true;
+                    }
+                    else{
+                        for(int i=lowerRangeOfId;i<upperRangeOfId+1;i++)
+                            Ids.add(i);
+                    }
                 }
                 else{
                     Ids.add(Integer.parseInt(myStr));
@@ -118,8 +123,13 @@ public class AppendBooksController {
         else if(inputIds.contains("-")){
             String s[]=inputIds.split("-");
             int lowerRangeOfId=Integer.parseInt(s[0]),upperRangeOfId=Integer.parseInt(s[1]);
-            for(int i=lowerRangeOfId;i<upperRangeOfId+1;i++)
-                Ids.add(i);
+            if(lowerRangeOfId>=upperRangeOfId){
+                boolForValidRange=true;
+            }
+            else{
+                for(int i=lowerRangeOfId;i<upperRangeOfId+1;i++)
+                    Ids.add(i);
+            }
         }
         else if(inputIds.contains(",")){
             ArrayOfIds = inputIds.split(","); 
@@ -134,6 +144,10 @@ public class AppendBooksController {
             if(booksEntityRepo.getBookIds().contains(id)){
                 openWindow.openDialogue("Warning", "You have entered an Id: "+id+" which is already in records." );
             }
+            else if(boolForValidRange){
+                openWindow.openDialogue("Warning", "You have entered invalid range of Ids.");
+
+            }
             else{
                 BooksEntity booksEntity=new BooksEntity();
                 booksEntity.setBookId(id);
@@ -145,7 +159,7 @@ public class AppendBooksController {
         }
         bookEntityService.addBooks(booksToAdd);
         openWindow.openDialogue("Info", "The id's: "+Ids+" have been inserted into database within "+bookCode.getText()+" Book code");
-        bookCode.clear();
+        //bookCode.clear();
         inputOfBookIds.clear();
         tableToShowBook.getItems().clear();
     }
