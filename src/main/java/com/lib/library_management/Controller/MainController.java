@@ -29,12 +29,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.time.Year;
 
 @Component
 public class MainController {
+
     private static Map<Integer, String> courseMap;
 
     static {
@@ -385,12 +385,13 @@ public class MainController {
     }
 
     @FXML
-    void returnBook(MouseEvent event) {
+    public void returnBook(MouseEvent event) {
         Boolean b=openWindow.openConfirmation("Warning", "Do you want to declare Returning of the Selected Book?");
         if(b){
             Stu_BooksDisplay_Table.getItems().remove(booksEntity);
             booksEntity.setStatus("Available");
+            booksEntity.setStudent(null);
+            booksService.saveReturningBook(booksEntity);
         }
     }
-
 }

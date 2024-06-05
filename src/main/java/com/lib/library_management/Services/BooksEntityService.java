@@ -42,4 +42,8 @@ public class BooksEntityService {
         booksRepo.saveAll(booksToAdd);
     }
 
+    public void saveReturningBook(BooksEntity booksEntity){
+        booksRepo.save(booksEntity);
+    }
+
 }

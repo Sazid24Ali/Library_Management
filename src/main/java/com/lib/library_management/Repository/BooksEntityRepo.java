@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -33,4 +34,9 @@ public interface BooksEntityRepo extends JpaRepository<BooksEntity, Integer> {
 
     @Query("SELECT b FROM BooksEntity b WHERE b.student.StudentRollNo = :StudentRollNo")
     List<BooksEntity> findBooksEntitiesByStudent_StudentRollNo(String StudentRollNo);
+
+    @Query("SELECT b.BookId FROM BooksEntity b")
+    ArrayList<Integer> getBookIds();
+
+    
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.lib.library_management.Entity.BookDetailsEntity;
 import com.lib.library_management.Entity.BooksEntity;
+import com.lib.library_management.Repository.BooksEntityRepo;
 import com.lib.library_management.Services.BooksDetailsService;
 import com.lib.library_management.Services.BooksEntityService;
 import com.lib.library_management.Utility.OpenWindow;
@@ -32,6 +33,9 @@ public class AppendBooksController {
 
     @Autowired
     OpenWindow openWindow;
+
+    @Autowired
+    BooksEntityRepo booksEntityRepo;
 
     BookDetailsEntity bookDetailsEntity=new BookDetailsEntity();
     BooksEntity booksEntity=new BooksEntity();
@@ -93,48 +97,56 @@ public class AppendBooksController {
 
     @FXML
     public void getBookId(MouseEvent event) {
-        String message="Do you really want to add these Id's of books for Book code "+bookCode.getText();
-        Boolean bool=openWindow.openConfirmation("Warning", message);
-        if(bool){
-            int l=0,h=0;
-            String Ids=inputOfBookIds.getText();
-            String[] ArrayOfIds = Ids.split(",");  
-            ArrayList<BooksEntity> booksToAdd=new ArrayList<BooksEntity>();
-            int f=0;
-            for(String myStr: ArrayOfIds) {
+        String inputIds=inputOfBookIds.getText();
+        String[] ArrayOfIds;
+        ArrayList<Integer> Ids=new ArrayList<>();
+        int j=0;
+        if(inputIds.contains(",") && inputIds.contains("-")){
+            ArrayOfIds = inputIds.split(","); 
+            for(String myStr: ArrayOfIds){
                 if(myStr.contains("-")){
-                    String[] s=myStr.split("-");
-                    l=Integer.parseInt(s[0]);
-                    h=Integer.parseInt(s[1]);
-                    if(l>=h && l!=0 && h!=0){
-                        for(int i=l;i<h+1;i++){
-                            BooksEntity booksEntity=new BooksEntity();
-                            booksEntity.setBookId(i);
-                            booksEntity.setStatus("Available");
-                            booksEntity.setBookDetailsEntity(bookDetailsEntity);
-                            booksToAdd.add(booksEntity);
-                        }
-                    }
-                    else{
-                        f++;
-                    }
+                    String s[]=myStr.split("-");
+                    int lowerRangeOfId=Integer.parseInt(s[0]),upperRangeOfId=Integer.parseInt(s[1]);
+                    for(int i=lowerRangeOfId;i<upperRangeOfId+1;i++)
+                        Ids.add(i);
                 }
                 else{
-                    BooksEntity booksEntity=new BooksEntity();
-                    booksEntity.setBookId(Integer.parseInt(myStr));
-                    booksEntity.setStatus("Available");
-                    booksEntity.setBookDetailsEntity(bookDetailsEntity);
-                    booksToAdd.add(booksEntity);
-                }
-                if(f!=0){
-                    openWindow.openDialogue("Info", "Please enter valid range of Id's. Values between "+String.valueOf(l)+" and"+String.valueOf(h)+" doesn't exist.");
+                    Ids.add(Integer.parseInt(myStr));
                 }
             }
-            bookEntityService.addBooks(booksToAdd);
-            openWindow.openDialogue("Info", "The id's "+Ids+" have been inserted into database within "+bookCode.getText()+" Book code");
-            bookCode.clear();
-            inputOfBookIds.clear();
-            tableToShowBook.getItems().clear();
         }
+        else if(inputIds.contains("-")){
+            String s[]=inputIds.split("-");
+            int lowerRangeOfId=Integer.parseInt(s[0]),upperRangeOfId=Integer.parseInt(s[1]);
+            for(int i=lowerRangeOfId;i<upperRangeOfId+1;i++)
+                Ids.add(i);
+        }
+        else if(inputIds.contains(",")){
+            ArrayOfIds = inputIds.split(","); 
+            for(String s:ArrayOfIds)
+                Ids.add(Integer.parseInt(s));
+        }
+        else{
+            Ids.add(Integer.parseInt(inputIds));
+        }
+        ArrayList<BooksEntity> booksToAdd=new ArrayList<BooksEntity>();
+        for(Integer id:Ids){
+            if(booksEntityRepo.getBookIds().contains(id)){
+                openWindow.openDialogue("Warning", "You have entered an Id: "+id+" which is already in records." );
+            }
+            else{
+                BooksEntity booksEntity=new BooksEntity();
+                booksEntity.setBookId(id);
+                booksEntity.setStatus("Available");
+                booksEntity.setDateOfAllotment(null);
+                booksEntity.setBookDetailsEntity(bookDetailsEntity);
+                booksToAdd.add(booksEntity);
+            }
+        }
+        bookEntityService.addBooks(booksToAdd);
+        openWindow.openDialogue("Info", "The id's: "+Ids+" have been inserted into database within "+bookCode.getText()+" Book code");
+        bookCode.clear();
+        inputOfBookIds.clear();
+        tableToShowBook.getItems().clear();
     }
 }
