@@ -50,7 +50,7 @@ public class MainController {
     private OpenWindow openWindow;
 
     private BooksEntity booksEntity;
-    
+
     @Autowired
     StudentService studentService;
 
@@ -148,6 +148,7 @@ public class MainController {
         issueBook_Btn.setDisable(value);
         returnBook_Btn.setDisable(value);
         Stu_Remove_Btn.setDisable(value);
+        Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
 
     }
 
@@ -284,6 +285,7 @@ public class MainController {
             if (data != null) {
                 VisibilitySetter(true);
                 newStudent(false);
+                returnBook_Btn.setDisable(true);
                 // System.out.println("\n\n\n\n" + data.getStudentName());
                 Stu_Name_La_Field.setText(data.getStudentName());
                 Stu_PhNo_La_Field.setText(String.valueOf(data.getPhoneNumber()));
@@ -385,38 +387,40 @@ public class MainController {
 
     @FXML
     void selectedBook(MouseEvent event) {
-        booksEntity=new BooksEntity();
+        booksEntity = new BooksEntity();
         booksEntity = Stu_BooksDisplay_Table.getSelectionModel().getSelectedItem();
         Stu_BooksDisplay_Table.setStyle("-fx-selection-bar: blue; -fx-selection-bar-non-focused: salmon;");
-        Boolean bool=false;
-        if(booksEntity!=null){
+        if (booksEntity == null) {
+            returnBook_Btn.setDisable(true);
+        } else {
             returnBook_Btn.setDisable(false);
         }
-        if(!bool){
-            Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
-        }
+        
     }
 
     @FXML
     public void returnBook(MouseEvent event) {
-        if(booksEntity!=null){
-            BookDetailsEntity bookDetailsEntity=new BookDetailsEntity();
-            bookDetailsEntity=booksEntity.getBookDetailsEntity();
-            String bookTitle=bookDetailsEntity.getBookName();
-            String bookEdition=bookDetailsEntity.getEdition();
-            String bookAuthor=bookDetailsEntity.getAuthor();
-            //String subjectCategory=bookDetailsEntity.getSubjectCategory();
-            Boolean boolean1=openWindow.openConfirmation("Warning", "Do you want to return the Selected Book?"+ "\n"+"Book Name: "+bookTitle+"\n"+
-            "Book Edition: "+bookEdition+"\n"+"Book Author"+bookAuthor);
-            if(boolean1){
+        if (booksEntity != null) {
+            BookDetailsEntity bookDetailsEntity = new BookDetailsEntity();
+            bookDetailsEntity = booksEntity.getBookDetailsEntity();
+            String bookTitle = bookDetailsEntity.getBookName();
+            String bookEdition = bookDetailsEntity.getEdition();
+            String bookAuthor = bookDetailsEntity.getAuthor();
+            // String subjectCategory=bookDetailsEntity.getSubjectCategory();
+            Boolean boolean1 = openWindow.openConfirmation("Warning",
+                    "Do you want to return the Selected Book?" + "\n" + "Book Name: " + bookTitle + "\n" +
+                            "Book Edition: " + bookEdition + "\n" + "Book Author: " + bookAuthor);
+            if (boolean1) {
                 Stu_BooksDisplay_Table.getItems().remove(booksEntity);
                 booksEntity.setStatus("Available");
                 booksEntity.setStudent(null);
                 booksService.saveReturningBook(booksEntity);
             }
-        }
-        else{
+        } else {
             openWindow.openDialogue("Info", "Please select any of the reocrd(s) to perform return option.");
         }
+        //Added this to clear the selection from the table and reset the return button to disable
+        Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
+        returnBook_Btn.setDisable(true);
     }
 }
