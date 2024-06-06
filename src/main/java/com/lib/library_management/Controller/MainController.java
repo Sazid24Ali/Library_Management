@@ -383,10 +383,10 @@ public class MainController {
     void selectedBook(MouseEvent event) {
         booksEntity=new BooksEntity();
         booksEntity = Stu_BooksDisplay_Table.getSelectionModel().getSelectedItem();
-        Stu_BooksDisplay_Table.setStyle("-fx-selection-bar: blue; -fx-selection-bar-non-focused: blue;");
+        Stu_BooksDisplay_Table.setStyle("-fx-selection-bar: blue; -fx-selection-bar-non-focused: salmon;");
         Boolean bool=false;
         if(booksEntity!=null){
-            bool=openWindow.openConfirmation("Info", "You have selected a Book from List of issued Books. To unselect, choose No. Else, choose yes to proceed to return.");
+            returnBook_Btn.setDisable(false);
         }
         if(!bool){
             Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
