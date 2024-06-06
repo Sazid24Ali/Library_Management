@@ -33,4 +33,9 @@ public interface BooksEntityRepo extends JpaRepository<BooksEntity, Integer> {
 
     @Query("SELECT b FROM BooksEntity b WHERE b.student.StudentRollNo = :StudentRollNo")
     List<BooksEntity> findBooksEntitiesByStudent_StudentRollNo(String StudentRollNo);
+
+    @Query("SELECT b.BookId FROM BooksEntity b")
+    ArrayList<Integer> getBookIds();
+
+    
 }
