@@ -49,6 +49,8 @@ public class MainController {
     @Autowired
     private OpenWindow openWindow;
 
+    private BooksEntity booksEntity;
+    
     private BooksEntity booksEntity = new BooksEntity();
 
     @Autowired
@@ -381,23 +383,21 @@ public class MainController {
 
     @FXML
     void selectedBook(MouseEvent event) {
+        booksEntity=new BooksEntity();
         booksEntity = Stu_BooksDisplay_Table.getSelectionModel().getSelectedItem();
         openWindow.openDialogue("Info", "You have selected a Book from List of issued Books.");
-        returnBook_Btn.setDisable(false);
-
     }
 
     @FXML
     public void returnBook(MouseEvent event) {
-        BookDetailsEntity bookDetailsEntity = new BookDetailsEntity();
-        bookDetailsEntity = booksEntity.getBookDetailsEntity();
-        String bookTitle = bookDetailsEntity.getBookName();
-        String bookEdition = bookDetailsEntity.getEdition();
-        String bookAuthor = bookDetailsEntity.getAuthor();
-        String subjectCategory = bookDetailsEntity.getSubjectCategory();
-        Boolean boolean1 = openWindow.openConfirmation("Warning", "Do you want to return the Selected Book?" + "\n"
-                + bookTitle + "\n" + bookEdition + "\n" + bookAuthor + "\n" + subjectCategory);
-        if (boolean1) {
+        BookDetailsEntity bookDetailsEntity=new BookDetailsEntity();
+        bookDetailsEntity=booksEntity.getBookDetailsEntity();
+        String bookTitle=bookDetailsEntity.getBookName();
+        String bookEdition=bookDetailsEntity.getEdition();
+        String bookAuthor=bookDetailsEntity.getAuthor();
+        String subjectCategory=bookDetailsEntity.getSubjectCategory();
+        Boolean boolean1=openWindow.openConfirmation("Warning", "Do you want to return the Selected Book?"+ "\n"+bookTitle+"\n"+bookEdition+"\n"+bookAuthor+"\n"+subjectCategory);
+        if(boolean1){
             Stu_BooksDisplay_Table.getItems().remove(booksEntity);
             booksEntity.setStatus("Available");
             booksEntity.setStudent(null);
