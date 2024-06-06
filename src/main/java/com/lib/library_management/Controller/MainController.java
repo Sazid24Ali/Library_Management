@@ -49,7 +49,7 @@ public class MainController {
     @Autowired
     private OpenWindow openWindow;
 
-    private BooksEntity booksEntity=new BooksEntity();
+    private BooksEntity booksEntity = new BooksEntity();
 
     @Autowired
     StudentService studentService;
@@ -145,8 +145,8 @@ public class MainController {
         Stu_EditDetails_Btn.setVisible(value);
         issueBook_Btn.setVisible(value);
         returnBook_Btn.setVisible(value);
-        issueBook_Btn.setDisable(value);
         returnBook_Btn.setDisable(value);
+        issueBook_Btn.setDisable(value);
         Stu_Remove_Btn.setDisable(value);
 
     }
@@ -325,7 +325,6 @@ public class MainController {
         Stu_Add_Btn.setVisible(value);
         Stu_EditDetails_Btn.setVisible(!value);
         issueBook_Btn.setDisable(value);
-        returnBook_Btn.setDisable(value);
         Stu_Remove_Btn.setDisable(value);
 
     }
@@ -363,42 +362,48 @@ public class MainController {
         String RollNo = 1007 + Student_Year_Field.getText() + course.substring(1, 4)
                 + Student_RollNo_Field.getText();
 
-        
-        if (openWindow.openConfirmation("Remove",   "Are you sure want to Remove the Student With Roll No \""+RollNo+"\"")){
+        if (openWindow.openConfirmation("Remove",
+                "Are you sure want to Remove the Student With Roll No \"" + RollNo + "\"")) {
             StudentEntity removeStudent = studentService.deleteById(RollNo);
 
             if (removeStudent != null) {
-                openWindow.openDialogue("Deleted Successfully", "Student Record Removed Successfully \n" + removeStudent);
+                openWindow.openDialogue("Deleted Successfully",
+                        "Student Record Removed Successfully \n" + removeStudent);
                 defaultSettings();
-    
+
             } else {
-                openWindow.openDialogue("Deletion Unsuccessful", "Student With " + RollNo + " Roll Number Cannot Be removed \nThere are books to be Returned ");
+                openWindow.openDialogue("Deletion Unsuccessful",
+                        "Student With " + RollNo + " Roll Number Cannot Be removed \nThere are books to be Returned ");
             }
         }
-        
-        
+
     }
 
     @FXML
     void selectedBook(MouseEvent event) {
         booksEntity = Stu_BooksDisplay_Table.getSelectionModel().getSelectedItem();
         openWindow.openDialogue("Info", "You have selected a Book from List of issued Books.");
+        returnBook_Btn.setDisable(false);
+
     }
 
     @FXML
     public void returnBook(MouseEvent event) {
-        BookDetailsEntity bookDetailsEntity=new BookDetailsEntity();
-        bookDetailsEntity=booksEntity.getBookDetailsEntity();
-        String bookTitle=bookDetailsEntity.getBookName();
-        String bookEdition=bookDetailsEntity.getEdition();
-        String bookAuthor=bookDetailsEntity.getAuthor();
-        String subjectCategory=bookDetailsEntity.getSubjectCategory();
-        Boolean boolean1=openWindow.openConfirmation("Warning", "Do you want to return the Selected Book?"+ "\n"+bookTitle+"\n"+bookEdition+"\n"+bookAuthor+"\n"+subjectCategory);
-        if(boolean1){
+        BookDetailsEntity bookDetailsEntity = new BookDetailsEntity();
+        bookDetailsEntity = booksEntity.getBookDetailsEntity();
+        String bookTitle = bookDetailsEntity.getBookName();
+        String bookEdition = bookDetailsEntity.getEdition();
+        String bookAuthor = bookDetailsEntity.getAuthor();
+        String subjectCategory = bookDetailsEntity.getSubjectCategory();
+        Boolean boolean1 = openWindow.openConfirmation("Warning", "Do you want to return the Selected Book?" + "\n"
+                + bookTitle + "\n" + bookEdition + "\n" + bookAuthor + "\n" + subjectCategory);
+        if (boolean1) {
             Stu_BooksDisplay_Table.getItems().remove(booksEntity);
             booksEntity.setStatus("Available");
             booksEntity.setStudent(null);
             booksService.saveReturningBook(booksEntity);
         }
+        returnBook_Btn.setDisable(true);
+        
     }
 }
