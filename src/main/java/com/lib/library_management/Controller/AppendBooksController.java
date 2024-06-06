@@ -97,7 +97,84 @@ public class AppendBooksController {
 
     @FXML
     public void getBookId(MouseEvent event) {
-        // String inputIds=inputOfBookIds.getText();
+        if(bookDetailsEntity!=null){
+            String userGivenIds=inputOfBookIds.getText();
+            Boolean boolForInvalidRange=false;
+            if(userGivenIds.charAt(userGivenIds.length()-1)!=','){
+                userGivenIds=userGivenIds+", ";
+            }
+            String[] idsSplitByComma=userGivenIds.split(",");
+            ArrayList<String> idsWithoutLastCharAdded=new ArrayList<>();
+            for(String idSplitByComma:idsSplitByComma)
+                idsWithoutLastCharAdded.add(idSplitByComma);
+            idsWithoutLastCharAdded.remove(idsWithoutLastCharAdded.size()-1);
+            ArrayList<Integer> Ids=new ArrayList<>();
+            for(String idOrRangeOfIds:idsWithoutLastCharAdded){
+                if(idOrRangeOfIds.contains("-")){
+                    String rangeOfIds[]=idOrRangeOfIds.split("-");
+                    int lowerRangeOfId=Integer.parseInt(rangeOfIds[0]),upperRangeOfId=Integer.parseInt(rangeOfIds[1]);
+                    if(lowerRangeOfId>=upperRangeOfId){
+                        openWindow.openDialogue("Warning", "The given range of Ids is Invalid. Please edit. ");
+                        boolForInvalidRange=true;
+                        inputOfBookIds.requestFocus();
+                        break;
+                    }
+                    else{
+                        while(upperRangeOfId>=lowerRangeOfId){
+                            Ids.add(upperRangeOfId);
+                            upperRangeOfId--;
+                        }
+                    }
+                }
+                else{
+                    Ids.add(Integer.parseInt(idOrRangeOfIds));
+                }
+            }
+            ArrayList<BooksEntity> booksToAdd=new ArrayList<BooksEntity>();
+            ArrayList<Integer> idsNotAdded=new ArrayList<>();
+            Boolean boolForNonUniqueIds=false;
+            if(!boolForInvalidRange){
+                for(int i=0;i<Ids.size()-1;i++){
+                    if(booksEntityRepo.getBookIds().contains(Ids.get(i))){
+                        boolForNonUniqueIds=true;
+                        idsNotAdded.add(Ids.get(i));
+                        Ids.remove(Ids.get(i));
+                    }
+                    else{
+                        BooksEntity booksEntity=new BooksEntity();
+                        booksEntity.setBookId(Ids.get(i));
+                        booksEntity.setStatus("Available");
+                        booksEntity.setDateOfAllotment(null);
+                        booksEntity.setBookDetailsEntity(bookDetailsEntity);
+                        booksToAdd.add(booksEntity);
+                    }
+                }
+                if(boolForNonUniqueIds){
+                    openWindow.openDialogue("Warning", "You have entered Ids: "+idsNotAdded+" which are already in records.\n\nNote: You can view the added books with Book Ids through Available books option by searching with Book Ids or Book Code." );
+                }
+                Boolean boolForEntryRequest=openWindow.openConfirmation("Info", "The id's: "+Ids+" are successfully being able to add into database within "+bookCode.getText()+" Book code.\nThe Ids "+idsNotAdded+" are not being able to be added into database as there exists books with Ids given. Do you want to proceed?");
+                if(boolForEntryRequest){
+                    try{
+                        bookEntityService.addBooks(booksToAdd);
+                        inputOfBookIds.clear();
+                        openWindow.openDialogue("Info", "The records are successfully entered into the database.");
+                        bookDetailsEntity=null;
+                    }
+                    catch(Exception e){
+                        openWindow.openDialogue("Issue", "There is some issue with the server.");
+                    }
+                }
+                else{
+                    inputOfBookIds.requestFocus();
+                }
+            }
+        }
+        else{
+            openWindow.openDialogue("Warning", "Please enter the Book code and click on search Button.");
+        }
+    }
+}
+// String inputIds=inputOfBookIds.getText();
         // String[] ArrayOfIds;
         // ArrayList<Integer> Ids=new ArrayList<>();
         // Boolean boolForValidRange=false;
@@ -180,5 +257,3 @@ public class AppendBooksController {
         // else{
         //     inputOfBookIds.requestFocus();
         // }
-    }
-}
