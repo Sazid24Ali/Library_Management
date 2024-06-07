@@ -17,6 +17,11 @@ public class BookDetailsEntity {
     String Author;
     String SubjectCategory;
     String Edition;
+    Integer pages;
+    String place_publisher;
+    Integer publishing_year;
+    Integer price;
+
 
     @Transient
     Long totalBooks;

@@ -59,6 +59,17 @@ public class AvailableBooksController {
     private TableColumn<BookDetailsEntity, Long> borrowedBooksColumn;
     @FXML
     private TableColumn<BookDetailsEntity, ArrayList<String>> bookIDsColumn;
+    @FXML
+    private TableColumn<BookDetailsEntity, Integer> pagesColumn;
+
+    @FXML
+    private TableColumn<BookDetailsEntity, String> placeAndpublisherColumn;
+
+    @FXML
+    private TableColumn<BookDetailsEntity, Integer> priceColumn;
+
+    @FXML
+    private TableColumn<BookDetailsEntity, Integer> publishYearColumn;
 
     private FilteredList<BookDetailsEntity> filteredList;
 
@@ -76,6 +87,11 @@ public class AvailableBooksController {
         availableBooksColumn.setCellValueFactory(new PropertyValueFactory<>("availableBooks"));
         borrowedBooksColumn.setCellValueFactory(new PropertyValueFactory<>("borrowedBooks"));
         bookIDsColumn.setCellValueFactory(new PropertyValueFactory<>("bookIds"));
+        pagesColumn.setCellValueFactory(new PropertyValueFactory<>("pages"));
+        placeAndpublisherColumn.setCellValueFactory(new PropertyValueFactory<>("place_publisher"));
+        publishYearColumn.setCellValueFactory(new PropertyValueFactory<>("publishing_year"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+
 
         loadBookData();
         setupFiltering();
