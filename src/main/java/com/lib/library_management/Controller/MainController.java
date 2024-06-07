@@ -149,6 +149,7 @@ public class MainController {
         returnBook_Btn.setDisable(value);
         Stu_Remove_Btn.setDisable(value);
         Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
+        Stu_BooksDisplay_Table.setDisable(value);
 
     }
 
@@ -229,7 +230,7 @@ public class MainController {
         defaultSettings();
         Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         openWindow.openScene("AppendBooks", "Append New Books ", primaryStage);
-        
+
     }
 
     @FXML
@@ -333,6 +334,8 @@ public class MainController {
         issueBook_Btn.setDisable(value);
         returnBook_Btn.setDisable(value);
         Stu_Remove_Btn.setDisable(value);
+        Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
+        Stu_BooksDisplay_Table.setDisable(value);
 
     }
 
@@ -396,7 +399,7 @@ public class MainController {
         } else {
             returnBook_Btn.setDisable(false);
         }
-        
+
     }
 
     @FXML
@@ -420,7 +423,8 @@ public class MainController {
         } else {
             openWindow.openDialogue("Info", "Please select any of the reocrd(s) to perform return option.");
         }
-        //Added this to clear the selection from the table and reset the return button to disable
+        // Added this to clear the selection from the table and reset the return button
+        // to disable
         Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
         returnBook_Btn.setDisable(true);
     }
