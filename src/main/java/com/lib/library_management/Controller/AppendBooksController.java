@@ -10,6 +10,7 @@ import com.lib.library_management.Repository.BooksEntityRepo;
 import com.lib.library_management.Services.BooksDetailsService;
 import com.lib.library_management.Services.BooksEntityService;
 import com.lib.library_management.Utility.OpenWindow;
+import com.lib.library_management.Utility.utilityClass;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -74,25 +75,42 @@ public class AppendBooksController {
     private TableColumn<BookDetailsEntity, Integer> BookCode;
 
     @FXML
-    void searchForBook(ActionEvent event) {
-        Boolean condition = bookCode.getLength() != 0;
-        if (condition) {
-            Integer Bcode = Integer.parseInt(bookCode.getText());
-            bookDetailsEntity = bookDetailsService.getBookDetailsByBookCode(Bcode);
-            display(bookDetailsEntity);
-        }
-    }
-
-    @FXML
     void initialize() {
         tableToShowBook.setEditable(false);
         inputOfBookIds.setDisable(true);
+        saveButtonForScene.setDisable(true);
         bookTitle.setCellValueFactory(new PropertyValueFactory<BookDetailsEntity, String>("BookName"));
         author.setCellValueFactory(new PropertyValueFactory<BookDetailsEntity, String>("Author"));
         edition.setCellValueFactory(new PropertyValueFactory<BookDetailsEntity, String>("Edition"));
         BookCode.setCellValueFactory(new PropertyValueFactory<BookDetailsEntity, Integer>("BookCode"));
         sub_category.setCellValueFactory(new PropertyValueFactory<BookDetailsEntity, String>("SubjectCategory"));
+        // For Inter Only input
+        utilityClass.setIntegerLimiter(bookCode, 5);
 
+    }
+
+    @FXML
+    void searchForBook(ActionEvent event) {
+        Boolean condition = bookCode.getLength() != 0;
+        if (condition) {
+            Integer Bcode = Integer.parseInt(bookCode.getText());
+            bookDetailsEntity = bookDetailsService.getBookDetailsByBookCode(Bcode);
+            if (bookDetailsEntity != null) {
+                display(bookDetailsEntity);
+            } else {
+                tableToShowBook.getItems().clear();
+                inputOfBookIds.clear();
+                inputOfBookIds.setDisable(true);
+                saveButtonForScene.setDisable(true);
+                openWindow.openDialogue("Warning",
+                        "Enter the Correct Book Code\n\nBooks Code is Not Available Add It in \" Add New Book \" Panel ");
+                bookCode.requestFocus();
+            }
+        } else {
+            openWindow.openDialogue("Warning",
+                    "Enter the Book Code\n");
+            bookCode.requestFocus();
+        }
     }
 
     @FXML
@@ -100,6 +118,8 @@ public class AppendBooksController {
         final ObservableList<BookDetailsEntity> bDetails = FXCollections.observableArrayList(bDE);
         tableToShowBook.setItems(bDetails);
         inputOfBookIds.setDisable(false);
+        saveButtonForScene.setDisable(false);
+        inputOfBookIds.requestFocus();
     }
 
     @FXML
@@ -108,6 +128,12 @@ public class AppendBooksController {
             Boolean boolForInvalidInput = false;
             // inputOfBookIds.setText(bookCode.getText());
             String userGivenIds = inputOfBookIds.getText().trim();
+            if (userGivenIds.isEmpty()) {
+                openWindow.openDialogue("Warning", "Enter the Book Ids");
+                inputOfBookIds.requestFocus();
+                return;
+
+            }
             Boolean boolForInvalidRange = false;
             if (!userGivenIds.contains(",")) {
                 userGivenIds = userGivenIds + ",";
