@@ -149,7 +149,6 @@ public class AppendBooksController {
                     if(booksEntityRepo.getBookIds().contains(Ids.get(i))){
                         boolForNonUniqueIds=true;
                         idsNotAdded.add(Ids.get(i));
-                        break;
                     }
                     else{
                         BooksEntity booksEntity=new BooksEntity();
