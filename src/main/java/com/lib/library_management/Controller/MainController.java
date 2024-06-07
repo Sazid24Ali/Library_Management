@@ -41,16 +41,16 @@ public class MainController {
     static {
         courseMap = new LinkedHashMap<>();
         courseMap.put(504, "(504) Computer Science ");
-        courseMap.put(123, "(123) Applied Maths");
-        courseMap.put(231, "(231) Pure Maths");
-        courseMap.put(405, "(405) Maths With CS");
+        courseMap.put(231, "(505) Pure Maths");
+        courseMap.put(123, "(506) Applied Maths");
+        courseMap.put(405, "(586) Maths With CS");
     }
     // To open New Windows
     @Autowired
     private OpenWindow openWindow;
 
     private BooksEntity booksEntity;
-    
+
     @Autowired
     StudentService studentService;
 
@@ -148,6 +148,7 @@ public class MainController {
         issueBook_Btn.setDisable(value);
         returnBook_Btn.setDisable(value);
         Stu_Remove_Btn.setDisable(value);
+        Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
 
     }
 
@@ -162,6 +163,9 @@ public class MainController {
         Stu_Name_La_Field.clear();
         Stu_PhNo_La_Field.clear();
         Stu_YOP_La_Field.clear();
+        Stu_Name_La_Field.setEditable(false);
+        Stu_PhNo_La_Field.setEditable(false);
+        Stu_YOP_La_Field.setEditable(false);
 
     }
 
@@ -282,6 +286,7 @@ public class MainController {
             if (data != null) {
                 VisibilitySetter(true);
                 newStudent(false);
+                returnBook_Btn.setDisable(true);
                 // System.out.println("\n\n\n\n" + data.getStudentName());
                 Stu_Name_La_Field.setText(data.getStudentName());
                 Stu_PhNo_La_Field.setText(String.valueOf(data.getPhoneNumber()));
@@ -364,56 +369,59 @@ public class MainController {
         String RollNo = 1007 + Student_Year_Field.getText() + course.substring(1, 4)
                 + Student_RollNo_Field.getText();
 
-        
-        if (openWindow.openConfirmation("Remove",   "Are you sure want to Remove the Student With Roll No \""+RollNo+"\"")){
+        if (openWindow.openConfirmation("Remove",
+                "Are you sure want to Remove the Student With Roll No \"" + RollNo + "\"")) {
             StudentEntity removeStudent = studentService.deleteById(RollNo);
 
             if (removeStudent != null) {
-                openWindow.openDialogue("Deleted Successfully", "Student Record Removed Successfully \n" + removeStudent);
+                openWindow.openDialogue("Deleted Successfully",
+                        "Student Record Removed Successfully \n" + removeStudent);
                 defaultSettings();
-    
+
             } else {
-                openWindow.openDialogue("Deletion Unsuccessful", "Student With " + RollNo + " Roll Number Cannot Be removed \nThere are books to be Returned ");
+                openWindow.openDialogue("Deletion Unsuccessful",
+                        "Student With " + RollNo + " Roll Number Cannot Be removed \nThere are books to be Returned ");
             }
         }
-        
-        
+
     }
 
     @FXML
     void selectedBook(MouseEvent event) {
-        booksEntity=new BooksEntity();
+        booksEntity = new BooksEntity();
         booksEntity = Stu_BooksDisplay_Table.getSelectionModel().getSelectedItem();
         Stu_BooksDisplay_Table.setStyle("-fx-selection-bar: blue; -fx-selection-bar-non-focused: salmon;");
-        Boolean bool=false;
-        if(booksEntity!=null){
+        if (booksEntity == null) {
+            returnBook_Btn.setDisable(true);
+        } else {
             returnBook_Btn.setDisable(false);
         }
-        if(!bool){
-            Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
-        }
+        
     }
 
     @FXML
     public void returnBook(MouseEvent event) {
-        if(booksEntity!=null){
-            BookDetailsEntity bookDetailsEntity=new BookDetailsEntity();
-            bookDetailsEntity=booksEntity.getBookDetailsEntity();
-            String bookTitle=bookDetailsEntity.getBookName();
-            String bookEdition=bookDetailsEntity.getEdition();
-            String bookAuthor=bookDetailsEntity.getAuthor();
-            //String subjectCategory=bookDetailsEntity.getSubjectCategory();
-            Boolean boolean1=openWindow.openConfirmation("Warning", "Do you want to return the Selected Book?"+ "\n"+"Book Name: "+bookTitle+"\n"+
-            "Book Edition: "+bookEdition+"\n"+"Book Author"+bookAuthor);
-            if(boolean1){
+        if (booksEntity != null) {
+            BookDetailsEntity bookDetailsEntity = new BookDetailsEntity();
+            bookDetailsEntity = booksEntity.getBookDetailsEntity();
+            String bookTitle = bookDetailsEntity.getBookName();
+            String bookEdition = bookDetailsEntity.getEdition();
+            String bookAuthor = bookDetailsEntity.getAuthor();
+            // String subjectCategory=bookDetailsEntity.getSubjectCategory();
+            Boolean boolean1 = openWindow.openConfirmation("Warning",
+                    "Do you want to return the Selected Book?" + "\n" + "Book Name: " + bookTitle + "\n" +
+                            "Book Edition: " + bookEdition + "\n" + "Book Author: " + bookAuthor);
+            if (boolean1) {
                 Stu_BooksDisplay_Table.getItems().remove(booksEntity);
                 booksEntity.setStatus("Available");
                 booksEntity.setStudent(null);
                 booksService.saveReturningBook(booksEntity);
             }
-        }
-        else{
+        } else {
             openWindow.openDialogue("Info", "Please select any of the reocrd(s) to perform return option.");
         }
+        //Added this to clear the selection from the table and reset the return button to disable
+        Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
+        returnBook_Btn.setDisable(true);
     }
 }
