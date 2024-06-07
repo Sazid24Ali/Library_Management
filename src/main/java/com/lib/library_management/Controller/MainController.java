@@ -229,6 +229,7 @@ public class MainController {
         defaultSettings();
         Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         openWindow.openScene("AppendBooks", "Append New Books ", primaryStage);
+        
     }
 
     @FXML
