@@ -222,6 +222,9 @@ public class MainController {
 
     @FXML
     void addNewBook(ActionEvent event) {
+        defaultSettings();
+        Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        openWindow.openScene("AddNewBooks", "Add New Books ", primaryStage);
 
     }
 
@@ -363,6 +366,9 @@ public class MainController {
 
     @FXML
     void removeBooks(ActionEvent event) {
+        defaultSettings();
+        Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        openWindow.openScene("RemoveRecords", "Remove Books ", primaryStage);
 
     }
 

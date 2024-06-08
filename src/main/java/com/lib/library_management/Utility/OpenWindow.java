@@ -35,8 +35,8 @@ public class OpenWindow {
         stage.setMinWidth(minWidth);
         stage.setMinHeight(minHeight);
 
-        stage.setMaxWidth(minWidth);
-        stage.setMaxHeight(minHeight);
+        // stage.setMaxWidth(minWidth);
+        // stage.setMaxHeight(minHeight);
 
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(parent);
@@ -67,6 +67,9 @@ public class OpenWindow {
             issueController controller = loader.getController();
             controller.setRollNo(RollNo);
 
+            // Remove this comments if we want the issue book window size to be  not fully maximized
+            // stage.setMaxWidth(650);
+            // stage.setMaxHeight(350);
             stage.show();
 
         } catch (Exception e) {
@@ -84,14 +87,14 @@ public class OpenWindow {
         alert.showAndWait();
 
     }
-    public boolean openConfirmation(String title,String message){
+
+    public boolean openConfirmation(String title, String message) {
         // ButtonType Yes = new ButtonType("Yes",);
-        Alert alert= new Alert(Alert.AlertType.CONFIRMATION,
-        message,ButtonType.YES,ButtonType.NO
-        );
-        
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                message, ButtonType.YES, ButtonType.NO);
+
         Optional<ButtonType> result = alert.showAndWait();
-        if(result.get() == ButtonType.YES){
+        if (result.get() == ButtonType.YES) {
             return true;
         }
 

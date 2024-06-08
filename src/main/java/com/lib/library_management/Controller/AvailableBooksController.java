@@ -16,10 +16,12 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 
 @Component
 public class AvailableBooksController {
@@ -73,6 +75,40 @@ public class AvailableBooksController {
 
     private FilteredList<BookDetailsEntity> filteredList;
 
+    public class CustomHeightTableCell<S, T> extends TableCell<S, T> {
+        private static final double DEFAULT_HEIGHT = 5.0; // Adjust this value as needed
+        private static final int CHAR_LIMIT = 30; // Number of characters after which to insert a new line
+
+        @Override
+        protected void updateItem(T item, boolean empty) {
+            super.updateItem(item, empty);
+
+            if (item == null || empty) {
+                setText(null);
+                setGraphic(null);
+                setPrefHeight(USE_COMPUTED_SIZE);
+            } else {
+                String text = item.toString();
+                text = insertNewLines(text, CHAR_LIMIT);
+                Text wrappedText = new Text(text);
+                wrappedText.wrappingWidthProperty().bind(getTableColumn().widthProperty().subtract(10));
+                setGraphic(wrappedText);
+                setPrefHeight(DEFAULT_HEIGHT + wrappedText.getLayoutBounds().getHeight());
+            }
+        }
+
+        private String insertNewLines(String text, int limit) {
+            StringBuilder sb = new StringBuilder(text);
+            int i = limit;
+            while (i < sb.length()) {
+                sb.insert(i, "\n");
+                i += limit + 1; // Move the index to the next limit position
+            }
+            return sb.toString();
+        }
+    }
+
+    @FXML
     public void initialize() {
         // message to be displayed when the table is empty
         DisplayAvailBooks_Table.setPlaceholder(new Label("Requested Data is Not Available "));
@@ -92,7 +128,20 @@ public class AvailableBooksController {
         publishYearColumn.setCellValueFactory(new PropertyValueFactory<>("publishing_year"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-
+        // Apply custom TableCell to columns
+        bookCodeColumn.setCellFactory(column -> new CustomHeightTableCell<>());
+        bookNameColumn.setCellFactory(column -> new CustomHeightTableCell<>());
+        authorColumn.setCellFactory(column -> new CustomHeightTableCell<>());
+        editionColumn.setCellFactory(column -> new CustomHeightTableCell<>());
+        subjectCategoryColumn.setCellFactory(column -> new CustomHeightTableCell<>());
+        totalBooksColumn.setCellFactory(column -> new CustomHeightTableCell<>());
+        availableBooksColumn.setCellFactory(column -> new CustomHeightTableCell<>());
+        borrowedBooksColumn.setCellFactory(column -> new CustomHeightTableCell<>());
+        bookIDsColumn.setCellFactory(column -> new CustomHeightTableCell<>());
+        pagesColumn.setCellFactory(column -> new CustomHeightTableCell<>());
+        placeAndpublisherColumn.setCellFactory(column -> new CustomHeightTableCell<>());
+        publishYearColumn.setCellFactory(column -> new CustomHeightTableCell<>());
+        priceColumn.setCellFactory(column -> new CustomHeightTableCell<>());
         loadBookData();
         setupFiltering();
     }

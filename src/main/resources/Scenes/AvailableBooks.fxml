@@ -5,40 +5,40 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="510.0" minWidth="1050.0" pickOnBounds="false" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lib.library_management.Controller.AvailableBooksController">
-   <children>
-      <VBox prefHeight="504.0" prefWidth="1050.0" spacing="20.0">
+
+<BorderPane minHeight="520.0" minWidth="860.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lib.library_management.Controller.AvailableBooksController">
+   <top>
+      <Label fx:id="AvailableBooks_Label" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pickOnBounds="false" text="Available Books" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
+   </top>
+   <center>
+      <VBox BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="AvailableBooks_Label" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pickOnBounds="false" text="Available Books">
-               <font>
-                  <Font name="System Bold" size="25.0" />
-               </font>
-            </Label>
-            <HBox alignment="CENTER_LEFT" spacing="10.0">
+            <HBox alignment="CENTER_LEFT" fillHeight="false" spacing="25.0">
                <children>
-                  <Label fx:id="Search_AvailBooks_Label" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="18.0" prefWidth="71.0" text="SEARCH">
+                  <Label fx:id="Search_AvailBooks_Label" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="108.0" text="SEARCH" HBox.hgrow="NEVER">
                      <font>
-                        <Font name="System Bold" size="16.0" />
+                        <Font name="System Bold" size="20.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="75.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="Search_AvailBooks_TextField" />
+                  <TextField fx:id="Search_AvailBooks_TextField" prefHeight="38.0" prefWidth="229.0" />
                </children>
                <padding>
-                  <Insets bottom="5.0" top="5.0" />
+                  <Insets bottom="10.0" top="10.0" />
                </padding>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
             </HBox>
-            <TableView fx:id="DisplayAvailBooks_Table" prefHeight="382.0" prefWidth="1200.0" tableMenuButtonVisible="true">
+            <TableView fx:id="DisplayAvailBooks_Table" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="bookCodeColumn" editable="false" minWidth="2.0" prefWidth="79.2000053524971" text="Book Code" />
                   <TableColumn fx:id="bookNameColumn" editable="false" prefWidth="151.99998474121094" text="Book Name" />
@@ -48,7 +48,7 @@
                   <TableColumn fx:id="totalBooksColumn" editable="false" prefWidth="76.7999267578125" text="Total Books" />
                   <TableColumn fx:id="availableBooksColumn" editable="false" prefWidth="69.60009765625" text="Available " />
                   <TableColumn fx:id="borrowedBooksColumn" editable="false" prefWidth="81.5999755859375" text="Borrowed" />
-                  <TableColumn fx:id="bookIDsColumn" editable="false" prefWidth="75.0" text="Books Ids" visible="false" />
+                  <TableColumn fx:id="bookIDsColumn" editable="false" prefWidth="75.0" text="Books Ids" />
                   <TableColumn fx:id="pagesColumn" prefWidth="75.0" text="Pages" visible="false" />
                   <TableColumn fx:id="placeAndpublisherColumn" prefWidth="75.0" text="Place And Publisher" visible="false" />
                   <TableColumn fx:id="publishYearColumn" prefWidth="75.0" text="Year of Publish" visible="false" />
@@ -60,8 +60,11 @@
             </TableView>
          </children>
          <padding>
-            <Insets bottom="20.0" left="25.0" right="25.0" top="10.0" />
+            <Insets bottom="25.0" left="25.0" right="25.0" />
          </padding>
       </VBox>
-   </children>
-</AnchorPane>
+   </center>
+   <padding>
+      <Insets bottom="20.0" left="7.0" />
+   </padding>
+</BorderPane>

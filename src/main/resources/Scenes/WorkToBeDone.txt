@@ -1,8 +1,8 @@
 Main screen -- Sazid ( Done )
 Issue Book  -- Partheev (Done)
 Available Books -- Sazid (Done)
-Add new Book
-Append Books -- Partheev(Done but changes expected)
-Remove Books
+Add new Book -- Sindhu
+Append Books -- Partheev (Done but changes expected)
+Remove Books -- Sindhu
 
 Multi purpose Ui(To show the success or confirmation or unable to transact thing)

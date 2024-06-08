@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 
 public class javafx_main extends Application {
 
-    
     private ConfigurableApplicationContext context;
 
     @Override
@@ -34,8 +33,8 @@ public class javafx_main extends Application {
         primaryStage.setMinWidth(minWidth);
         primaryStage.setMinHeight(minHeight);
 
-        primaryStage.setMaxWidth(minWidth);
-        primaryStage.setMaxHeight(minHeight);
+        // primaryStage.setMaxWidth(minWidth);
+        // primaryStage.setMaxHeight(minHeight);
 
         primaryStage.setTitle("Main Screen");
         primaryStage
