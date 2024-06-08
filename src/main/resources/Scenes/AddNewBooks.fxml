@@ -12,13 +12,19 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="561.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller=" com.lib.library_management.Controller.AddNewBooksController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+   prefHeight="561.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21"
+   xmlns:fx="http://javafx.com/fxml/1"
+   fx:controller="com.lib.library_management.Controller.AddNewBooksController">
    <children>
-      <VBox layoutX="156.8" layoutY="14.0" prefHeight="400.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox layoutX="156.8" layoutY="14.0" prefHeight="400.0" prefWidth="500.0"
+         AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+         AnchorPane.topAnchor="0.0">
          <children>
             <StackPane layoutX="136.0" layoutY="22.0" prefHeight="57.0" prefWidth="202.0">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="36.0" stroke="BLACK" strokeType="INSIDE" width="130.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="36.0"
+                     stroke="BLACK" strokeType="INSIDE" width="130.0" />
                   <Label text="ADD NEW BOOK">
                      <font>
                         <Font name="System Bold" size="14.0" />
@@ -28,7 +34,8 @@
             </StackPane>
             <HBox prefHeight="0.0" prefWidth="475.0">
                <children>
-                  <Label layoutX="42.0" layoutY="84.0" prefHeight="28.0" prefWidth="201.0" text="Book Code">
+                  <Label layoutX="42.0" layoutY="84.0" prefHeight="28.0" prefWidth="201.0"
+                     text="Book Code">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -36,7 +43,8 @@
                         <Insets left="50.0" />
                      </padding>
                   </Label>
-                  <TextField fx:id="tfbookcode" layoutX="245.0" layoutY="84.0" prefHeight="26.0" prefWidth="273.0" />
+                  <TextField fx:id="tfbookcode" layoutX="245.0" layoutY="84.0" prefHeight="26.0"
+                     prefWidth="273.0" />
                </children>
                <padding>
                   <Insets top="20.0" />
@@ -44,7 +52,8 @@
             </HBox>
             <HBox layoutX="10.0" layoutY="72.0" prefHeight="0.0" prefWidth="475.0">
                <children>
-                  <Label layoutX="42.0" layoutY="84.0" prefHeight="28.0" prefWidth="201.0" text="Book Name">
+                  <Label layoutX="42.0" layoutY="84.0" prefHeight="28.0" prefWidth="201.0"
+                     text="Book Name">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -52,7 +61,8 @@
                         <Insets left="50.0" />
                      </padding>
                   </Label>
-                  <TextField fx:id="tfbookname" layoutX="245.0" layoutY="84.0" prefHeight="26.0" prefWidth="273.0" />
+                  <TextField fx:id="tfbookname" layoutX="245.0" layoutY="84.0" prefHeight="26.0"
+                     prefWidth="273.0" />
                </children>
                <padding>
                   <Insets top="20.0" />
@@ -60,7 +70,8 @@
             </HBox>
             <HBox layoutX="10.0" layoutY="118.0" prefHeight="0.0" prefWidth="475.0">
                <children>
-                  <Label layoutX="42.0" layoutY="84.0" prefHeight="28.0" prefWidth="201.0" text="Author">
+                  <Label layoutX="42.0" layoutY="84.0" prefHeight="28.0" prefWidth="201.0"
+                     text="Author">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -68,7 +79,8 @@
                         <Insets left="50.0" />
                      </padding>
                   </Label>
-                  <TextField fx:id="tfAuthor" layoutX="245.0" layoutY="84.0" prefHeight="26.0" prefWidth="273.0" />
+                  <TextField fx:id="tfAuthor" layoutX="245.0" layoutY="84.0" prefHeight="26.0"
+                     prefWidth="273.0" />
                </children>
                <padding>
                   <Insets top="20.0" />
@@ -76,7 +88,8 @@
             </HBox>
             <HBox layoutX="10.0" layoutY="164.0" prefHeight="0.0" prefWidth="475.0">
                <children>
-                  <Label layoutX="42.0" layoutY="84.0" prefHeight="28.0" prefWidth="201.0" text="Subject Category">
+                  <Label layoutX="42.0" layoutY="84.0" prefHeight="28.0" prefWidth="201.0"
+                     text="Subject Category">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -84,7 +97,8 @@
                         <Insets left="50.0" />
                      </padding>
                   </Label>
-                  <TextField fx:id="tfsubjectcategory" layoutX="245.0" layoutY="84.0" prefHeight="26.0" prefWidth="273.0" />
+                  <TextField fx:id="tfsubjectcategory" layoutX="245.0" layoutY="84.0"
+                     prefHeight="26.0" prefWidth="273.0" />
                </children>
                <padding>
                   <Insets top="20.0" />
@@ -92,7 +106,8 @@
             </HBox>
             <HBox layoutX="10.0" layoutY="209.0" prefHeight="0.0" prefWidth="475.0">
                <children>
-                  <Label layoutX="42.0" layoutY="84.0" prefHeight="28.0" prefWidth="201.0" text="Edition">
+                  <Label layoutX="42.0" layoutY="84.0" prefHeight="28.0" prefWidth="201.0"
+                     text="Edition">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -100,7 +115,8 @@
                         <Insets left="50.0" />
                      </padding>
                   </Label>
-                  <TextField fx:id="tfedition" layoutX="245.0" layoutY="84.0" prefHeight="26.0" prefWidth="273.0" />
+                  <TextField fx:id="tfedition" layoutX="245.0" layoutY="84.0" prefHeight="26.0"
+                     prefWidth="273.0" />
                </children>
                <padding>
                   <Insets top="20.0" />
@@ -108,7 +124,8 @@
             </HBox>
             <HBox layoutX="10.0" layoutY="255.0" prefHeight="0.0" prefWidth="475.0">
                <children>
-                  <Label layoutX="42.0" layoutY="84.0" prefHeight="28.0" prefWidth="201.0" text="Place and Publisher">
+                  <Label layoutX="42.0" layoutY="84.0" prefHeight="28.0" prefWidth="201.0"
+                     text="Place and Publisher">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -116,7 +133,8 @@
                         <Insets left="50.0" />
                      </padding>
                   </Label>
-                  <TextField fx:id="tfplaceandpublisher" layoutX="245.0" layoutY="84.0" prefHeight="26.0" prefWidth="273.0" />
+                  <TextField fx:id="tfplaceandpublisher" layoutX="245.0" layoutY="84.0"
+                     prefHeight="26.0" prefWidth="273.0" />
                </children>
                <padding>
                   <Insets top="20.0" />
@@ -124,7 +142,8 @@
             </HBox>
             <HBox layoutX="10.0" layoutY="300.0" prefHeight="0.0" prefWidth="475.0">
                <children>
-                  <Label layoutX="42.0" layoutY="84.0" prefHeight="28.0" prefWidth="201.0" text="Year">
+                  <Label layoutX="42.0" layoutY="84.0" prefHeight="28.0" prefWidth="201.0"
+                     text="Year">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -132,7 +151,8 @@
                         <Insets left="50.0" />
                      </padding>
                   </Label>
-                  <TextField fx:id="tfyear" layoutX="245.0" layoutY="84.0" prefHeight="26.0" prefWidth="273.0" />
+                  <TextField fx:id="tfyear" layoutX="245.0" layoutY="84.0" prefHeight="26.0"
+                     prefWidth="273.0" />
                </children>
                <padding>
                   <Insets top="20.0" />
@@ -140,7 +160,8 @@
             </HBox>
             <HBox layoutX="10.0" layoutY="346.0" prefHeight="0.0" prefWidth="475.0">
                <children>
-                  <Label layoutX="42.0" layoutY="84.0" prefHeight="28.0" prefWidth="201.0" text="Pages">
+                  <Label layoutX="42.0" layoutY="84.0" prefHeight="28.0" prefWidth="201.0"
+                     text="Pages">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -148,7 +169,8 @@
                         <Insets left="50.0" />
                      </padding>
                   </Label>
-                  <TextField fx:id="tfpages" layoutX="245.0" layoutY="84.0" prefHeight="26.0" prefWidth="273.0" />
+                  <TextField fx:id="tfpages" layoutX="245.0" layoutY="84.0" prefHeight="26.0"
+                     prefWidth="273.0" />
                </children>
                <padding>
                   <Insets top="20.0" />
@@ -156,7 +178,8 @@
             </HBox>
             <HBox layoutX="10.0" layoutY="392.0" prefHeight="0.0" prefWidth="475.0">
                <children>
-                  <Label layoutX="42.0" layoutY="84.0" prefHeight="28.0" prefWidth="201.0" text="Price">
+                  <Label layoutX="42.0" layoutY="84.0" prefHeight="28.0" prefWidth="201.0"
+                     text="Price">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -164,13 +187,15 @@
                         <Insets left="50.0" />
                      </padding>
                   </Label>
-                  <TextField fx:id="tfprice" layoutX="245.0" layoutY="84.0" prefHeight="26.0" prefWidth="273.0" />
+                  <TextField fx:id="tfprice" layoutX="245.0" layoutY="84.0" prefHeight="26.0"
+                     prefWidth="273.0" />
                </children>
                <padding>
                   <Insets top="20.0" />
                </padding>
             </HBox>
-            <Button fx:id="save" layoutX="171.0" layoutY="329.0" mnemonicParsing="false" onAction="#onclicksave" prefHeight="35.0" prefWidth="173.0" text="SAVE">
+            <Button fx:id="save" layoutX="171.0" layoutY="329.0" mnemonicParsing="false"
+               onAction="#onclicksave" prefHeight="35.0" prefWidth="173.0" text="SAVE">
                <font>
                   <Font name="System Bold Italic" size="12.0" />
                </font>
