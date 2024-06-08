@@ -31,6 +31,8 @@ public class BookDetailsEntity {
     Long borrowedBooks;
     @Transient
     ArrayList<String> bookIds;
+    @Transient
+    ArrayList<String> borrowedStudents;
 
 
 }
