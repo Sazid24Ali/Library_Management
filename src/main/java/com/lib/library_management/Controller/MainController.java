@@ -391,7 +391,14 @@ public class MainController {
                 + Student_RollNo_Field.getText();
         Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         openWindow.openScene("Issue", "Issue Books", primaryStage, RollNo);
-        
+
+        setIssuedbooks(RollNo);
+        // Added this to clear the selection from the table and reset the return button
+        // to disable
+        Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
+        returnBook_Btn.setDisable(true);
+
+
     }
 
     @FXML

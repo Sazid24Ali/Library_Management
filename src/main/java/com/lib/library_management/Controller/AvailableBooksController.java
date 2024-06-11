@@ -62,6 +62,8 @@ public class AvailableBooksController {
     @FXML
     private TableColumn<BookDetailsEntity, ArrayList<String>> bookIDsColumn;
     @FXML
+    private TableColumn<BookDetailsEntity, ArrayList<String>> borrowedStudentsColumn;
+    @FXML
     private TableColumn<BookDetailsEntity, Integer> pagesColumn;
 
     @FXML
@@ -77,7 +79,7 @@ public class AvailableBooksController {
 
     public class CustomHeightTableCell<S, T> extends TableCell<S, T> {
         private static final double DEFAULT_HEIGHT = 5.0; // Adjust this value as needed
-        private static final int CHAR_LIMIT = 30; // Number of characters after which to insert a new line
+        private static final int CHAR_LIMIT = 32; // Number of characters after which to insert a new line
 
         @Override
         protected void updateItem(T item, boolean empty) {
@@ -99,6 +101,15 @@ public class AvailableBooksController {
 
         private String insertNewLines(String text, int limit) {
             StringBuilder sb = new StringBuilder(text);
+            if (sb.charAt(0) == '[') {
+                for (int i = 0; i < sb.length(); i++) {
+                    if (sb.charAt(i) == ',') {
+                        sb.insert(i + 1, '\n');
+                    }
+
+                }
+                return sb.toString();
+            }
             int i = limit;
             while (i < sb.length()) {
                 sb.insert(i, "\n");
@@ -127,6 +138,7 @@ public class AvailableBooksController {
         placeAndpublisherColumn.setCellValueFactory(new PropertyValueFactory<>("place_publisher"));
         publishYearColumn.setCellValueFactory(new PropertyValueFactory<>("publishing_year"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        borrowedStudentsColumn.setCellValueFactory(new PropertyValueFactory<>("borrowedStudents"));
 
         // Apply custom TableCell to columns
         bookCodeColumn.setCellFactory(column -> new CustomHeightTableCell<>());
@@ -142,6 +154,7 @@ public class AvailableBooksController {
         placeAndpublisherColumn.setCellFactory(column -> new CustomHeightTableCell<>());
         publishYearColumn.setCellFactory(column -> new CustomHeightTableCell<>());
         priceColumn.setCellFactory(column -> new CustomHeightTableCell<>());
+        borrowedStudentsColumn.setCellFactory(column -> new CustomHeightTableCell<>());
         loadBookData();
         setupFiltering();
     }
@@ -156,6 +169,7 @@ public class AvailableBooksController {
             book.setAvailableBooks(booksService.countAvailableBooks(bookCode));
             book.setBorrowedBooks(booksService.countBorrowedBooks(bookCode));
             book.setBookIds(booksService.getBookIds(bookCode));
+            book.setBorrowedStudents(booksService.getBorrowedStudents(bookCode));
         });
 
         filteredList = new FilteredList<>(observableBookList, p -> true);
@@ -182,7 +196,9 @@ public class AvailableBooksController {
                         || (book.getEdition() != null && book.getEdition().toLowerCase().contains(lowerCaseFilter))
                         || (book.getSubjectCategory() != null
                                 && book.getSubjectCategory().toLowerCase().contains(lowerCaseFilter))
-                        || (book.getBookIds() != null && book.getBookIds().toString().contains(lowerCaseFilter));
+                        || (book.getBookIds() != null && book.getBookIds().toString().contains(lowerCaseFilter))
+                        || (book.getBorrowedStudents() != null
+                                && book.getBorrowedStudents().toString().contains(lowerCaseFilter));
                 // the below line are commented Because we don't want to filter the books based
                 // on the Number of books available , borrowed and available.
                 // || (book.getTotalBooks() != null &&
