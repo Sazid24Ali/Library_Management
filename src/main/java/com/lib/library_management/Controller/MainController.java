@@ -138,6 +138,18 @@ public class MainController {
     @FXML
     private TableColumn<BooksEntity, String> editionColumn;
 
+    @FXML
+    private TableColumn<BooksEntity, Integer> pagesColumn;
+
+    @FXML
+    private TableColumn<BooksEntity, String> placeAndPublisherColumn;
+
+    @FXML
+    private TableColumn<BooksEntity, Integer> priceColumn;
+
+    @FXML
+    private TableColumn<BooksEntity, Integer> publishingYearColumn;
+
     void VisibilitySetter(boolean value) {
         Stu_Add_Btn.setVisible(!value);
         Stu_Remove_Btn.setVisible(value);
@@ -195,6 +207,26 @@ public class MainController {
         });
 
         DateOfAllotmentColumn.setCellValueFactory(new PropertyValueFactory<>("dateOfAllotment"));
+
+        pagesColumn.setCellValueFactory(cellData -> {
+            BooksEntity booksEntity = cellData.getValue();
+            return new SimpleIntegerProperty(booksEntity.getBookDetailsEntity().getPages()).asObject();
+        });
+
+        placeAndPublisherColumn.setCellValueFactory(cellData -> {
+            BooksEntity booksEntity = cellData.getValue();
+            return new SimpleStringProperty(booksEntity.getBookDetailsEntity().getPlace_publisher());
+        });
+
+        priceColumn.setCellValueFactory(cellData -> {
+            BooksEntity booksEntity = cellData.getValue();
+            return new SimpleIntegerProperty(booksEntity.getBookDetailsEntity().getPrice()).asObject();
+        });
+
+        publishingYearColumn.setCellValueFactory(cellData -> {
+            BooksEntity booksEntity = cellData.getValue();
+            return new SimpleIntegerProperty(booksEntity.getBookDetailsEntity().getPublishing_year()).asObject();
+        });
 
         // To get the default select "Select the Course" when any admin btn is clicked
         Student_Course_CBox.setButtonCell(new ListCell<>() {
@@ -312,9 +344,7 @@ public class MainController {
         List<BooksEntity> booksData = booksService.getBooksFromStudentRollNo(RollNo);
         // System.out.println(booksData);
         ObservableList<BooksEntity> observableBooksList = FXCollections.observableArrayList(booksData);
-
         Stu_BooksDisplay_Table.setItems(observableBooksList);
-
     }
 
     @FXML
@@ -361,7 +391,7 @@ public class MainController {
                 + Student_RollNo_Field.getText();
         Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         openWindow.openScene("Issue", "Issue Books", primaryStage, RollNo);
-
+        
     }
 
     @FXML
@@ -433,5 +463,14 @@ public class MainController {
         // to disable
         Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
         returnBook_Btn.setDisable(true);
+    }
+
+    public void refreshTable() {
+        String course = Student_Course_CBox.getValue();
+        String RollNo = 1007 + Student_Year_Field.getText() + course.substring(1, 4)
+        + Student_RollNo_Field.getText();
+        setIssuedbooks(RollNo);
+        Stu_BooksDisplay_Table.refresh();
+        //Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
     }
 }

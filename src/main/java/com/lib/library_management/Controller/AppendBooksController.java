@@ -75,6 +75,18 @@ public class AppendBooksController {
     private TableColumn<BookDetailsEntity, Integer> BookCode;
 
     @FXML
+    private TableColumn<BookDetailsEntity, Integer> pagesColumn;
+
+    @FXML
+    private TableColumn<BookDetailsEntity, String> placeAndPublisherColumn;
+
+    @FXML
+    private TableColumn<BookDetailsEntity, Integer> priceColumn;
+
+    @FXML
+    private TableColumn<BookDetailsEntity, Integer> publishingYearColumn;
+
+    @FXML
     void initialize() {
         tableToShowBook.setEditable(false);
         inputOfBookIds.setDisable(true);
@@ -84,6 +96,10 @@ public class AppendBooksController {
         edition.setCellValueFactory(new PropertyValueFactory<BookDetailsEntity, String>("Edition"));
         BookCode.setCellValueFactory(new PropertyValueFactory<BookDetailsEntity, Integer>("BookCode"));
         sub_category.setCellValueFactory(new PropertyValueFactory<BookDetailsEntity, String>("SubjectCategory"));
+        pagesColumn.setCellValueFactory(new PropertyValueFactory<BookDetailsEntity, Integer>("pages"));
+        placeAndPublisherColumn.setCellValueFactory(new PropertyValueFactory<BookDetailsEntity, String>("place_publisher"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<BookDetailsEntity, Integer>("price"));
+        publishingYearColumn.setCellValueFactory(new PropertyValueFactory<BookDetailsEntity, Integer>("publishing_year"));
         // For Inter Only input
         utilityClass.setIntegerLimiter(bookCode, 5);
 
@@ -115,7 +131,7 @@ public class AppendBooksController {
 
     @FXML
     void display(BookDetailsEntity bDE) {
-        final ObservableList<BookDetailsEntity> bDetails = FXCollections.observableArrayList(bDE);
+        ObservableList<BookDetailsEntity> bDetails = FXCollections.observableArrayList(bDE);
         tableToShowBook.setItems(bDetails);
         inputOfBookIds.setDisable(false);
         saveButtonForScene.setDisable(false);

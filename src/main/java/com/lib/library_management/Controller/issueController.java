@@ -52,7 +52,8 @@ public class issueController {
 
     @FXML
     void addBookToTable(MouseEvent event) {
-
+         MainController mainController = new MainController();
+         mainController.refreshTable();
     }
 
 }
