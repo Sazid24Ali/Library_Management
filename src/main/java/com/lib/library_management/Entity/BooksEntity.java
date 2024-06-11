@@ -28,6 +28,4 @@ public class BooksEntity {
     StudentEntity student;
 
     private LocalDate dateOfAllotment;
-
-    
 }
