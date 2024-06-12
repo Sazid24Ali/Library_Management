@@ -16,6 +16,7 @@ public class StudentEntity {
     String PhoneNumber;
     String Branch;
     Year YearOfPassing;
+    String facultyPosition;
 
     public StudentEntity() {
     }

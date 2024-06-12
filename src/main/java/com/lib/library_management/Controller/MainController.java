@@ -30,6 +30,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import java.time.Year;
 
@@ -44,6 +45,7 @@ public class MainController {
         courseMap.put(231, "(505) Pure Maths");
         courseMap.put(123, "(506) Applied Maths");
         courseMap.put(405, "(586) Maths With CS");
+        courseMap.put(393, "Faculty");
     }
     // To open New Windows
     @Autowired
@@ -112,6 +114,45 @@ public class MainController {
     private TextField Student_Year_Field;
 
     @FXML
+    private Button Fact_Add_Btn;
+
+    @FXML
+    private TextField Fact_Dept_La_Field;
+
+    @FXML
+    private Label Fact_Dept_Label;
+
+    @FXML
+    private Button Fact_EditDetails_Btn;
+
+    @FXML
+    private TextField Fact_Name_La_Field;
+
+    @FXML
+    private Label Fact_Name_Label;
+
+    @FXML
+    private TextField Fact_PhNo_La_Field;
+
+    @FXML
+    private Label Fact_PhNo_Label;
+
+    @FXML
+    private Label Fact_Position_Label;
+
+    @FXML
+    private Button Fact_Remove_Btn;
+
+    @FXML
+    private TextField Fact_Position_La_Field;
+
+    @FXML
+    private GridPane FacultyPane;
+
+    @FXML
+    private GridPane StudentPane;
+
+    @FXML
     private Button issueBook_Btn;
 
     @FXML
@@ -168,6 +209,7 @@ public class MainController {
     void defaultSettings() {
         VisibilitySetter(false);
         Stu_Add_Btn.setVisible(false);
+        Stu_Add_Btn.setText("Add Student");
         Student_RollNo_Field.clear();
         Student_Year_Field.clear();
         Student_Course_CBox.getSelectionModel().clearSelection();
@@ -179,6 +221,8 @@ public class MainController {
         Stu_Name_La_Field.setEditable(false);
         Stu_PhNo_La_Field.setEditable(false);
         Stu_YOP_La_Field.setEditable(false);
+        StudentPane.setVisible(false);
+        FacultyPane.setVisible(false);
 
     }
 
@@ -187,6 +231,7 @@ public class MainController {
         // Mapping the Table Columns to the BooksEntity
         Stu_BooksDisplay_Table.setPlaceholder(new Label("No Books Taken "));
         Stu_BooksDisplay_Table.setEditable(true);
+        // StudentPane.setVisible(false);
 
         bookCodeColumn.setCellValueFactory(cellData -> {
             BooksEntity booksEntity = cellData.getValue();
@@ -253,6 +298,26 @@ public class MainController {
     }
 
     @FXML
+    void setPane(ActionEvent event) {
+        // System.out.println("Got in here ");
+        String scope = Student_Course_CBox.getValue();
+        if (scope == "Faculty") {
+            Student_Year_Field.clear();
+            Student_RollNo_Field.clear();
+            Student_Year_Field.setDisable(true);
+            Student_RollNo_Field.setPromptText("CE ID");
+        } else {
+            if (Student_RollNo_Field.getLength() == 0) {
+
+            }
+            // Student_Year_Field.clear();
+            // Student_RollNo_Field.clear();
+            Student_Year_Field.setDisable(false);
+            Student_RollNo_Field.setPromptText("Roll No");
+        }
+    }
+
+    @FXML
     void addNewBook(ActionEvent event) {
         defaultSettings();
         Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
@@ -312,21 +377,42 @@ public class MainController {
     }
 
     @FXML
+    void addFaculty(ActionEvent event) {
+
+    }
+
+    @FXML
     void getStudentData(ActionEvent event) {
-        if (Student_Course_CBox.getValue() != null && Student_RollNo_Field.getLength() >= 3
-                && Student_Year_Field.getLength() >= 2) {
-            String course = Student_Course_CBox.getValue();
-            String RollNo = 1007 + Student_Year_Field.getText() + course.substring(1, 4)
-                    + Student_RollNo_Field.getText();
+        String course = Student_Course_CBox.getValue();
+        if (course != null && Student_RollNo_Field.getLength() >= 3) {
+            String RollNo;
+
+            if (course == "Faculty") {
+                RollNo = Student_RollNo_Field.getText();
+                FacultyPane.setVisible(true);
+            } else {
+                // Checking the Year is >=2 indirectly
+                if (Student_Year_Field.getLength() < 2) {
+                    openWindow.openDialogue("Warning", "Enter the Year");
+                    return;
+                }
+                RollNo = 1007 + Student_Year_Field.getText() + course.substring(1, 4)
+                        + Student_RollNo_Field.getText();
+                StudentPane.setVisible(true);
+            }
             StudentEntity data = studentService.getStudentDataByRollNo(RollNo);
             if (data != null) {
                 VisibilitySetter(true);
                 newStudent(false);
                 returnBook_Btn.setDisable(true);
-                // System.out.println("\n\n\n\n" + data.getStudentName());
+                System.out.println("\n\n\n\n" + data.getYearOfPassing());
                 Stu_Name_La_Field.setText(data.getStudentName());
                 Stu_PhNo_La_Field.setText(String.valueOf(data.getPhoneNumber()));
                 Stu_YOP_La_Field.setText(String.valueOf(data.getYearOfPassing()));
+                Fact_Name_La_Field.setText(data.getStudentName());
+                Fact_PhNo_La_Field.setText(String.valueOf(data.getPhoneNumber()));
+                Fact_Position_La_Field.setText(data.getFacultyPosition());
+
                 setIssuedbooks(RollNo);
             } else {
                 openWindow.openDialogue("Information", "Student Details Not Found \n Add Student");
@@ -369,6 +455,7 @@ public class MainController {
         Stu_Remove_Btn.setDisable(value);
         Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
         Stu_BooksDisplay_Table.setDisable(value);
+        Stu_Add_Btn.setText("Save Data");
 
     }
 
@@ -397,7 +484,6 @@ public class MainController {
         // to disable
         Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
         returnBook_Btn.setDisable(true);
-
 
     }
 
@@ -429,6 +515,11 @@ public class MainController {
                         "Student With " + RollNo + " Roll Number Cannot Be removed \nThere are books to be Returned ");
             }
         }
+
+    }
+
+    @FXML
+    void removeFaculty(ActionEvent event) {
 
     }
 
@@ -475,9 +566,9 @@ public class MainController {
     public void refreshTable() {
         String course = Student_Course_CBox.getValue();
         String RollNo = 1007 + Student_Year_Field.getText() + course.substring(1, 4)
-        + Student_RollNo_Field.getText();
+                + Student_RollNo_Field.getText();
         setIssuedbooks(RollNo);
         Stu_BooksDisplay_Table.refresh();
-        //Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
+        // Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
     }
 }
