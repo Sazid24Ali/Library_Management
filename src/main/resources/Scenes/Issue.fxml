@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane minHeight="300.0" minWidth="635.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lib.library_management.Controller.issueController">
    <top>
       <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
@@ -51,7 +50,7 @@
       </VBox>
    </top>
    <center>
-      <TableView accessibleRole="MENU" editable="true" fixedCellSize="3.0" prefHeight="100.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+      <TableView fx:id="Tableviewdemo" accessibleRole="MENU" fixedCellSize="3.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="takenBookId" prefWidth="216.7999496459961" text="Book Id" />
           <TableColumn fx:id="takenBookTitle" prefWidth="216.79998779296875" text="Book Title" />

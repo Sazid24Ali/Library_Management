@@ -12,10 +12,27 @@ import com.lib.library_management.Repository.BookDetailsRepo;
 public class BookDetailsService {
 
     @Autowired
-    private BookDetailsRepo bookDetailsRepository;
+    private final BookDetailsRepo bookDetailsRepository;
+
+    public BookDetailsService(BookDetailsRepo bookDetailsRepository) {
+        this.bookDetailsRepository = bookDetailsRepository;
+    }
 
     public List<BookDetailsEntity> getAllBooks() {
         return bookDetailsRepository.findAll();
     }
 
+    public boolean addBooksData(BookDetailsEntity BooksData) {
+        try {
+            bookDetailsRepository.save(BooksData);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public BookDetailsEntity getBookDetailsEntity(Integer bookId) {
+        return bookDetailsRepository.findById(bookId).get();
+    }
 }

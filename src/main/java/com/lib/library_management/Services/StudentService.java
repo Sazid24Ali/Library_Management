@@ -24,7 +24,7 @@ public class StudentService {
 
     }
 
-    public boolean addStudentData(StudentEntity StudentData){
+    public boolean addStudentData(StudentEntity StudentData) {
         try {
             studentRepo.save(StudentData);
             return true;
@@ -39,11 +39,11 @@ public class StudentService {
         try {
             studentRepo.deleteById(rollNo);
             return data;
-            
+
         } catch (Exception e) {
             return null;
         }
-        
+
     }
 
 }
