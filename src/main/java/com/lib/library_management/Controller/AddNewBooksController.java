@@ -71,16 +71,31 @@ public class AddNewBooksController {
             Integer price = Integer.parseInt(tfprice.getText());
             String place_publisher = tfplaceandpublisher.getText();
             String SubjectCategory = tfsubjectcategory.getText();
-
-            BookDetailsEntity newBookData = new BookDetailsEntity(BookCode, BookName, Author, SubjectCategory,
-                    Edition, pages, place_publisher, publishing_year, price);
-            System.out.println(newBookData);
-
-            if (bookDetailsService.addBooksData(newBookData)) {
-                openWindow.openDialogue("Success", "Book Data Successfully Added: " + newBookData);
-                // Clear fields or perform any other necessary actions
+            tfbookcode.clear();
+            tfAuthor.clear();
+            tfbookname.clear();
+            tfedition.clear();
+            tfpages.clear();
+            tfplaceandpublisher.clear();
+            tfprice.clear();
+            tfsubjectcategory.clear();
+            tfyear.clear();
+            if (bookDetailsService.checkBookCodeIsExist(BookCode)) {
+                openWindow.openDialogue("Warning", " BookCode is Already Exist ");
             } else {
-                openWindow.openDialogue("Error", "Failed to Add Book Data");
+                BookDetailsEntity newBookData = new BookDetailsEntity(BookCode, BookName, Author, SubjectCategory,
+                        Edition, pages, place_publisher, publishing_year, price);
+                if (openWindow.openConfirmation("Add New Book?", "Do you want save the book data?")) {
+                    System.out.println(newBookData);
+                    if (bookDetailsService.addBooksData(newBookData)) {
+                        openWindow.openDialogue("Successful:",
+                                "Successfully Added the Book with the BookName \"" + BookName + "and BookCode \" "
+                                        + BookCode + "");
+                        // Clear fields or perform any other necessary actions
+                    } else {
+                        openWindow.openDialogue("Error", "Failed to Add Book Data");
+                    }
+                }
             }
         } catch (NumberFormatException e) {
             openWindow.openDialogue("Error", "Invalid Input");

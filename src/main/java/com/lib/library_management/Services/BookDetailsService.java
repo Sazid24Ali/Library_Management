@@ -35,4 +35,8 @@ public class BookDetailsService {
     public BookDetailsEntity getBookDetailsEntity(Integer bookId) {
         return bookDetailsRepository.findById(bookId).get();
     }
+
+    public boolean checkBookCodeIsExist(Integer bookcode) {
+        return bookDetailsRepository.existsById(bookcode);
+    }
 }

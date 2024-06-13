@@ -297,7 +297,7 @@ public class MainController {
             }
 
         } else {
-            openWindow.openDialogue("Information", "ENter the Data Correctly");
+            openWindow.openDialogue("Information", "Enter the Data Correctly");
 
         }
 
@@ -398,7 +398,6 @@ public class MainController {
         Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
         returnBook_Btn.setDisable(true);
 
-
     }
 
     @FXML
@@ -475,9 +474,9 @@ public class MainController {
     public void refreshTable() {
         String course = Student_Course_CBox.getValue();
         String RollNo = 1007 + Student_Year_Field.getText() + course.substring(1, 4)
-        + Student_RollNo_Field.getText();
+                + Student_RollNo_Field.getText();
         setIssuedbooks(RollNo);
         Stu_BooksDisplay_Table.refresh();
-        //Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
+        // Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
     }
 }
