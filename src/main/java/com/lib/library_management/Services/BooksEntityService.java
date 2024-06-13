@@ -33,6 +33,10 @@ public class BooksEntityService {
         return booksRepo.getBookIds(bookCode);
     }
 
+    public ArrayList<String> getBorrowedStudents(Integer bookCode) {
+        return booksRepo.getBorrowedStudents(bookCode);
+    }
+
     public List<BooksEntity> getBooksFromStudentRollNo(String RollNo) {
         return booksRepo.findBooksEntitiesByStudent_StudentRollNo(RollNo);
         // booksRepository.f

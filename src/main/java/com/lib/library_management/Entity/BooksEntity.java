@@ -29,12 +29,9 @@ public class BooksEntity {
     StudentEntity student;
 
     private LocalDate dateOfAllotment;
-
-    @Transient
-    String Edition;
     @Transient
     String BookName;
-
-    // Other fields and methods
+    @Transient
+    String Edition;
 
 }

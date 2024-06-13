@@ -52,11 +52,6 @@ public class issueController {
     @FXML
     private TableView<BooksEntity> Tableviewdemo;
 
-    public class CustomHeightTableCell<S, T> extends TableCell<S, T> {
-        private static final double DEFAULT_HEIGHT = 5.0; // Adjust this value as needed
-        private static final int CHAR_LIMIT = 30;
-    }
-
     public void setRollNo(String RollNo) {
         studentId.setText(RollNo);
         studentId.setEditable(false);
@@ -69,10 +64,6 @@ public class issueController {
         takenBookId.setCellValueFactory(new PropertyValueFactory<BooksEntity, Integer>("BookId"));
         takenBookTitle.setCellValueFactory(new PropertyValueFactory<BooksEntity, String>("BookName"));
         takenBookEdition.setCellValueFactory(new PropertyValueFactory<BooksEntity, String>("Edition"));
-
-        takenBookId.setCellFactory(column -> new CustomHeightTableCell<>());
-        takenBookTitle.setCellFactory(column -> new CustomHeightTableCell<>());
-        takenBookEdition.setCellFactory(column -> new CustomHeightTableCell<>());
 
     }
 
@@ -107,7 +98,8 @@ public class issueController {
 
     @FXML
     void addBookToTable(MouseEvent event) {
-
+        MainController mainController = new MainController();
+        mainController.refreshTable();
     }
 
 }
