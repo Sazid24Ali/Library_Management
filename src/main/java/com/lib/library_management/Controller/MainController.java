@@ -192,6 +192,9 @@ public class MainController {
     private TableColumn<BooksEntity, Integer> publishingYearColumn;
 
     void VisibilitySetter(boolean value) {
+        Fact_Add_Btn.setVisible(value);
+        Fact_EditDetails_Btn.setVisible(value);
+        Fact_Remove_Btn.setVisible(value);
         Stu_Add_Btn.setVisible(!value);
         Stu_Remove_Btn.setVisible(value);
         Stu_BooksDisplay_Table.setVisible(value);
@@ -221,7 +224,7 @@ public class MainController {
         Stu_Name_La_Field.setEditable(false);
         Stu_PhNo_La_Field.setEditable(false);
         Stu_YOP_La_Field.setEditable(false);
-        StudentPane.setVisible(false);
+        StudentPane.setVisible(true);
         FacultyPane.setVisible(false);
 
     }
@@ -231,7 +234,6 @@ public class MainController {
         // Mapping the Table Columns to the BooksEntity
         Stu_BooksDisplay_Table.setPlaceholder(new Label("No Books Taken "));
         Stu_BooksDisplay_Table.setEditable(true);
-        // StudentPane.setVisible(false);
 
         bookCodeColumn.setCellValueFactory(cellData -> {
             BooksEntity booksEntity = cellData.getValue();
@@ -306,6 +308,8 @@ public class MainController {
             Student_RollNo_Field.clear();
             Student_Year_Field.setDisable(true);
             Student_RollNo_Field.setPromptText("CE ID");
+            StudentPane.setVisible(false);
+            FacultyPane.setVisible(true);
         } else {
             if (Student_RollNo_Field.getLength() == 0) {
 
@@ -313,7 +317,8 @@ public class MainController {
             // Student_Year_Field.clear();
             // Student_RollNo_Field.clear();
             Student_Year_Field.setDisable(false);
-            Student_RollNo_Field.setPromptText("Roll No");
+            // Student_RollNo_Field.setPromptText("Roll No");
+            defaultSettings();
         }
     }
 
@@ -555,7 +560,7 @@ public class MainController {
                 booksService.saveReturningBook(booksEntity);
             }
         } else {
-            openWindow.openDialogue("Info", "Please select any of the reocrd(s) to perform return option.");
+            openWindow.openDialogue("Info", "Please select any of the record(s) to perform return option.");
         }
         // Added this to clear the selection from the table and reset the return button
         // to disable
