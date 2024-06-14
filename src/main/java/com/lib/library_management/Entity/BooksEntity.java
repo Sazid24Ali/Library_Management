@@ -33,5 +33,11 @@ public class BooksEntity {
     String BookName;
     @Transient
     String Edition;
+    @Transient
+    String SubjectCategory;
+    @Transient
+    Integer BookCode;
+    @Transient
+    String Author;
 
 }

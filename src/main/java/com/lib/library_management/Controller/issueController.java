@@ -40,14 +40,18 @@ public class issueController {
     private TextField studentId;
 
     @FXML
+    private TableColumn<BooksEntity, Integer> takenBookId;
+    @FXML
+    private TableColumn<BooksEntity, String> takenBookTitle;
+    @FXML
+    private TableColumn<BooksEntity, String> Subject_Category;
+    @FXML
+    private TableColumn<BooksEntity, String> takenAuthor;
+    @FXML
     private TableColumn<BooksEntity, String> takenBookEdition;
 
     @FXML
-    private TableColumn<BooksEntity, Integer> takenBookId;
-
-    @FXML
-    private TableColumn<BooksEntity, String> takenBookTitle;
-
+    private TableColumn<BooksEntity, Integer> takenBookCode;
     @FXML
     private TableView<BooksEntity> Tableviewdemo;
 
@@ -63,6 +67,9 @@ public class issueController {
         takenBookId.setCellValueFactory(new PropertyValueFactory<BooksEntity, Integer>("BookId"));
         takenBookTitle.setCellValueFactory(new PropertyValueFactory<BooksEntity, String>("BookName"));
         takenBookEdition.setCellValueFactory(new PropertyValueFactory<BooksEntity, String>("Edition"));
+        takenAuthor.setCellValueFactory(new PropertyValueFactory<BooksEntity, String>("Author"));
+        Subject_Category.setCellValueFactory(new PropertyValueFactory<BooksEntity, String>("SubjectCategory"));
+        takenBookCode.setCellValueFactory(new PropertyValueFactory<BooksEntity, Integer>("BookCode"));
 
     }
 
@@ -80,6 +87,11 @@ public class issueController {
                     BookDetailsEntity details = book.getBookDetailsEntity();
                     book.setBookName(details.getBookName());
                     book.setEdition(details.getEdition());
+                    book.setAuthor(details.getAuthor());
+                    book.setSubjectCategory(details.getSubjectCategory());
+                    book.setBookCode(details.getBookCode());
+                    book.setBookId(bookId);
+
                 });
                 System.out.println(observableBookList);
                 Tableviewdemo.setItems(observableBookList);
