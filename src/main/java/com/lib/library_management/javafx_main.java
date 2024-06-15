@@ -27,9 +27,9 @@ public class javafx_main extends Application {
 
         Parent root = loader.load();
 
-        // MainController controller = loader.getController();
-        // // Pass the primary stage to the controller
-        // controller.setPrimaryStage(primaryStage);
+        MainController controller = loader.getController();
+        // Pass the primary stage to the controller
+        controller.setPrimaryStage(primaryStage);
 
         // Change the Size here for the main screen
         double minWidth = root.minWidth(-1); // Passing -1 to get the computed value

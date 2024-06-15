@@ -21,6 +21,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -192,6 +194,29 @@ public class MainController {
     @FXML
     private TableColumn<BooksEntity, Integer> publishingYearColumn;
 
+    private Stage primaryStage;
+    private boolean isEditing = false;
+
+    // Setter method to set the primary stage
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+
+        // Override the close request
+        this.primaryStage.setOnCloseRequest(event -> {
+            if (isEditing) {
+                // Prevent the window from closing
+                event.consume();
+
+                // Show a warning message
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("Close Prevented");
+                alert.setHeaderText(null);
+                alert.setContentText("You cannot close the window while editing.");
+                alert.showAndWait();
+            }
+        });
+    }
+
     void initialState() {
         // Headers Setting
         Student_RollNo_Field.clear();
@@ -234,6 +259,8 @@ public class MainController {
     }
 
     void VisibilitySetter(boolean value) {
+
+        isEditing = !value;
         Fact_Add_Btn.setVisible(value);
         Fact_EditDetails_Btn.setVisible(value);
         Fact_Remove_Btn.setVisible(value);
@@ -377,7 +404,6 @@ public class MainController {
                 Student_Year_Field.setText(Year);
                 Student_RollNo_Field.setText(RollNo);
             }
-
         }
     }
 
@@ -582,6 +608,8 @@ public class MainController {
     }
 
     private void edit_Fact_Stud(boolean value) {
+        isEditing = value;
+
         issueBook_Btn.setDisable(value);
         returnBook_Btn.setDisable(value);
         Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
