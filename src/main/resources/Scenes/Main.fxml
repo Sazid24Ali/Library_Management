@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -46,7 +47,7 @@
                   <HBox spacing="15.0" style="-fx-border-radius: 20; -fx-border-color: black; -fx-border-width: 2;">
                      <children>
                         <TextField fx:id="Student_Year_Field" prefHeight="35.0" prefWidth="70.0" promptText="Year" HBox.hgrow="SOMETIMES" />
-                        <ComboBox fx:id="Student_Course_CBox" prefHeight="35.0" prefWidth="294.0" promptText="Select the Course" />
+                        <ComboBox fx:id="Student_Course_CBox" onAction="#setPane" prefHeight="35.0" prefWidth="294.0" promptText="Select the Course" />
                         <TextField fx:id="Student_RollNo_Field" onAction="#getStudentData" prefHeight="35.0" prefWidth="98.0" promptText="RollNo" HBox.hgrow="SOMETIMES" />
                         <Button fx:id="Student_Search_Btn" mnemonicParsing="false" onAction="#getStudentData" prefHeight="35.0" prefWidth="128.0" text="Search" />
                      </children>
@@ -56,35 +57,73 @@
                   </HBox>
                </children>
             </HBox>
-            <GridPane alignment="CENTER" hgap="20.0" style="-fx-alignment: center; -fx-border-color: black; -fx-border-width: 2;" vgap="10.0">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="139.20000305175782" minWidth="10.0" prefWidth="116.40003662109376" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.00000000000001" minWidth="10.0" prefWidth="100.59998779296876" />
-                  <ColumnConstraints hgrow="ALWAYS" maxWidth="207.19997558593747" minWidth="10.0" prefWidth="183.3999755859375" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="139.20001220703125" minWidth="10.0" prefWidth="97.00002441406252" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
+            <StackPane>
                <children>
-                  <Label fx:id="Stu_Name_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Student Name" GridPane.columnIndex="1" />
-                  <TextField fx:id="Stu_Name_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" />
-                  <Label fx:id="Stu_PhNo_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Phone Number" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="Stu_PhNo_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="206.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <Label fx:id="Stu_YOP_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Year Of Passing" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField fx:id="Stu_YOP_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <Button fx:id="Stu_Remove_Btn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeStudent" text="Remove Student" GridPane.rowIndex="3" />
-                  <Button fx:id="Stu_Add_Btn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addStudent" text="Add Student" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                  <Button fx:id="Stu_EditDetails_Btn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editStudentData" text="Edit Details" GridPane.columnIndex="3" />
+                  <GridPane fx:id="StudentPane" alignment="CENTER" hgap="20.0" style="-fx-alignment: center; -fx-border-color: black; -fx-border-width: 2;" vgap="10.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="139.20000305175782" minWidth="10.0" prefWidth="116.40003662109376" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.00000000000001" minWidth="10.0" prefWidth="100.59998779296876" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="207.19997558593747" minWidth="10.0" prefWidth="183.3999755859375" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="139.20001220703125" minWidth="10.0" prefWidth="97.00002441406252" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label fx:id="Stu_Name_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Student Name" GridPane.columnIndex="1" />
+                        <TextField fx:id="Stu_Name_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" />
+                        <Label fx:id="Stu_PhNo_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Phone Number" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="Stu_PhNo_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="206.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Label fx:id="Stu_YOP_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Year Of Passing" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="Stu_YOP_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Button fx:id="Stu_Remove_Btn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeStudent" text="Remove Student" visible="false" GridPane.rowIndex="4" />
+                        <Button fx:id="Stu_Add_Btn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addStudent" text="Add Student" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                        <Button fx:id="Stu_EditDetails_Btn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editStudentData" text="Edit Details" visible="false" GridPane.columnIndex="3" />
+                        <Label fx:id="Stu_Dept_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Department" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="Stu_Dept_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </GridPane>
+                  <GridPane fx:id="FacultyPane" alignment="CENTER" hgap="20.0" style="-fx-alignment: center; -fx-border-color: black; -fx-border-width: 2;" vgap="10.0" visible="false">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="139.20000305175782" minWidth="10.0" prefWidth="116.40003662109376" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.00000000000001" minWidth="10.0" prefWidth="100.59998779296876" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="207.19997558593747" minWidth="10.0" prefWidth="183.3999755859375" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="139.20001220703125" minWidth="10.0" prefWidth="97.00002441406252" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label fx:id="Fact_Name_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Faculty Name" GridPane.columnIndex="1" />
+                        <TextField fx:id="Fact_Name_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" />
+                        <Label fx:id="Fact_PhNo_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Phone Number" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="Fact_PhNo_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="206.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Label fx:id="Fact_Position_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Position" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="Fact_Position_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Button fx:id="Fact_Remove_Btn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeFaculty" text="Remove Faculty" visible="false" GridPane.rowIndex="4" />
+                        <Button fx:id="Fact_Add_Btn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addFaculty" text="Add Faculty" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                        <Button fx:id="Fact_EditDetails_Btn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editFacultyData" text="Edit Details" visible="false" GridPane.columnIndex="3" />
+                        <Label fx:id="Fact_Dept_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Department" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="Fact_Dept_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </GridPane>
                </children>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </GridPane>
-            <TableView id="styleForSelection" fx:id="Stu_BooksDisplay_Table" onMouseClicked="#selectedBook" prefHeight="200.0" stylesheets="@styleSheetForCellSelection.css" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+            </StackPane>
+            <TableView id="styleForSelection" fx:id="Stu_BooksDisplay_Table" onMouseClicked="#selectedBook" prefHeight="200.0" stylesheets="@styleSheetForCellSelection.css" tableMenuButtonVisible="true" visible="false" VBox.vgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="bookCodeColumn" editable="false" prefWidth="75.20001602172852" text="Book Code" />
                   <TableColumn fx:id="bookIdColumn" editable="false" prefWidth="84.0" text="Book Id" />
@@ -103,13 +142,13 @@
             </TableView>
             <HBox alignment="BOTTOM_CENTER" spacing="50.0">
                <children>
-                  <Button fx:id="issueBook_Btn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#issueBook" prefHeight="55.0" prefWidth="150.0" text="Issue New Book" textAlignment="CENTER" />
+                  <Button fx:id="issueBook_Btn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#issueBook" prefHeight="55.0" prefWidth="150.0" text="Issue New Book" textAlignment="CENTER" visible="false" />
                   <Region HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets left="25.0" right="25.0" />
                      </HBox.margin>
                   </Region>
-                  <Button fx:id="returnBook_Btn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#returnBook" prefHeight="55.0" prefWidth="150.0" text="Return The Book" textAlignment="CENTER" />
+                  <Button fx:id="returnBook_Btn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#returnBook" prefHeight="55.0" prefWidth="150.0" text="Return The Book" textAlignment="CENTER" visible="false" />
                </children>
                <padding>
                   <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />

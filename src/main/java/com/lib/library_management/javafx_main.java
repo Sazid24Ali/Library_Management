@@ -3,6 +3,8 @@ package com.lib.library_management;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import com.lib.library_management.Controller.MainController;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,6 +26,10 @@ public class javafx_main extends Application {
         loader.setControllerFactory(context::getBean);
 
         Parent root = loader.load();
+
+        MainController controller = loader.getController();
+        // Pass the primary stage to the controller
+        controller.setPrimaryStage(primaryStage);
 
         // Change the Size here for the main screen
         double minWidth = root.minWidth(-1); // Passing -1 to get the computed value
