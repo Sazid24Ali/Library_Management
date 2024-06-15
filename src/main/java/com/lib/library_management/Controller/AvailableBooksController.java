@@ -62,7 +62,7 @@ public class AvailableBooksController {
     @FXML
     private TableColumn<BookDetailsEntity, ArrayList<String>> bookIDsColumn;
     @FXML
-    private TableColumn<BookDetailsEntity, ArrayList<String>> borrowedStudentsColumn;
+    private TableColumn<BookDetailsEntity, ArrayList<String>> borrowedByColumn;
     @FXML
     private TableColumn<BookDetailsEntity, Integer> pagesColumn;
 
@@ -138,7 +138,7 @@ public class AvailableBooksController {
         placeAndpublisherColumn.setCellValueFactory(new PropertyValueFactory<>("place_publisher"));
         publishYearColumn.setCellValueFactory(new PropertyValueFactory<>("publishing_year"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-        borrowedStudentsColumn.setCellValueFactory(new PropertyValueFactory<>("borrowedStudents"));
+        borrowedByColumn.setCellValueFactory(new PropertyValueFactory<>("borrowedStudents"));
 
         // Apply custom TableCell to columns
         bookCodeColumn.setCellFactory(column -> new CustomHeightTableCell<>());
@@ -154,7 +154,7 @@ public class AvailableBooksController {
         placeAndpublisherColumn.setCellFactory(column -> new CustomHeightTableCell<>());
         publishYearColumn.setCellFactory(column -> new CustomHeightTableCell<>());
         priceColumn.setCellFactory(column -> new CustomHeightTableCell<>());
-        borrowedStudentsColumn.setCellFactory(column -> new CustomHeightTableCell<>());
+        borrowedByColumn.setCellFactory(column -> new CustomHeightTableCell<>());
         loadBookData();
         setupFiltering();
     }
