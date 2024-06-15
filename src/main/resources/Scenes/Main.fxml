@@ -80,9 +80,9 @@
                         <TextField fx:id="Stu_PhNo_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="206.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                         <Label fx:id="Stu_YOP_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Year Of Passing" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <TextField fx:id="Stu_YOP_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <Button fx:id="Stu_Remove_Btn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeStudent" text="Remove Student" GridPane.rowIndex="4" />
-                        <Button fx:id="Stu_Add_Btn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addStudent" text="Add Student" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                        <Button fx:id="Stu_EditDetails_Btn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editStudentData" text="Edit Details" GridPane.columnIndex="3" />
+                        <Button fx:id="Stu_Remove_Btn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeStudent" text="Remove Student" visible="false" GridPane.rowIndex="4" />
+                        <Button fx:id="Stu_Add_Btn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addStudent" text="Add Student" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                        <Button fx:id="Stu_EditDetails_Btn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editStudentData" text="Edit Details" visible="false" GridPane.columnIndex="3" />
                         <Label fx:id="Stu_Dept_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Department" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <TextField fx:id="Stu_Dept_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                      </children>
@@ -111,9 +111,9 @@
                         <TextField fx:id="Fact_PhNo_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="206.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                         <Label fx:id="Fact_Position_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Position" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <TextField fx:id="Fact_Position_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <Button fx:id="Fact_Remove_Btn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeFaculty" text="Remove Faculty" GridPane.rowIndex="4" />
-                        <Button fx:id="Fact_Add_Btn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addFaculty" text="Add Faculty" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                        <Button fx:id="Fact_EditDetails_Btn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editStudentData" text="Edit Details" GridPane.columnIndex="3" />
+                        <Button fx:id="Fact_Remove_Btn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeFaculty" text="Remove Faculty" visible="false" GridPane.rowIndex="4" />
+                        <Button fx:id="Fact_Add_Btn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addFaculty" text="Add Faculty" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                        <Button fx:id="Fact_EditDetails_Btn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editStudentData" text="Edit Details" visible="false" GridPane.columnIndex="3" />
                         <Label fx:id="Fact_Dept_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Department" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <TextField fx:id="Fact_Dept_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                      </children>
@@ -123,7 +123,7 @@
                   </GridPane>
                </children>
             </StackPane>
-            <TableView id="styleForSelection" fx:id="Stu_BooksDisplay_Table" onMouseClicked="#selectedBook" prefHeight="200.0" stylesheets="@styleSheetForCellSelection.css" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+            <TableView id="styleForSelection" fx:id="Stu_BooksDisplay_Table" onMouseClicked="#selectedBook" prefHeight="200.0" stylesheets="@styleSheetForCellSelection.css" tableMenuButtonVisible="true" visible="false" VBox.vgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="bookCodeColumn" editable="false" prefWidth="75.20001602172852" text="Book Code" />
                   <TableColumn fx:id="bookIdColumn" editable="false" prefWidth="84.0" text="Book Id" />
@@ -142,13 +142,13 @@
             </TableView>
             <HBox alignment="BOTTOM_CENTER" spacing="50.0">
                <children>
-                  <Button fx:id="issueBook_Btn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#issueBook" prefHeight="55.0" prefWidth="150.0" text="Issue New Book" textAlignment="CENTER" />
+                  <Button fx:id="issueBook_Btn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#issueBook" prefHeight="55.0" prefWidth="150.0" text="Issue New Book" textAlignment="CENTER" visible="false" />
                   <Region HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets left="25.0" right="25.0" />
                      </HBox.margin>
                   </Region>
-                  <Button fx:id="returnBook_Btn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#returnBook" prefHeight="55.0" prefWidth="150.0" text="Return The Book" textAlignment="CENTER" />
+                  <Button fx:id="returnBook_Btn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#returnBook" prefHeight="55.0" prefWidth="150.0" text="Return The Book" textAlignment="CENTER" visible="false" />
                </children>
                <padding>
                   <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />

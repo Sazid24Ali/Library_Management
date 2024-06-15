@@ -47,6 +47,7 @@ public class MainController {
         courseMap.put(405, "(586) Maths With CS");
         courseMap.put(393, "Faculty");
     }
+    ObservableList<String> observableCourses = FXCollections.observableArrayList(courseMap.values());
     // To open New Windows
     @Autowired
     private OpenWindow openWindow;
@@ -191,49 +192,84 @@ public class MainController {
     @FXML
     private TableColumn<BooksEntity, Integer> publishingYearColumn;
 
-    void VisibilitySetter(boolean value) {
-        Fact_Add_Btn.setVisible(value);
-        Fact_EditDetails_Btn.setVisible(value);
-        Fact_Remove_Btn.setVisible(value);
-        Stu_Add_Btn.setVisible(!value);
-        Stu_Remove_Btn.setVisible(value);
-        Stu_BooksDisplay_Table.setVisible(value);
-        Stu_EditDetails_Btn.setVisible(value);
-        issueBook_Btn.setVisible(value);
-        returnBook_Btn.setVisible(value);
-        issueBook_Btn.setDisable(value);
-        returnBook_Btn.setDisable(value);
-        Stu_Remove_Btn.setDisable(value);
-        Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
-        Stu_BooksDisplay_Table.setDisable(value);
+    void initialFacultyPaneState() {
 
     }
 
-    void defaultSettings() {
-        VisibilitySetter(false);
-        Stu_Add_Btn.setVisible(false);
-        Stu_Add_Btn.setText("Add Student");
+    void initialState() {
+        // Headers Setting
         Student_RollNo_Field.clear();
         Student_Year_Field.clear();
-        Student_Course_CBox.getSelectionModel().clearSelection();
+
+        // Student_Course_CBox.getSelectionModel().clearSelection();
         Student_RollNo_Field.setPromptText("Roll No");
         Student_Year_Field.setPromptText("Year");
+
+        // Students Fields
+        StudentPane.setVisible(true);
+        Stu_Add_Btn.setVisible(false);
+        Stu_Add_Btn.setText("Add Student");
+
         Stu_Name_La_Field.clear();
         Stu_PhNo_La_Field.clear();
         Stu_YOP_La_Field.clear();
         Stu_Name_La_Field.setEditable(false);
         Stu_PhNo_La_Field.setEditable(false);
         Stu_YOP_La_Field.setEditable(false);
-        StudentPane.setVisible(true);
-        FacultyPane.setVisible(false);
 
+        Stu_Remove_Btn.setVisible(false);
+        Stu_EditDetails_Btn.setVisible(false);
+
+        // FacultyFields
+        FacultyPane.setVisible(false);
+        Fact_Add_Btn.setVisible(false);
+        Fact_Add_Btn.setText("Add Faculty");
+
+        Fact_Name_La_Field.clear();
+        Fact_PhNo_La_Field.clear();
+        Fact_Position_La_Field.clear();
+        Fact_Name_La_Field.setEditable(false);
+        Fact_PhNo_La_Field.setEditable(false);
+        Fact_Position_La_Field.setEditable(false);
+
+        Fact_Remove_Btn.setVisible(false);
+        Fact_EditDetails_Btn.setVisible(false);
+
+    }
+
+    void VisibilitySetter(boolean value) {
+        Fact_Add_Btn.setVisible(value);
+        Fact_EditDetails_Btn.setVisible(value);
+        Fact_Remove_Btn.setVisible(value);
+
+        Stu_Add_Btn.setVisible(!value);
+        Stu_Remove_Btn.setVisible(value);
+        Stu_EditDetails_Btn.setVisible(value);
+        
+        Stu_BooksDisplay_Table.setVisible(value);
+        
+        issueBook_Btn.setVisible(value);
+        returnBook_Btn.setVisible(value);
+        
+        issueBook_Btn.setDisable(value);
+        returnBook_Btn.setDisable(value);
+        Stu_Remove_Btn.setDisable(value);
+
+        Stu_BooksDisplay_Table.setDisable(value);
+
+    }
+
+    void defaultSettings() {
+        VisibilitySetter(false);
+        Student_Course_CBox.getSelectionModel().clearSelection();
+        initialState();
     }
 
     @FXML
     void initialize() {
         // Mapping the Table Columns to the BooksEntity
         Stu_BooksDisplay_Table.setPlaceholder(new Label("No Books Taken "));
-        Stu_BooksDisplay_Table.setEditable(true);
+        // Stu_BooksDisplay_Table.setEditable(true);
 
         bookCodeColumn.setCellValueFactory(cellData -> {
             BooksEntity booksEntity = cellData.getValue();
@@ -287,16 +323,28 @@ public class MainController {
                 }
             }
         });
-        VisibilitySetter(false);
-        Stu_Add_Btn.setVisible(false);
-        // Stu_EditDetails_Btn.setVisible(false);
-        ObservableList<String> observableCourses = FXCollections.observableArrayList(courseMap.values());
+        // VisibilitySetter(false);
+        // Setting the Combo box
+        initializeComboBox();
+        // setting the fields length
+        setFelidLengths();
+
+    }
+
+    void initializeComboBox() {
+        try {
+            Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
         Student_Course_CBox.setItems(observableCourses);
+    }
+
+    void setFelidLengths() {
         utilityClass.setIntegerLimiter(Student_Year_Field, 2);
         utilityClass.setIntegerLimiter(Student_RollNo_Field, 4);
         utilityClass.setIntegerLimiter(Stu_PhNo_La_Field, 10);
         utilityClass.setIntegerLimiter(Stu_YOP_La_Field, 4);
-
     }
 
     @FXML
@@ -311,14 +359,11 @@ public class MainController {
             StudentPane.setVisible(false);
             FacultyPane.setVisible(true);
         } else {
-            if (Student_RollNo_Field.getLength() == 0) {
-
+            if (Student_RollNo_Field.getLength() == 0 && Student_Year_Field.getLength() == 0) {
+                initialState();
             }
-            // Student_Year_Field.clear();
-            // Student_RollNo_Field.clear();
             Student_Year_Field.setDisable(false);
-            // Student_RollNo_Field.setPromptText("Roll No");
-            defaultSettings();
+
         }
     }
 
@@ -351,7 +396,7 @@ public class MainController {
             String branch = course.substring(6);
             String PhNo = Stu_PhNo_La_Field.getText();
             Year YearOfPassing = Year.parse(Stu_YOP_La_Field.getText());
-            StudentEntity newStudentData = new StudentEntity(RollNo, Name, PhNo, branch, YearOfPassing);
+            StudentEntity newStudentData = new StudentEntity(RollNo, Name, PhNo, branch, YearOfPassing, null);
 
             System.out.println(newStudentData);
 
