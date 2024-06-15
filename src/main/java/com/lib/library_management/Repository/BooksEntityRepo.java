@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.lib.library_management.Entity.BookDetailsEntity;
 import com.lib.library_management.Entity.BooksEntity;
 
 @Repository
@@ -39,5 +40,8 @@ public interface BooksEntityRepo extends JpaRepository<BooksEntity, Integer> {
 
     @Query("SELECT b.student.StudentRollNo,b.BookId FROM BooksEntity b WHERE b.bookDetailsEntity.BookCode = :bookCode and b.student.StudentRollNo IS NOT NULL")
     ArrayList<String> getBorrowedStudents(Integer bookCode);
+
+    @Query("SELECT b.bookDetailsEntity FROM BooksEntity b WHERE b.BookId = :bookId")
+    BookDetailsEntity findBookDetailsByBookId(@Param("bookId") Integer bookId);
 
 }

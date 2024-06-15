@@ -3,8 +3,8 @@ package com.lib.library_management.Services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lib.library_management.Repository.BooksEntityRepo;
 import com.lib.library_management.Entity.BooksEntity;
+import com.lib.library_management.Repository.BooksEntityRepo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,4 +58,14 @@ public class BooksEntityService {
         booksRepo.save(booksEntity);
     }
 
+    public BooksEntity getBookDataByBookId(Integer bookId) {
+        try {
+            BooksEntity bookDetailsEntity = booksRepo.findById(bookId).get();
+            return bookDetailsEntity;
+
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
 }

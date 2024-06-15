@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Transient;
 import lombok.Data;
 
 @Entity
@@ -28,4 +29,15 @@ public class BooksEntity {
     StudentEntity student;
 
     private LocalDate dateOfAllotment;
+    @Transient
+    String BookName;
+    @Transient
+    String Edition;
+    @Transient
+    String SubjectCategory;
+    @Transient
+    Integer BookCode;
+    @Transient
+    String Author;
+
 }
