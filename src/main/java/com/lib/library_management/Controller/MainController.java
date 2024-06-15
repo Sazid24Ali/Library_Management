@@ -192,10 +192,6 @@ public class MainController {
     @FXML
     private TableColumn<BooksEntity, Integer> publishingYearColumn;
 
-    void initialFacultyPaneState() {
-
-    }
-
     void initialState() {
         // Headers Setting
         Student_RollNo_Field.clear();
@@ -256,6 +252,11 @@ public class MainController {
         Stu_Remove_Btn.setDisable(value);
 
         Stu_BooksDisplay_Table.setDisable(value);
+
+        Admin_AddNewBookIds_Btn.setDisable(value);
+        Admin_AddNewBook_Btn.setDisable(value);
+        Admin_AvailableBooks_Btn.setDisable(value);
+        Admin_RemoveBooks_Btn.setDisable(value);
 
     }
 
@@ -345,27 +346,32 @@ public class MainController {
         utilityClass.setIntegerLimiter(Student_RollNo_Field, 4);
         utilityClass.setIntegerLimiter(Stu_PhNo_La_Field, 10);
         utilityClass.setIntegerLimiter(Stu_YOP_La_Field, 4);
+
+        utilityClass.setIntegerLimiter(Fact_PhNo_La_Field, 10);
+
     }
 
     @FXML
     void setPane(ActionEvent event) {
         // System.out.println("Got in here ");
         String scope = Student_Course_CBox.getValue();
+        String RollNo = Student_RollNo_Field.getText();
+        String Year = Student_Year_Field.getText();
+        initialState();
+        VisibilitySetter(false);
         if (scope == "Faculty") {
+            Fact_Add_Btn.setVisible(false);
             Student_Course_CBox.setValue(scope);
             Student_Year_Field.setDisable(true);
             Student_RollNo_Field.setPromptText("CE ID");
             StudentPane.setVisible(false);
             FacultyPane.setVisible(true);
         } else {
-            if (Student_RollNo_Field.getLength() == 0 && Student_Year_Field.getLength() == 0) {
-                initialState();
+            Stu_Add_Btn.setVisible(false);
+            if (RollNo.length() == 0 && Year.length() == 0) {
                 Student_Course_CBox.setValue(scope);
                 Student_Year_Field.setDisable(false);
             } else {
-                String RollNo = Student_RollNo_Field.getText();
-                String Year = Student_Year_Field.getText();
-                initialState();
                 Student_Course_CBox.setValue(scope);
                 Student_Year_Field.setDisable(false);
                 Student_Year_Field.setText(Year);
@@ -436,10 +442,10 @@ public class MainController {
             String RollNo = Student_RollNo_Field.getText();
             String facultyName = Fact_Name_La_Field.getText();
             String PhNo = Fact_PhNo_La_Field.getText();
-            Year YearOfPassing = null;
+            // Year YearOfPassing = null;
             String faculty_Position = Fact_Position_La_Field.getText();
 
-            StudentEntity newFaculty = new StudentEntity(RollNo, facultyName, PhNo, branch, YearOfPassing,
+            StudentEntity newFaculty = new StudentEntity(RollNo, facultyName, PhNo, branch, null,
                     faculty_Position);
             addNewFact_stud(newFaculty, "Faculty");
         } else {
@@ -490,8 +496,9 @@ public class MainController {
 
         StudentEntity data = studentService.getStudentDataByRollNo(RollNo);
         if (data != null) {
+            System.out.println("Set Faculty Data Got data");
             VisibilitySetter(true);
-            newStudent(false);
+            newFaculty(false);
             returnBook_Btn.setDisable(true);
             System.out.println("\n\n\n\n" + data.getYearOfPassing());
             Fact_Name_La_Field.setText(data.getStudentName());
@@ -500,7 +507,7 @@ public class MainController {
 
             setIssuedbooks(RollNo);
         } else {
-            openWindow.openDialogue("Information", "Student Details Not Found \n Add Student");
+            openWindow.openDialogue("Information", "Faculty Details Not Found \n Add Faculty");
             VisibilitySetter(false);
             newFaculty(true);
         }
@@ -537,13 +544,11 @@ public class MainController {
     @FXML
     void editStudentData(ActionEvent event) {
         edit_Student_Data(true);
-
     }
 
     @FXML
     void editFacultyData(ActionEvent event) {
         edit_Faculty_Data(true);
-
     }
 
     private void edit_Faculty_Data(boolean value) {
@@ -551,9 +556,10 @@ public class MainController {
         Fact_PhNo_La_Field.setEditable(value);
         Fact_Position_La_Field.setEditable(value);
 
+        Fact_Add_Btn.setVisible(value);
+        Fact_Remove_Btn.setDisable(value);
         Fact_EditDetails_Btn.setVisible(!value);
         Fact_Add_Btn.setText("Save Data");
-        Fact_Add_Btn.setVisible(value);
         edit_Fact_Stud(value);
 
     }
@@ -569,6 +575,7 @@ public class MainController {
         Stu_YOP_La_Field.setEditable(value);
 
         Stu_Add_Btn.setVisible(value);
+        Stu_Remove_Btn.setDisable(value);
         Stu_EditDetails_Btn.setVisible(!value);
         Stu_Add_Btn.setText("Save Data");
         edit_Fact_Stud(value);
@@ -577,9 +584,13 @@ public class MainController {
     private void edit_Fact_Stud(boolean value) {
         issueBook_Btn.setDisable(value);
         returnBook_Btn.setDisable(value);
-        Stu_Remove_Btn.setDisable(value);
         Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
         Stu_BooksDisplay_Table.setDisable(value);
+
+        Admin_AddNewBookIds_Btn.setDisable(value);
+        Admin_AddNewBook_Btn.setDisable(value);
+        Admin_AvailableBooks_Btn.setDisable(value);
+        Admin_RemoveBooks_Btn.setDisable(value);
     }
 
     private void newFaculty(boolean value) {
@@ -587,6 +598,7 @@ public class MainController {
         Fact_PhNo_La_Field.clear();
         Fact_Position_La_Field.clear();
         Fact_Add_Btn.setVisible(value);
+        Fact_Add_Btn.setText("Save Data ");
         edit_Faculty_Data(value);
     }
 
