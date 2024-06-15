@@ -48,7 +48,7 @@
                   <TableColumn fx:id="availableBooksColumn" editable="false" prefWidth="69.60009765625" text="Available " />
                   <TableColumn fx:id="borrowedBooksColumn" editable="false" prefWidth="81.5999755859375" text="Borrowed" />
                   <TableColumn fx:id="bookIDsColumn" editable="false" prefWidth="75.0" text="Books Ids" visible="false" />
-                  <TableColumn fx:id="borrowedStudentsColumn" editable="false" prefWidth="75.0" text="Borrowed Students" visible="false" />
+                  <TableColumn fx:id="borrowedByColumn" editable="false" prefWidth="75.0" text="Borrowed By" visible="false" />
                   <TableColumn fx:id="pagesColumn" prefWidth="75.0" text="Pages" visible="false" />
                   <TableColumn fx:id="placeAndpublisherColumn" prefWidth="75.0" text="Place And Publisher" visible="false" />
                   <TableColumn fx:id="publishYearColumn" prefWidth="75.0" text="Year of Publish" visible="false" />

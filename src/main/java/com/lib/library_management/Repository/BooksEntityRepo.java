@@ -13,7 +13,7 @@ import com.lib.library_management.Entity.BooksEntity;
 
 @Repository
 public interface BooksEntityRepo extends JpaRepository<BooksEntity, Integer> {
-    
+
     @Query("SELECT COUNT(b) FROM BooksEntity b WHERE b.bookDetailsEntity.BookCode = :bookCode")
     long countTotalBooks(@Param("bookCode") Integer bookCode);
 
@@ -37,8 +37,7 @@ public interface BooksEntityRepo extends JpaRepository<BooksEntity, Integer> {
     @Query("SELECT b.BookId FROM BooksEntity b")
     ArrayList<Integer> getBookIds();
 
-    @Query("SELECT b.student.StudentRollNo FROM BooksEntity b WHERE b.bookDetailsEntity.BookCode = :bookCode and b.student.StudentRollNo IS NOT NULL")
+    @Query("SELECT b.student.StudentRollNo,b.BookId FROM BooksEntity b WHERE b.bookDetailsEntity.BookCode = :bookCode and b.student.StudentRollNo IS NOT NULL")
     ArrayList<String> getBorrowedStudents(Integer bookCode);
 
-    
 }

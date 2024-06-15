@@ -34,19 +34,27 @@ public class BooksEntityService {
     }
 
     public ArrayList<String> getBorrowedStudents(Integer bookCode) {
-        return booksRepo.getBorrowedStudents(bookCode);
+        ArrayList<String> data = booksRepo.getBorrowedStudents(bookCode);
+        ArrayList<String> formattedData = new ArrayList<>();
+        int i = 0;
+        for (int j = 0; j < data.size(); j++) {
+            String pair = data.get(j).replace(",", " -> ");
+            formattedData.add(pair);            
+        }
+        // System.out.println(formattedData);
+        return formattedData;
+
     }
 
-    public List<BooksEntity> getBooksFromStudentRollNo(String RollNo){
+    public List<BooksEntity> getBooksFromStudentRollNo(String RollNo) {
         return booksRepo.findBooksEntitiesByStudent_StudentRollNo(RollNo);
-        // booksRepository.f
     }
 
-    public void addBooks(ArrayList<BooksEntity> booksToAdd){
+    public void addBooks(ArrayList<BooksEntity> booksToAdd) {
         booksRepo.saveAll(booksToAdd);
     }
 
-    public void saveReturningBook(BooksEntity booksEntity){
+    public void saveReturningBook(BooksEntity booksEntity) {
         booksRepo.save(booksEntity);
     }
 
