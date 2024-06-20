@@ -610,13 +610,19 @@ public class MainController {
     }
 
     private void edit_Fact_Stud(boolean value) {
-        // System.out.println("edit_fact_student value is " + isEditing + " boolean is " + value);
+        // System.out.println("edit_fact_student value is " + isEditing + " boolean is "
+        // + value);
         isEditing = value;
 
         issueBook_Btn.setDisable(value);
         returnBook_Btn.setDisable(value);
         Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
         Stu_BooksDisplay_Table.setDisable(value);
+
+        Student_RollNo_Field.setDisable(value);
+        Student_Course_CBox.setDisable(value);
+        Student_Year_Field.setDisable(value);
+        Student_Search_Btn.setDisable(value);
 
         Admin_AddNewBookIds_Btn.setDisable(value);
         Admin_AddNewBook_Btn.setDisable(value);
