@@ -260,7 +260,7 @@ public class MainController {
 
     void VisibilitySetter(boolean value) {
 
-        isEditing = !value;
+        // isEditing = !value;
         Fact_Add_Btn.setVisible(value);
         Fact_EditDetails_Btn.setVisible(value);
         Fact_Remove_Btn.setVisible(value);
@@ -424,11 +424,13 @@ public class MainController {
     }
 
     void addNewFact_stud(StudentEntity newData, String fact_stud) {
+        // System.out.println("Add New Student Fact value is " + isEditing);
+        isEditing = false;
 
         System.out.println(newData);
         // System.out.println("\n\n\n" + newStudentData.toString());
         if (studentService.addStudentData(newData)) {
-            openWindow.openDialogue("Success", " Add " + fact_stud + " Data Successfully " + newData);
+            openWindow.openDialogue("Success", " Added " + fact_stud + " Data Successfully " + newData);
             // Virtually Click the Search Button
             ActionEvent event = new ActionEvent();
             getStudentData(event);
@@ -608,12 +610,19 @@ public class MainController {
     }
 
     private void edit_Fact_Stud(boolean value) {
+        // System.out.println("edit_fact_student value is " + isEditing + " boolean is "
+        // + value);
         isEditing = value;
 
         issueBook_Btn.setDisable(value);
         returnBook_Btn.setDisable(value);
         Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
         Stu_BooksDisplay_Table.setDisable(value);
+
+        Student_RollNo_Field.setDisable(value);
+        Student_Course_CBox.setDisable(value);
+        Student_Year_Field.setDisable(value);
+        Student_Search_Btn.setDisable(value);
 
         Admin_AddNewBookIds_Btn.setDisable(value);
         Admin_AddNewBook_Btn.setDisable(value);
