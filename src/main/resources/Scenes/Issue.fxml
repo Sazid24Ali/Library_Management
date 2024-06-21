@@ -61,16 +61,6 @@
          </columnResizePolicy>
       </TableView>
    </center>
-   <bottom>
-      <Button fx:id="issueButton" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#addBookToTable" prefHeight="62.0" prefWidth="178.0" text="Issue the Book" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets bottom="15.0" top="15.0" />
-         </BorderPane.margin>
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Button>
-   </bottom>
    <padding>
       <Insets bottom="25.0" left="20.0" right="20.0" top="10.0" />
    </padding>
@@ -89,4 +79,23 @@
          </columnResizePolicy>
       </TableView>
    </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="210.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="issueButton" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#addBookToTable" prefHeight="62.0" prefWidth="178.0" text="Issue the Book">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="removebtn" mnemonicParsing="false" onMouseClicked="#booksremove" prefHeight="62.0" prefWidth="200.0" text="Remove the Book">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+         </children>
+         <BorderPane.margin>
+            <Insets top="20.0" />
+         </BorderPane.margin>
+      </HBox>
+   </bottom>
 </BorderPane>
