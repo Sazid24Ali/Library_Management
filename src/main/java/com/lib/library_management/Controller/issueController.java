@@ -37,6 +37,9 @@ public class issueController {
     private Button issueButton;
 
     @FXML
+    private Button removebtn;
+
+    @FXML
     private TextField studentId;
 
     @FXML
@@ -111,6 +114,11 @@ public class issueController {
     void addBookToTable(MouseEvent event) {
         MainController mainController = new MainController();
         mainController.refreshTable();
+    }
+
+    @FXML
+    void booksremove(MouseEvent event) {
+
     }
 
 }

@@ -194,6 +194,12 @@ public class MainController {
     @FXML
     private TableColumn<BooksEntity, Integer> publishingYearColumn;
 
+    @FXML
+    private Button Fact_Cancel_Edit_Btn;
+
+    @FXML
+    private Button Stu_Cancel_Edit_Btn;
+
     private Stage primaryStage;
     private boolean isEditing = false;
 
@@ -222,6 +228,8 @@ public class MainController {
         Student_RollNo_Field.clear();
         Student_Year_Field.clear();
 
+        isEditing = false;
+
         // Student_Course_CBox.getSelectionModel().clearSelection();
         Student_RollNo_Field.setPromptText("Roll No");
         Student_Year_Field.setPromptText("Year");
@@ -240,6 +248,7 @@ public class MainController {
 
         Stu_Remove_Btn.setVisible(false);
         Stu_EditDetails_Btn.setVisible(false);
+        Stu_Cancel_Edit_Btn.setVisible(false);
 
         // FacultyFields
         FacultyPane.setVisible(false);
@@ -255,13 +264,14 @@ public class MainController {
 
         Fact_Remove_Btn.setVisible(false);
         Fact_EditDetails_Btn.setVisible(false);
+        Fact_Cancel_Edit_Btn.setVisible(false);
 
     }
 
     void VisibilitySetter(boolean value) {
 
         // isEditing = !value;
-        Fact_Add_Btn.setVisible(value);
+        // Fact_Add_Btn.setVisible(value);
         Fact_EditDetails_Btn.setVisible(value);
         Fact_Remove_Btn.setVisible(value);
 
@@ -290,6 +300,7 @@ public class MainController {
     void defaultSettings() {
         VisibilitySetter(false);
         Student_Course_CBox.getSelectionModel().clearSelection();
+        Student_Course_CBox.setDisable(false);
         initialState();
     }
 
@@ -393,8 +404,10 @@ public class MainController {
             Student_RollNo_Field.setPromptText("CE ID");
             StudentPane.setVisible(false);
             FacultyPane.setVisible(true);
+            utilityClass.setIntegerLimiter(Student_RollNo_Field, 7);
         } else {
             Stu_Add_Btn.setVisible(false);
+            utilityClass.setIntegerLimiter(Student_RollNo_Field, 4);
             if (RollNo.length() == 0 && Year.length() == 0) {
                 Student_Course_CBox.setValue(scope);
                 Student_Year_Field.setDisable(false);
@@ -437,7 +450,6 @@ public class MainController {
         } else {
             openWindow.openDialogue("Try Again", "Data Was Not Added\n Try Again Later");
         }
-
     }
 
     @FXML
@@ -457,7 +469,8 @@ public class MainController {
 
             addNewFact_stud(newStudentData, "Student");
         } else {
-            openWindow.openDialogue("Information", "Enter the Data Correctly");
+            openWindow.openDialogue("Information",
+                    "Enter the Data Correctly \nFollow the Below Rules : \nRoll No Should have at least be 3 digits Long\nName Should have at least 5 characters\nYear of Passing Should be 4 Digits\nPhone Number Should be 10 Digits Long");
         }
     }
 
@@ -477,7 +490,8 @@ public class MainController {
                     faculty_Position);
             addNewFact_stud(newFaculty, "Faculty");
         } else {
-            openWindow.openDialogue("Information", "Enter the Data Correctly");
+            openWindow.openDialogue("Information",
+                    "Enter the Data Correctly \nFollow the Below Rules : \nCE ID Should have at least be 4 digits Long\nName Should have at least 5 characters\nPosition Should have at least 5 characters Long\nPhone Number Should be 10 Digits Long");
         }
 
     }
@@ -528,7 +542,7 @@ public class MainController {
             VisibilitySetter(true);
             newFaculty(false);
             returnBook_Btn.setDisable(true);
-            System.out.println("\n\n\n\n" + data.getYearOfPassing());
+            Student_Year_Field.setDisable(true);
             Fact_Name_La_Field.setText(data.getStudentName());
             Fact_PhNo_La_Field.setText(String.valueOf(data.getPhoneNumber()));
             Fact_Position_La_Field.setText(data.getFacultyPosition());
@@ -579,6 +593,20 @@ public class MainController {
         edit_Faculty_Data(true);
     }
 
+    @FXML
+    void cancelEdit(ActionEvent event) {
+        boolean cancelConformation = openWindow.openConfirmation("Confirmation",
+                "This action will revert the changes back");
+        if (cancelConformation) {
+            if (Stu_Name_La_Field.getLength() != 0 || Fact_Name_La_Field.getLength() != 0) {
+                getStudentData(event);
+            } else {
+                defaultSettings();
+            }
+        }
+        // edit_Faculty_Data(true);
+    }
+
     private void edit_Faculty_Data(boolean value) {
         Fact_Name_La_Field.setEditable(value);
         Fact_PhNo_La_Field.setEditable(value);
@@ -588,6 +616,7 @@ public class MainController {
         Fact_Remove_Btn.setDisable(value);
         Fact_EditDetails_Btn.setVisible(!value);
         Fact_Add_Btn.setText("Save Data");
+        Fact_Cancel_Edit_Btn.setVisible(value);
         edit_Fact_Stud(value);
 
     }
@@ -606,6 +635,7 @@ public class MainController {
         Stu_Remove_Btn.setDisable(value);
         Stu_EditDetails_Btn.setVisible(!value);
         Stu_Add_Btn.setText("Save Data");
+        Stu_Cancel_Edit_Btn.setVisible(value);
         edit_Fact_Stud(value);
     }
 
