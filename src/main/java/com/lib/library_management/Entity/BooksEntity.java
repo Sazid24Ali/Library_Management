@@ -39,5 +39,22 @@ public class BooksEntity {
     Integer BookCode;
     @Transient
     String Author;
+    @Transient
+    String StudentRollNo;
+
+    @Override
+    public String toString() {
+        return "BooksEntity{" +
+                "BookId=" + BookId +
+                ", BookName='" + BookName + '\'' +
+                ", Edition='" + Edition + '\'' +
+                ", Author='" + Author + '\'' +
+                ", SubjectCategory='" + SubjectCategory + '\'' +
+                ", BookCode=" + BookCode +
+                ", status='" + status + '\'' +
+                ", dateOfAllotment=" + dateOfAllotment +
+                ", studentRollNo=" + (student != null ? student.getStudentRollNo() : "null") +
+                '}';
+    }
 
 }

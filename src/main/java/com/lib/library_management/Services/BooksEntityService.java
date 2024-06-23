@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.lib.library_management.Entity.BooksEntity;
 import com.lib.library_management.Repository.BooksEntityRepo;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,4 +66,21 @@ public class BooksEntityService {
         }
         return null;
     }
+
+    public void updateBookStatus(BooksEntity book) {
+        try {
+            booksRepo.save(book);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<BooksEntity> getAllBooks() {
+        return booksRepo.findAll();
+    }
+
+    public boolean checkBookExistsById(Integer bookId) {
+        return booksRepo.existsById(bookId);
+    }
+
 }
