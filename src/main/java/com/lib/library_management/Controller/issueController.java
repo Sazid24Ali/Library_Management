@@ -87,7 +87,10 @@ public class issueController {
 
     @FXML
     void initialize() {
-        Tableviewdemo.setPlaceholder(new Label("Requested Data is Not Available"));
+        observableBookList.clear();
+        addedBookIds.clear();
+        removebtn.setDisable(true);
+        Tableviewdemo.setPlaceholder(new Label("No Books Added"));
         utilityClass.setIntegerLimiter(addingBookId, 7);
         takenBookId.setCellValueFactory(new PropertyValueFactory<>("BookId"));
         takenBookTitle.setCellValueFactory(new PropertyValueFactory<>("BookName"));
