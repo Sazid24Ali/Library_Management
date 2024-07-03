@@ -11,6 +11,7 @@ import com.lib.library_management.Entity.BookDetailsEntity;
 import com.lib.library_management.Entity.BooksEntity;
 import com.lib.library_management.Entity.StudentEntity;
 import com.lib.library_management.Services.BooksEntityService;
+import com.lib.library_management.Services.StudentService;
 import com.lib.library_management.Utility.OpenWindow;
 import com.lib.library_management.Utility.utilityClass;
 
@@ -31,6 +32,8 @@ public class issueController {
     private OpenWindow openWindow;
     @Autowired
     private BooksEntityService booksEntityService;
+    @Autowired
+    private StudentService studentService;
 
     @FXML
     private Button addButton;
@@ -118,6 +121,11 @@ public class issueController {
             }
 
             if (booksEntityService.checkBookExistsById(bookId)) {
+                if (booksEntityService.isBookAlreadyBorrowed(bookId)) {
+                    openWindow.openDialogue("Warning", "Book ID " + bookId + " is already borrowed.");
+                    clearFields();
+                    return;
+                }
                 BooksEntity bookDetailsOptional = booksEntityService.getBookDataByBookId(bookId);
                 if (bookDetailsOptional != null) {
                     BookDetailsEntity details = bookDetailsOptional.getBookDetailsEntity();
@@ -157,13 +165,13 @@ public class issueController {
             String studentRollNo = studentId.getText();
             boolean confirm = openWindow.openConfirmation("Confirmation", "Do you want to add these books?");
             if (confirm) {
+                StudentEntity student = studentService.getStudentByRollNo(studentRollNo);
                 for (BooksEntity book : observableBookList) {
                     if (addedBookIds.contains(book.getBookId())) {
                         book.setStatus("Borrowed");
                         book.setDateOfAllotment(issueDate);
-                        StudentEntity student = new StudentEntity();
-                        student.setStudentRollNo(studentRollNo);
                         book.setStudent(student);
+                        student.setStudentRollNo(studentRollNo);
                         System.out.println(book);
                     }
                 }
