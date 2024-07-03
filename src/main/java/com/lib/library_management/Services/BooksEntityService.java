@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.lib.library_management.Entity.BooksEntity;
 import com.lib.library_management.Repository.BooksEntityRepo;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +13,7 @@ import java.util.List;
 public class BooksEntityService {
 
     @Autowired
-    BooksEntityRepo booksRepo;
-
-    BooksEntity booksEntity;
+    private BooksEntityRepo booksRepo;
 
     public long countTotalBooks(Integer bookCode) {
         return booksRepo.countTotalBooks(bookCode);
@@ -35,17 +34,15 @@ public class BooksEntityService {
     public ArrayList<String> getBorrowedStudents(Integer bookCode) {
         ArrayList<String> data = booksRepo.getBorrowedStudents(bookCode);
         ArrayList<String> formattedData = new ArrayList<>();
-        for (int j = 0; j < data.size(); j++) {
-            String pair = data.get(j).replace(",", " -> ");
+        for (String datum : data) {
+            String pair = datum.replace(",", " -> ");
             formattedData.add(pair);
         }
-        // System.out.println(formattedData);
         return formattedData;
-
     }
 
-    public List<BooksEntity> getBooksFromStudentRollNo(String RollNo) {
-        return booksRepo.findBooksEntitiesByStudent_StudentRollNo(RollNo);
+    public List<BooksEntity> getBooksFromStudentRollNo(String rollNo) {
+        return booksRepo.findBooksEntitiesByStudent_StudentRollNo(rollNo);
     }
 
     public void addBooks(ArrayList<BooksEntity> booksToAdd) {
@@ -58,11 +55,9 @@ public class BooksEntityService {
 
     public BooksEntity getBookDataByBookId(Integer bookId) {
         try {
-            BooksEntity bookDetailsEntity = booksRepo.findById(bookId).get();
-            return bookDetailsEntity;
-
+            return booksRepo.findById(bookId).orElse(null);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         return null;
     }
@@ -83,4 +78,16 @@ public class BooksEntityService {
         return booksRepo.existsById(bookId);
     }
 
+    public List<BooksEntity> getBooksByCode(Integer bookCode) {
+        return booksRepo.findBooksByBookDetailsEntity_BookCode(bookCode);
+    }
+
+    public boolean isBookAlreadyBorrowed(Integer bookId) {
+        BooksEntity book = booksRepo.findById(bookId).orElse(null);
+        return book != null && book.getStatus().equals("Borrowed");
+    }
+
+    public void deleteBook(Integer bookId) {
+        booksRepo.deleteById(bookId);
+    }
 }
