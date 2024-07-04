@@ -92,7 +92,7 @@ public class issueController {
     public void setRollNo(String RollNo) {
         studentId.setText(RollNo);
         studentId.setEditable(false);
-        student = studentService.getStudentByRollNo(RollNo);
+        // student = studentService.getStudentByRollNo(RollNo);
     }
 
     public void setMainController(MainController mainController) {
@@ -182,6 +182,7 @@ public class issueController {
                         book.setDateOfAllotment(issueDate);
                         book.setStudent(student);
 
+
                         // Ensure that bookDetailsEntity is set
                         BooksEntity bookDetailsOptional = booksEntityService.getBookDataByBookId(book.getBookId());
                         if (bookDetailsOptional != null) {
@@ -198,6 +199,7 @@ public class issueController {
                                     "Failed to retrieve book details for Book ID: " + book.getBookId());
                             return;
                         }
+
                     }
                 }
 
