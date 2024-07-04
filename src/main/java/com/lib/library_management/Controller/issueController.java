@@ -65,8 +65,7 @@ public class issueController {
     private TableColumn<BooksEntity, Integer> takenBookCode;
     @FXML
     private TableView<BooksEntity> Tableviewdemo;
-    @FXML
-    private Button removebtn;
+    
 
     private ObservableList<BooksEntity> observableBookList = FXCollections.observableArrayList();
     private List<Integer> addedBookIds = new ArrayList<>();
@@ -91,7 +90,7 @@ public class issueController {
     public void setRollNo(String RollNo) {
         studentId.setText(RollNo);
         studentId.setEditable(false);
-        student = studentService.getStudentByRollNo(RollNo);
+        // student = studentService.getStudentByRollNo(RollNo);
     }
 
     public void setMainController(MainController mainController) {
@@ -116,6 +115,7 @@ public class issueController {
                 removebtn.setDisable(true);
             }
         });
+        removebtn.setDisable(true);
     }
 
     @FXML
@@ -181,8 +181,7 @@ public class issueController {
                         book.setStatus("Borrowed");
                         book.setDateOfAllotment(issueDate);
                         book.setStudent(student);
-                        student.setStudentRollNo(studentRollNo);
-
+                        // student.setStudentRollNo(studentRollNo);
                     }
                 }
 
@@ -208,11 +207,6 @@ public class issueController {
         ObservableList<BooksEntity> filteredObservableList = FXCollections.observableArrayList(filteredBooks);
         Tableviewdemo.setItems(filteredObservableList);
         mainController.getStudentData(null);
-
-    }
-}
-    @FXML
-    void booksremove(MouseEvent event) {
 
     }
 
