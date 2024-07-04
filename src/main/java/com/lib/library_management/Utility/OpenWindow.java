@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import com.lib.library_management.Controller.MainController;
 import com.lib.library_management.Controller.issueController;
 
 import javafx.fxml.FXMLLoader;
@@ -59,13 +60,14 @@ public class OpenWindow {
         }
     }
 
-    public void openScene(String FileName, String Title, Stage parent, String RollNo) {
+    public void openScene(String FileName, String Title, Stage parent, String RollNo,MainController mainControllerObj) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/" + FileName + ".fxml"));
             Stage stage = initializeTheStage(loader, parent, Title);
 
             issueController controller = loader.getController();
             controller.setRollNo(RollNo);
+            controller.setMainController(mainControllerObj);
 
             // Remove this comments if we want the issue book window size to be  not fully maximized
             // stage.setMaxWidth(650);

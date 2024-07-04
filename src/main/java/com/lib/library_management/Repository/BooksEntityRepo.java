@@ -44,4 +44,7 @@ public interface BooksEntityRepo extends JpaRepository<BooksEntity, Integer> {
     @Query("SELECT b.bookDetailsEntity FROM BooksEntity b WHERE b.BookId = :bookId")
     BookDetailsEntity findBookDetailsByBookId(@Param("bookId") Integer bookId);
 
+    @Query("SELECT b FROM BooksEntity b WHERE b.bookDetailsEntity.BookCode = :bookCode")
+    List<BooksEntity> findBooksByBookDetailsEntity_BookCode(Integer bookCode);
+
 }

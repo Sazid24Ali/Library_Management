@@ -687,7 +687,7 @@ public class MainController {
         String RollNo = 1007 + Student_Year_Field.getText() + course.substring(1, 4)
                 + Student_RollNo_Field.getText();
         Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        openWindow.openScene("Issue", "Issue Books", primaryStage, RollNo);
+        openWindow.openScene("Issue", "Issue Books", primaryStage, RollNo,this);
 
         setIssuedbooks(RollNo);
         // Added this to clear the selection from the table and reset the return button

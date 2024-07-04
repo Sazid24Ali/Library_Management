@@ -56,6 +56,8 @@ public class AddNewBooksController {
         // utilityClass.setIntegerLimiter(tfAuthor, 50);
         utilityClass.setIntegerLimiter(tfbookcode, 5);
         utilityClass.setIntegerLimiter(tfyear, 4);
+        utilityClass.setIntegerLimiter(tfprice, 10000);
+        utilityClass.setIntegerLimiter(tfpages, 10000);
         // utilityClass.setIntegerLimiter(tfsubjectcategory, 50);
     }
 
