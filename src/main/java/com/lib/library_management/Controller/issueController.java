@@ -67,7 +67,6 @@ public class issueController {
 
     private ObservableList<BooksEntity> observableBookList = FXCollections.observableArrayList();
     private List<Integer> addedBookIds = new ArrayList<>();
-    private StudentEntity student;
     private MainController mainController;
 
     @FXML
@@ -98,17 +97,14 @@ public class issueController {
 
     @FXML
     void initialize() {
-        observableBookList.clear();
-        addedBookIds.clear();
-        removebtn.setDisable(true);
-        Tableviewdemo.setPlaceholder(new Label("No Books Added"));
+        Tableviewdemo.setPlaceholder(new Label("Requested Data is Not Available"));
         utilityClass.setIntegerLimiter(addingBookId, 7);
-        takenBookId.setCellValueFactory(new PropertyValueFactory<>("bookId"));
-        takenBookTitle.setCellValueFactory(new PropertyValueFactory<>("bookName"));
-        takenBookEdition.setCellValueFactory(new PropertyValueFactory<>("edition"));
-        takenAuthor.setCellValueFactory(new PropertyValueFactory<>("author"));
-        Subject_Category.setCellValueFactory(new PropertyValueFactory<>("subjectCategory"));
-        takenBookCode.setCellValueFactory(new PropertyValueFactory<>("bookCode"));
+        takenBookId.setCellValueFactory(new PropertyValueFactory<>("BookId"));
+        takenBookTitle.setCellValueFactory(new PropertyValueFactory<>("BookName"));
+        takenBookEdition.setCellValueFactory(new PropertyValueFactory<>("Edition"));
+        takenAuthor.setCellValueFactory(new PropertyValueFactory<>("Author"));
+        Subject_Category.setCellValueFactory(new PropertyValueFactory<>("SubjectCategory"));
+        takenBookCode.setCellValueFactory(new PropertyValueFactory<>("BookCode"));
         Tableviewdemo.setItems(observableBookList);
         Tableviewdemo.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -125,36 +121,31 @@ public class issueController {
             Integer bookId = Integer.parseInt(addingBookId.getText());
             boolean isBookAlreadyAdded = observableBookList.stream()
                     .anyMatch(book -> book.getBookId().equals(bookId));
-
-            if (student != null && booksEntityService.isBookAlreadyBorrowed(bookId, student.getStudentRollNo())) {
-                openWindow.openDialogue("Warning",
-                        "Book ID " + bookId + " is already borrowed by the current student.");
-                clearFields();
-                return;
-            }
             if (isBookAlreadyAdded) {
                 openWindow.openDialogue("Warning", "Book ID " + bookId + " is already added.");
                 clearFields();
                 return;
             }
+
             if (booksEntityService.checkBookExistsById(bookId)) {
+                if (booksEntityService.isBookAlreadyBorrowed(bookId)) {
+                    openWindow.openDialogue("Warning", "Book ID " + bookId + " is already borrowed.");
+                    clearFields();
+                    return;
+                }
                 BooksEntity bookDetailsOptional = booksEntityService.getBookDataByBookId(bookId);
                 if (bookDetailsOptional != null) {
                     BookDetailsEntity details = bookDetailsOptional.getBookDetailsEntity();
-                    if (details != null) {
-                        BooksEntity book = new BooksEntity();
-                        book.setBookId(bookId);
-                        book.setBookName(details.getBookName());
-                        book.setEdition(details.getEdition());
-                        book.setAuthor(details.getAuthor());
-                        book.setSubjectCategory(details.getSubjectCategory());
-                        book.setBookCode(details.getBookCode());
-                        observableBookList.add(book);
-                        addedBookIds.add(bookId);
-                        clearFields();
-                    } else {
-                        openWindow.openDialogue("Error", "Failed to retrieve book details for Book ID: " + bookId);
-                    }
+                    BooksEntity book = new BooksEntity();
+                    book.setBookId(bookId);
+                    book.setBookName(details.getBookName());
+                    book.setEdition(details.getEdition());
+                    book.setAuthor(details.getAuthor());
+                    book.setSubjectCategory(details.getSubjectCategory());
+                    book.setBookCode(details.getBookCode());
+                    observableBookList.add(book);
+                    addedBookIds.add(bookId);
+                    clearFields();
                 } else {
                     openWindow.openDialogue("Error", "Failed to retrieve book details for Book ID: " + bookId);
                 }
@@ -178,40 +169,22 @@ public class issueController {
     void addBookToTable(MouseEvent event) {
         try {
             LocalDate issueDate = LocalDate.now();
+            String studentRollNo = studentId.getText();
             boolean confirm = openWindow.openConfirmation("Confirmation", "Do you want to add these books?");
-            if (confirm && student != null) {
+            if (confirm) {
+                StudentEntity student = studentService.getStudentByRollNo(studentRollNo);
                 for (BooksEntity book : observableBookList) {
                     if (addedBookIds.contains(book.getBookId())) {
                         book.setStatus("Borrowed");
                         book.setDateOfAllotment(issueDate);
                         book.setStudent(student);
+                        student.setStudentRollNo(studentRollNo);
 
-                        // Ensure that bookDetailsEntity is set
-                        BooksEntity bookDetailsOptional = booksEntityService.getBookDataByBookId(book.getBookId());
-                        if (bookDetailsOptional != null) {
-                            BookDetailsEntity details = bookDetailsOptional.getBookDetailsEntity();
-                            if (details != null) {
-                                book.setBookDetailsEntity(details);
-                            } else {
-                                openWindow.openDialogue("Error",
-                                        "Failed to retrieve book details for Book ID: " + book.getBookId());
-                                return;
-                            }
-                        } else {
-                            openWindow.openDialogue("Error",
-                                    "Failed to retrieve book details for Book ID: " + book.getBookId());
-                            return;
-                        }
                     }
                 }
-
-                booksEntityService.saveOrUpdateBooks(observableBookList);
-
-                observableBookList.clear();
-                addedBookIds.clear();
                 refreshTable();
             } else {
-                System.out.println("Book addition canceled by user or no student selected.");
+                System.out.println("Book addition canceled by user.");
             }
         } catch (NumberFormatException e) {
             openWindow.openDialogue("Error", "Please enter valid integers for Book IDs.");
@@ -222,8 +195,14 @@ public class issueController {
     }
 
     private void refreshTable() {
-        Tableviewdemo.setItems(FXCollections.observableArrayList(observableBookList));
-        Tableviewdemo.refresh();
+        List<BooksEntity> filteredBooks = new ArrayList<>();
+        for (BooksEntity book : observableBookList) {
+            if (addedBookIds.contains(book.getBookId())) {
+                filteredBooks.add(book);
+            }
+        }
+        ObservableList<BooksEntity> filteredObservableList = FXCollections.observableArrayList(filteredBooks);
+        Tableviewdemo.setItems(filteredObservableList);
         mainController.getStudentData(null);
 
     }
