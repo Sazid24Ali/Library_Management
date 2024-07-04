@@ -175,6 +175,7 @@ public class issueController {
 
                     }
                 }
+
                 refreshTable();
             } else {
                 System.out.println("Book addition canceled by user.");

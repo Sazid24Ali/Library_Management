@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import com.lib.library_management.Entity.BooksEntity;
 import com.lib.library_management.Repository.BooksEntityRepo;
 
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,4 +92,8 @@ public class BooksEntityService {
         booksRepo.deleteById(bookId);
     }
 
+    public void saveOrUpdateBooks(ObservableList<BooksEntity> observableBookList) {
+        List<BooksEntity> booksToSaveOrUpdate = new ArrayList<>(observableBookList);
+        booksRepo.saveAll(booksToSaveOrUpdate);
+    }
 }
