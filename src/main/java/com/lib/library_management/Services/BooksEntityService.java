@@ -2,12 +2,8 @@ package com.lib.library_management.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.lib.library_management.Entity.BooksEntity;
 import com.lib.library_management.Repository.BooksEntityRepo;
-
-import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,31 +81,13 @@ public class BooksEntityService {
         return booksRepo.findBooksByBookDetailsEntity_BookCode(bookCode);
     }
 
-    @Transactional
-    public boolean isBookAlreadyBorrowed(Integer bookId, String studentRollNo) {
-        BooksEntity borrowedBook = booksRepo.findByBookIdAndStudentRollNoAndStatus(bookId, studentRollNo,
-                "Borrowed");
-        return borrowedBook != null;
+    public boolean isBookAlreadyBorrowed(Integer bookId) {
+        BooksEntity book = booksRepo.findById(bookId).orElse(null);
+        return book != null && book.getStatus().equals("Borrowed");
     }
 
     public void deleteBook(Integer bookId) {
         booksRepo.deleteById(bookId);
     }
 
-    public List<BooksEntity> getIssuedBooksByStudentRollNo(String rollNo) {
-        return booksRepo.findByStudentRollNoAndStatus(rollNo, "Borrowed");
-    }
-
-    public void updateBook(BooksEntity book) {
-        booksRepo.save(book);
-    }
-
-    @Transactional
-    public void saveOrUpdateBook(BooksEntity book) {
-        booksRepo.save(book);
-    }
-
-    public void saveOrUpdateBooks(List<BooksEntity> books) {
-        booksRepo.saveAll(books);
-    }
 }
