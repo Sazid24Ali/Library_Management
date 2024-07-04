@@ -3,12 +3,14 @@ package com.lib.library_management.Services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.lib.library_management.Entity.BooksEntity;
+import com.lib.library_management.Entity.StudentEntity;
 import com.lib.library_management.Repository.BooksEntityRepo;
 
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BooksEntityService {
@@ -95,5 +97,14 @@ public class BooksEntityService {
     public void saveOrUpdateBooks(ObservableList<BooksEntity> observableBookList) {
         List<BooksEntity> booksToSaveOrUpdate = new ArrayList<>(observableBookList);
         booksRepo.saveAll(booksToSaveOrUpdate);
+    }
+
+    public String getBorrowerRollNo(Integer bookId) {
+
+        Optional<BooksEntity> bookOptional = booksRepo.findById(bookId);
+        return bookOptional.map(book -> {
+            StudentEntity student = book.getStudent();
+            return (student != null) ? student.getStudentRollNo() : null;
+        }).orElse(null);
     }
 }
