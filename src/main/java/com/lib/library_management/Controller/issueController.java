@@ -17,6 +17,7 @@ import com.lib.library_management.Utility.utilityClass;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -66,6 +67,7 @@ public class issueController {
 
     private ObservableList<BooksEntity> observableBookList = FXCollections.observableArrayList();
     private List<Integer> addedBookIds = new ArrayList<>();
+    private MainController mainController;
 
     @FXML
     void booksremove(MouseEvent event) {
@@ -86,6 +88,11 @@ public class issueController {
     public void setRollNo(String RollNo) {
         studentId.setText(RollNo);
         studentId.setEditable(false);
+        student = studentService.getStudentByRollNo(RollNo);
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 
     @FXML
@@ -109,7 +116,7 @@ public class issueController {
     }
 
     @FXML
-    void addBook(MouseEvent event) {
+    void addBook(ActionEvent event) {
         try {
             Integer bookId = Integer.parseInt(addingBookId.getText());
             boolean isBookAlreadyAdded = observableBookList.stream()
@@ -197,5 +204,7 @@ public class issueController {
         }
         ObservableList<BooksEntity> filteredObservableList = FXCollections.observableArrayList(filteredBooks);
         Tableviewdemo.setItems(filteredObservableList);
+        mainController.getStudentData(null);
+
     }
 }
