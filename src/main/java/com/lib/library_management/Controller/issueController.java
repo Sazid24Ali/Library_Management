@@ -46,6 +46,9 @@ public class issueController {
     private Button issueButton;
 
     @FXML
+    private Button removebtn;
+
+    @FXML
     private TextField studentId;
 
     @FXML
@@ -207,4 +210,10 @@ public class issueController {
         mainController.getStudentData(null);
 
     }
+}
+    @FXML
+    void booksremove(MouseEvent event) {
+
+    }
+
 }
