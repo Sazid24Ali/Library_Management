@@ -119,7 +119,7 @@ public class issueController {
                 removebtn.setDisable(true);
             }
         });
-        
+
         removebtn.setDisable(true);
     }
 
@@ -175,6 +175,10 @@ public class issueController {
 
     @FXML
     void addBookToTable(MouseEvent event) {
+        if (observableBookList.isEmpty()) {
+            openWindow.openDialogue("No Books", "No Books Added \nAdd the Books ");
+            return;
+        }
         try {
             LocalDate issueDate = LocalDate.now();
             boolean confirm = openWindow.openConfirmation("Confirmation", "Do you want to add these books?");
@@ -184,7 +188,6 @@ public class issueController {
                         book.setStatus("Borrowed");
                         book.setDateOfAllotment(issueDate);
                         book.setStudent(student);
-
 
                         // Ensure that bookDetailsEntity is set
                         BooksEntity bookDetailsOptional = booksEntityService.getBookDataByBookId(book.getBookId());
