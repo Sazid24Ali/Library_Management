@@ -65,7 +65,9 @@ public class issueController {
     private TableColumn<BooksEntity, Integer> takenBookCode;
     @FXML
     private TableView<BooksEntity> Tableviewdemo;
-    
+    // @FXML
+    // private Button removebtn;
+    private StudentEntity student;
 
     private ObservableList<BooksEntity> observableBookList = FXCollections.observableArrayList();
     private List<Integer> addedBookIds = new ArrayList<>();
@@ -172,19 +174,39 @@ public class issueController {
     void addBookToTable(MouseEvent event) {
         try {
             LocalDate issueDate = LocalDate.now();
-            String studentRollNo = studentId.getText();
             boolean confirm = openWindow.openConfirmation("Confirmation", "Do you want to add these books?");
-            if (confirm) {
-                StudentEntity student = studentService.getStudentByRollNo(studentRollNo);
+            if (confirm && student != null) {
                 for (BooksEntity book : observableBookList) {
                     if (addedBookIds.contains(book.getBookId())) {
                         book.setStatus("Borrowed");
                         book.setDateOfAllotment(issueDate);
                         book.setStudent(student);
-                        // student.setStudentRollNo(studentRollNo);
+
+
+                        // Ensure that bookDetailsEntity is set
+                        BooksEntity bookDetailsOptional = booksEntityService.getBookDataByBookId(book.getBookId());
+                        if (bookDetailsOptional != null) {
+                            BookDetailsEntity details = bookDetailsOptional.getBookDetailsEntity();
+                            if (details != null) {
+                                book.setBookDetailsEntity(details);
+                            } else {
+                                openWindow.openDialogue("Error",
+                                        "Failed to retrieve book details for Book ID: " + book.getBookId());
+                                return;
+                            }
+                        } else {
+                            openWindow.openDialogue("Error",
+                                    "Failed to retrieve book details for Book ID: " + book.getBookId());
+                            return;
+                        }
+
                     }
                 }
 
+                booksEntityService.saveOrUpdateBooks(observableBookList);
+
+                observableBookList.clear();
+                addedBookIds.clear();
                 refreshTable();
             } else {
                 System.out.println("Book addition canceled by user.");
