@@ -87,12 +87,14 @@ public class issueController {
             e.printStackTrace();
             openWindow.openDialogue("Error", "An error occurred while removing the book: " + e.getMessage());
         }
+        Tableviewdemo.getSelectionModel().clearSelection();
+        removebtn.setDisable(true);
     }
 
     public void setRollNo(String RollNo) {
         studentId.setText(RollNo);
         studentId.setEditable(false);
-        // student = studentService.getStudentByRollNo(RollNo);
+        student = studentService.getStudentByRollNo(RollNo);
     }
 
     public void setMainController(MainController mainController) {
@@ -117,6 +119,7 @@ public class issueController {
                 removebtn.setDisable(true);
             }
         });
+        
         removebtn.setDisable(true);
     }
 
