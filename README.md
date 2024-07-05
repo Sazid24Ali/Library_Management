@@ -1,4 +1,4 @@
-Library Management System
+#Library Management System
 
 This project is a Library Management System implemented in Java for the backend logic and JavaFX for the frontend user interface. The purpose of this application is to digitalize and streamline the process of borrowing and returning books by students in a library setting, replacing traditional manual registers.
 
