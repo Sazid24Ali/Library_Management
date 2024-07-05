@@ -42,4 +42,5 @@ Technologies Used
 
 •	Database:  MySQL
 
+To install, [click here](https://github.com/Sazid24Ali/Library_Management/edit/Partheev_WorkingBranch/README.md)
 
