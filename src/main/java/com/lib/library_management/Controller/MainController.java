@@ -683,11 +683,16 @@ public class MainController {
         // if the edit is clicked and then the issue is clicked then the felids are
         // forever in edit mode
         // edit_Student_Data(false);
-        String course = Student_Course_CBox.getValue();
-        String RollNo = 1007 + Student_Year_Field.getText() + course.substring(1, 4)
-                + Student_RollNo_Field.getText();
+        String scope = Student_Course_CBox.getValue();
+        String RollNo;
+        if (scope == "Faculty") {
+            RollNo = Student_RollNo_Field.getText();
+        } else {
+            RollNo = 1007 + Student_Year_Field.getText() + scope.substring(1, 4)
+                    + Student_RollNo_Field.getText();
+        }
         Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        openWindow.openScene("Issue", "Issue Books", primaryStage, RollNo,this);
+        openWindow.openScene("Issue", "Issue Books", primaryStage, RollNo, this);
 
         setIssuedbooks(RollNo);
         // Added this to clear the selection from the table and reset the return button
