@@ -188,6 +188,10 @@ public class AppendBooksController {
                     break;
                 }
             }
+            Set<Integer> IdSet=new LinkedHashSet<>();
+            IdSet.addAll(Ids);
+            Ids.clear();
+            Ids.addAll(IdSet);
             ArrayList<BooksEntity> booksToAdd = new ArrayList<BooksEntity>();
             ArrayList<Integer> idsNotAdded = new ArrayList<>();
             ArrayList<Integer> idsAdded = new ArrayList<>();
