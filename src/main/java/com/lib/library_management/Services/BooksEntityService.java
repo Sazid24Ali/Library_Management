@@ -39,7 +39,7 @@ public class BooksEntityService {
         int i = 0;
         for (int j = 0; j < data.size(); j++) {
             String pair = data.get(j).replace(",", " -> ");
-            formattedData.add(pair);            
+            formattedData.add(pair);
         }
         // System.out.println(formattedData);
         return formattedData;
@@ -67,5 +67,53 @@ public class BooksEntityService {
 
         }
         return null;
+    }
+
+    public void updateBookStatus(BooksEntity book) {
+        try {
+            booksRepo.save(book);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<BooksEntity> getAllBooks() {
+        return booksRepo.findAll();
+    }
+
+    public boolean checkBookExistsById(Integer bookId) {
+        return booksRepo.existsById(bookId);
+    }
+
+    public List<BooksEntity> getBooksByCode(Integer bookCode) {
+        return booksRepo.findBooksByBookDetailsEntity_BookCode(bookCode);
+    }
+
+    public boolean isBookAlreadyBorrowed(Integer bookId) {
+        BooksEntity book = booksRepo.findById(bookId).orElse(null);
+        return book != null && book.getStatus().equals("Borrowed");
+    }
+
+    public void deleteBook(Integer bookId) {
+        booksRepo.deleteById(bookId);
+    }
+
+    public void saveOrUpdateBooks(ObservableList<BooksEntity> observableBookList) {
+        List<BooksEntity> booksToSaveOrUpdate = new ArrayList<>(observableBookList);
+        booksRepo.saveAll(booksToSaveOrUpdate);
+    }
+
+    public String getBorrowerRollNo(Integer bookId) {
+
+        Optional<BooksEntity> bookOptional = booksRepo.findById(bookId);
+        return bookOptional.map(book -> {
+            StudentEntity student = book.getStudent();
+            return (student != null) ? student.getStudentRollNo() : null;
+        }).orElse(null);
+    }
+
+    public void deleteBooksByCode(Integer bookCode) {
+        List<BooksEntity> books = booksRepo.findBooksByBookDetailsEntity_BookCode(bookCode);
+        booksRepo.deleteAll(books);
     }
 }
