@@ -43,7 +43,16 @@ public class StudentService {
         } catch (Exception e) {
             return null;
         }
+    }
 
+    public StudentEntity getStudentByRollNo(String rollNo) {
+
+        try {
+            StudentEntity data2 = studentRepo.findById(rollNo).get();
+            return data2;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 }

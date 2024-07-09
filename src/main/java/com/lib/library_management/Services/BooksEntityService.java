@@ -12,6 +12,8 @@ import com.lib.library_management.Repository.BooksEntityRepo;
 
 import javafx.collections.ObservableList;
 
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -55,13 +57,11 @@ public class BooksEntityService {
             String pair = data.get(j).replace(",", " -> ");
             formattedData.add(pair);
         }
-        // System.out.println(formattedData);
         return formattedData;
-
     }
 
-    public List<BooksEntity> getBooksFromStudentRollNo(String RollNo) {
-        return booksRepo.findBooksEntitiesByStudent_StudentRollNo(RollNo);
+    public List<BooksEntity> getBooksFromStudentRollNo(String rollNo) {
+        return booksRepo.findBooksEntitiesByStudent_StudentRollNo(rollNo);
     }
 
     public void addBooks(ArrayList<BooksEntity> booksToAdd) {
@@ -74,11 +74,9 @@ public class BooksEntityService {
 
     public BooksEntity getBookDataByBookId(Integer bookId) {
         try {
-            BooksEntity bookDetailsEntity = booksRepo.findById(bookId).get();
-            return bookDetailsEntity;
-
+            return booksRepo.findById(bookId).orElse(null);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         return null;
     }

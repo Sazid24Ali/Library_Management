@@ -33,9 +33,15 @@ public class StudentEntity {
 
     @Override
     public String toString() {
-        return "\nStudentRollNo=" + StudentRollNo + "\nStudentName=" + StudentName + "\nPhoneNumber="
-                + PhoneNumber + "\nBranch=" + Branch + "\nYearOfPassing=" + YearOfPassing + "\n" + facultyPosition
-                + "\n";
+        if (facultyPosition == null) {
+            return "\nStudentRollNo = " + StudentRollNo + "\nStudentName = " + StudentName + "\nPhone Number = "
+                    + PhoneNumber + "\nBranch = " + Branch + "\nYearOfPassing = " + YearOfPassing + "\n";
+        } else {
+            return "\nFaculty Id = " + StudentRollNo + "\nFaculty Name = " + StudentName + "\nPhone Number = "
+                    + PhoneNumber + "\nRole = " + Branch + "\nFaculty Position = " + facultyPosition
+                    + "\n";
+        }
+
     }
 
 }
