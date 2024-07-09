@@ -20,7 +20,4 @@ public interface BookDetailsRepo extends JpaRepository<BookDetailsEntity, Intege
     @Query("DELETE FROM BookDetailsEntity b WHERE b.BookCode = :bookCode")
     void deleteByBookCode(Integer bookCode);
 
-    @Query("SELECT b FROM BooksEntity b WHERE b.bookCode = :bookCode")
-    List<BooksEntity> findByBookCode(@Param("bookCode") Integer bookCode);
-
 }
