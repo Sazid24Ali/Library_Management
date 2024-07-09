@@ -76,13 +76,14 @@
                   <Font name="System Bold Italic" size="13.0" />
                </font>
             </Button>
-            <TableView prefHeight="144.0" prefWidth="600.0">
+            <TableView fx:id="removebooktable" prefHeight="144.0" prefWidth="600.0" tableMenuButtonVisible="true">
               <columns>
                 <TableColumn fx:id="colBookcode" prefWidth="77.60003662109375" text="Book Code" />
                 <TableColumn fx:id="colbookname" prefWidth="217.5999755859375" text=" Book Name" />
                   <TableColumn fx:id="colauthor" prefWidth="94.4000244140625" text=" Author" />
                   <TableColumn fx:id="coledition" prefWidth="83.20001220703125" text="Edition" />
-                  <TableColumn fx:id="colsubject" prefWidth="124.79998779296875" text=" Subject" />
+                  <TableColumn fx:id="colsubject" prefWidth="109.59994506835938" text=" Subject" />
+                  <TableColumn fx:id="colbookid" prefWidth="75.0" text=" Book id" />
               </columns>
                <VBox.margin>
                   <Insets top="20.0" />

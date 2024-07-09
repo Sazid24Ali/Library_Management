@@ -103,6 +103,10 @@ public class issueController {
 
     @FXML
     void initialize() {
+        // To have an fresh exeperience whenever we open the issue controller again
+        observableBookList.clear();
+        // addedBookIds.clear();
+
         Tableviewdemo.setPlaceholder(new Label("Requested Data is Not Available"));
         utilityClass.setIntegerLimiter(addingBookId, 7);
         takenBookId.setCellValueFactory(new PropertyValueFactory<>("BookId"));
