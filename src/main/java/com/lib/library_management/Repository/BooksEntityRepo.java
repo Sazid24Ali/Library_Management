@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.ArrayList;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.lib.library_management.Entity.BookDetailsEntity;
 import com.lib.library_management.Entity.BooksEntity;
@@ -44,4 +46,20 @@ public interface BooksEntityRepo extends JpaRepository<BooksEntity, Integer> {
     @Query("SELECT b.bookDetailsEntity FROM BooksEntity b WHERE b.BookId = :bookId")
     BookDetailsEntity findBookDetailsByBookId(@Param("bookId") Integer bookId);
 
+    @Query("SELECT b FROM BooksEntity b WHERE b.bookDetailsEntity.BookCode = :bookCode")
+    List<BooksEntity> findBooksByBookDetailsEntity_BookCode(Integer bookCode);
+
+    @Query("SELECT bd FROM BookDetailsEntity bd WHERE bd.BookCode = :bookCode")
+    List<BookDetailsEntity> findByBookCode(@Param("bookCode") int bookCode);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM BooksEntity b WHERE b.bookDetailsEntity.BookCode = :bookCode")
+    void deleteBooksByBookCode(Integer bookCode);
+
+    @Query("SELECT b FROM BooksEntity b WHERE b.bookDetailsEntity.BookCode = :bookCode")
+    List<BooksEntity> findBooksByBookCode(Integer bookCode);
+
+    @Query("SELECT b FROM BooksEntity b LEFT JOIN FETCH b.bookDetailsEntity bd WHERE b.BookId = :bookId")
+    BooksEntity findBookByBookId(@Param("bookId") Integer bookId);
 }

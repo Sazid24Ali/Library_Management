@@ -1,6 +1,7 @@
 package com.lib.library_management.Controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,8 +34,7 @@ public class RemoveRecordsController {
 
     @FXML
     private TableColumn<BooksEntity, Integer> colBookcode;
-    @FXML
-    private RadioButton rdBookcode;
+
     @FXML
     private TableColumn<BooksEntity, Integer> colbookid;
 
@@ -49,6 +49,9 @@ public class RemoveRecordsController {
 
     @FXML
     private TableColumn<BooksEntity, String> colsubject;
+
+    @FXML
+    private RadioButton rdBookcode;
 
     @FXML
     private RadioButton rdBookid;
@@ -96,7 +99,6 @@ public class RemoveRecordsController {
     void onclickcontentsvisible(ActionEvent event) {
         String input = tfid_bookcode.getText().trim();
 
-        // Check if neither radio button is selected
         if (!rdBookid.isSelected() && !rdBookcode.isSelected()) {
             openWindow.openDialogue("Warning", "Please select either Book ID or Book Code.");
             return;
@@ -136,13 +138,14 @@ public class RemoveRecordsController {
                 }
             } else if (rdBookcode.isSelected()) {
                 Integer bookCode = Integer.parseInt(input);
-                // Check if the book code already exists in the table
+
                 if (observableBookList.stream().anyMatch(book -> book.getBookCode() == bookCode)) {
                     openWindow.openDialogue("Warning", "Book Code " + bookCode + " already exists in the table.");
                     return;
                 }
 
                 List<BooksEntity> books = booksService.getBooksByCode(bookCode);
+                System.out.println(books);
                 if (books.isEmpty()) {
                     openWindow.openDialogue("Warning", "No books found with Book Code " + bookCode);
                 } else {
@@ -176,22 +179,31 @@ public class RemoveRecordsController {
 
     @FXML
     void removebooksonclick(ActionEvent event) {
-        if (observableBookList.isEmpty()) {
-            openWindow.openDialogue("Warning", "No books selected for removal.");
-            return;
-        }
-
         boolean confirm = openWindow.openConfirmation("Confirmation",
                 "Do you want to permanently remove the selected books?");
         if (confirm) {
             try {
                 if (rdBookid.isSelected()) {
+                    if (observableBookList.isEmpty()) {
+                        openWindow.openDialogue("Warning", "No books selected for removal.");
+                        return;
+                    }
                     for (BooksEntity book : observableBookList) {
                         booksService.deleteBook(book.getBookId());
                     }
                 } else if (rdBookcode.isSelected()) {
-                    for (BooksEntity book : observableBookList) {
-                        booksService.deleteBooksByCode(book.getBookCode());
+                    List<Integer> validBookCodes = observableBookList.stream()
+                            .filter(book -> book.getBookCode() != null)
+                            .map(BooksEntity::getBookCode)
+                            .collect(Collectors.toList());
+
+                    if (validBookCodes.isEmpty()) {
+                        openWindow.openDialogue("Warning", "No valid book codes selected for removal.");
+                        return;
+                    }
+
+                    for (Integer bookCode : validBookCodes) {
+                        booksService.deleteBookDetailsByCode(bookCode);
                     }
                 }
                 observableBookList.clear();
