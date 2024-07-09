@@ -7,7 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lib.library_management.Entity.BookDetailsEntity;
 import com.lib.library_management.Entity.BooksEntity;
 import com.lib.library_management.Entity.StudentEntity;
+ 
 import com.lib.library_management.Repository.BookDetailsRepo;
+ 
 import com.lib.library_management.Repository.BooksEntityRepo;
 
 import javafx.collections.ObservableList;
@@ -119,6 +121,7 @@ public class BooksEntityService {
             return (student != null) ? student.getStudentRollNo() : null;
         }).orElse(null);
     }
+ 
 
     @Transactional(readOnly = true)
     public List<BookDetailsEntity> getBookDetailsByCode(int bookCode) {
@@ -157,4 +160,5 @@ public class BooksEntityService {
         return booksRepo.findBookByBookId(bookId);
     }
 
+ 
 }
