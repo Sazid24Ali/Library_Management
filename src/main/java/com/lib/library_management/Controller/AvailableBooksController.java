@@ -171,6 +171,7 @@ public class AvailableBooksController {
             book.setBookIds(booksService.getBookIds(bookCode));
             book.setBorrowedStudents(booksService.getBorrowedStudents(bookCode));
         });
+        System.out.println("Book Details \n"+observableBookList);
 
         filteredList = new FilteredList<>(observableBookList, p -> true);
         // To add the functionality of Sorting the value in columns
