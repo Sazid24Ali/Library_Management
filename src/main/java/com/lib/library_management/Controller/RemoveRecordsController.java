@@ -132,6 +132,7 @@ public class RemoveRecordsController {
                     book.setAuthor(details.getAuthor());
                     book.setSubjectCategory(details.getSubjectCategory());
                     book.setBookCode(details.getBookCode());
+                    book.setStudent(bookDetailsOptional.getStudent());
                     if (observableBookList.contains(book)) {
                         openWindow.openDialogue("Warning", "Book ID " + bookId + " is already added.");
                         return;
@@ -208,7 +209,7 @@ public class RemoveRecordsController {
                     }
                     if (!BooksNotremoved.isEmpty()) {
                         openWindow.openDialogue("Message", "The Following Ids Were Not Removed\nThis Books Are Issued to Students/Faculty\n"+BooksNotremoved);
-                        
+                        return;
                     }
                 }
                 if (rdBookcode.isSelected()) {
