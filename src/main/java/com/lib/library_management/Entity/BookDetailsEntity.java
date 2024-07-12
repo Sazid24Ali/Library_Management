@@ -3,6 +3,7 @@ package com.lib.library_management.Entity;
 import java.util.ArrayList;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Transient;
 import lombok.Data;
@@ -12,6 +13,7 @@ import lombok.Data;
 public class BookDetailsEntity {
 
     @Id
+    @GeneratedValue
     Integer BookCode;// Change it to Sting If Needed
     String BookName;
     String Author;
@@ -38,6 +40,20 @@ public class BookDetailsEntity {
         this.publishing_year = publishing_year;
         this.price = price;
     }
+    
+
+    public BookDetailsEntity(String bookName, String author, String subjectCategory, String edition, Integer pages,
+            String place_publisher, Integer publishing_year, Integer price) {
+        BookName = bookName;
+        Author = author;
+        SubjectCategory = subjectCategory;
+        Edition = edition;
+        this.pages = pages;
+        this.place_publisher = place_publisher;
+        this.publishing_year = publishing_year;
+        this.price = price;
+    }
+
 
     @Transient
     Long totalBooks;
@@ -57,7 +73,5 @@ public class BookDetailsEntity {
                 + ", place_publisher=" + place_publisher + ", publishing_year=" + publishing_year + ", price=" + price
                 + "]";
     }
-
-    
 
 }

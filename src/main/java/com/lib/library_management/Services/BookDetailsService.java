@@ -22,14 +22,14 @@ public class BookDetailsService {
         return bookDetailsRepository.findAll();
     }
 
-    public boolean addBooksData(BookDetailsEntity BooksData) {
+    public Integer addBooksData(BookDetailsEntity BooksData) {
         try {
-            bookDetailsRepository.save(BooksData);
-            return true;
+            Integer bookCode = bookDetailsRepository.save(BooksData).getBookCode();
+            return bookCode;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+        return -1;
     }
 
     public BookDetailsEntity getBookDetailsEntity(Integer bookId) {

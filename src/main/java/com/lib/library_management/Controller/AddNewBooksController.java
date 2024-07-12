@@ -64,7 +64,7 @@ public class AddNewBooksController {
     @FXML
     void onclicksave(ActionEvent event) {
         try {
-            Integer BookCode = Integer.parseInt(tfbookcode.getText());
+            // Integer BookCode = Integer.parseInt(tfbookcode.getText());
             String Author = tfAuthor.getText();
             String BookName = tfbookname.getText();
             String Edition = tfedition.getText();
@@ -82,21 +82,24 @@ public class AddNewBooksController {
             tfprice.clear();
             tfsubjectcategory.clear();
             tfyear.clear();
-            if (bookDetailsService.checkBookCodeIsExist(BookCode)) {
-                openWindow.openDialogue("Warning", " BookCode is Already Exist ");
-            } else {
-                BookDetailsEntity newBookData = new BookDetailsEntity(BookCode, BookName, Author, SubjectCategory,
+            // if (bookDetailsService.checkBookCodeIsExist(BookCode)) {
+            //     openWindow.openDialogue("Warning", " BookCode is Already Exist ");
+            // } else {
+                BookDetailsEntity newBookData = new BookDetailsEntity(BookName, Author, SubjectCategory,
                         Edition, pages, place_publisher, publishing_year, price);
                 if (openWindow.openConfirmation("Add New Book?", "Do you want save the book data?")) {
                     System.out.println(newBookData);
-                    if (bookDetailsService.addBooksData(newBookData)) {
-                        openWindow.openDialogue("Successful:",
-                                "Successfully Added the Book with the BookName \"" + BookName + "and BookCode \" "
-                                        + BookCode + "");
-                        // Clear fields or perform any other necessary actions
-                    } else {
+                    Integer bookCode = bookDetailsService.addBooksData(newBookData);
+                    if (bookCode==-1) {
+                        
                         openWindow.openDialogue("Error", "Failed to Add Book Data");
-                    }
+                        
+                    } else {
+                        openWindow.openDialogue("Successful:",
+                                "Successfully Added the Book with the BookName \" " + BookName + " \" and BookCode \" "
+                                        + bookCode + " \" ");
+                        // Clear fields or perform any other necessary actions
+                    // }
                 }
             }
         } catch (NumberFormatException e) {

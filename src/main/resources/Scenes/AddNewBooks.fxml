@@ -14,7 +14,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="623.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lib.library_management.Controller.AddNewBooksController">
    <top>
       <StackPane prefHeight="59.0" prefWidth="626.0" BorderPane.alignment="CENTER">
@@ -66,7 +65,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label prefHeight="19.0" prefWidth="74.0" text="BookCode">
+            <Label prefHeight="19.0" prefWidth="74.0" text="BookCode" visible="false">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -111,7 +110,7 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <TextField fx:id="tfbookcode" GridPane.columnIndex="1" />
+            <TextField fx:id="tfbookcode" visible="false" GridPane.columnIndex="1" />
             <TextField fx:id="tfbookname" layoutX="310.0" layoutY="14.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="tfAuthor" layoutX="310.0" layoutY="49.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="tfsubjectcategory" layoutX="310.0" layoutY="83.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
