@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import com.lib.library_management.Entity.BookDetailsEntity;
 import com.lib.library_management.Entity.BooksEntity;
+import com.lib.library_management.Repository.BookDetailsRepo;
+import com.lib.library_management.Services.BookDetailsService;
 import com.lib.library_management.Services.BooksEntityService;
 import com.lib.library_management.Utility.OpenWindow;
 
@@ -31,6 +33,9 @@ public class RemoveRecordsController {
 
     @Autowired
     private BooksEntityService booksService;
+
+    @Autowired
+    private BookDetailsRepo bookDetailsRepo;
 
     @Autowired
     private OpenWindow openWindow;
@@ -72,7 +77,7 @@ public class RemoveRecordsController {
     private TableView<BooksEntity> removebooktable;
 
     private ObservableList<BooksEntity> observableBookList = FXCollections.observableArrayList();
-    private Map<Integer,String> BooksNotremoved = new HashMap();
+    private Map<Integer, String> booksNotRemoved = new HashMap<>();
 
     private ToggleGroup toggleGroup = new ToggleGroup();
 
@@ -90,13 +95,13 @@ public class RemoveRecordsController {
 
         rdBookcode.setToggleGroup(toggleGroup);
         rdBookid.setToggleGroup(toggleGroup);
-
         toggleGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
             if (newToggle == rdBookid) {
                 tfid_bookcode.setPromptText("Enter Book ID");
             } else if (newToggle == rdBookcode) {
                 tfid_bookcode.setPromptText("Enter Book Code");
             }
+            clearTableAndData();
         });
     }
 
@@ -119,9 +124,9 @@ public class RemoveRecordsController {
                 Integer bookId = Integer.parseInt(input);
                 if (observableBookList.stream().anyMatch(book -> book.getBookId() == bookId)) {
                     openWindow.openDialogue("Warning", "Book ID " + bookId + " already exists in the table.");
+                    clearTableAndData();
                     return;
                 }
-                // TODO : The Logic Need to be Setted here` 
                 BooksEntity bookDetailsOptional = booksService.getBookDataByBookId(bookId);
                 if (bookDetailsOptional != null) {
                     BookDetailsEntity details = bookDetailsOptional.getBookDetailsEntity();
@@ -133,11 +138,6 @@ public class RemoveRecordsController {
                     book.setSubjectCategory(details.getSubjectCategory());
                     book.setBookCode(details.getBookCode());
                     book.setStudent(bookDetailsOptional.getStudent());
-                    if (observableBookList.contains(book)) {
-                        openWindow.openDialogue("Warning", "Book ID " + bookId + " is already added.");
-                        return;
-                    }
-
                     observableBookList.add(book);
                 } else {
                     openWindow.openDialogue("Warning", "Book ID " + bookId + " does not exist.");
@@ -147,11 +147,11 @@ public class RemoveRecordsController {
 
                 if (observableBookList.stream().anyMatch(book -> book.getBookCode() == bookCode)) {
                     openWindow.openDialogue("Warning", "Book Code " + bookCode + " already exists in the table.");
+                    clearTableAndData();
                     return;
                 }
 
                 List<BooksEntity> books = booksService.getBooksByCode(bookCode);
-                System.out.println(books);
                 if (books.isEmpty()) {
                     openWindow.openDialogue("Warning", "No books found with Book Code " + bookCode);
                 } else {
@@ -164,11 +164,6 @@ public class RemoveRecordsController {
                         book.setAuthor(details.getAuthor());
                         book.setSubjectCategory(details.getSubjectCategory());
                         book.setBookCode(details.getBookCode());
-                        if (observableBookList.contains(book)) {
-                            openWindow.openDialogue("Warning", "Book Code " + bookCode + " is already added.");
-                            return;
-                        }
-
                         observableBookList.add(book);
                     }
                 }
@@ -185,7 +180,7 @@ public class RemoveRecordsController {
 
     @FXML
     void removebooksonclick(ActionEvent event) {
-        BooksNotremoved.clear();
+        booksNotRemoved.clear();
         if (observableBookList.isEmpty()) {
             openWindow.openDialogue("Warning", "No books selected for removal.");
             return;
@@ -195,46 +190,81 @@ public class RemoveRecordsController {
         if (confirm) {
             try {
                 if (rdBookid.isSelected()) {
-                    // if (observableBookList.isEmpty()) {
-                    // openWindow.openDialogue("Warning", "No books selected for removal.");
-                    // return;
-                    // }
+                    List<Integer> removedBookIds = new ArrayList<>();
                     for (BooksEntity book : observableBookList) {
-                        System.out.println("To Be Removed : \n"+book);
-                        if (book.getStudent() == null){
+                        if (book.getStudent() == null) {
                             booksService.deleteBook(book.getBookId());
-                        }else{
-                            BooksNotremoved.put(book.getBookId(),book.getStudent().getStudentRollNo());
+                            removedBookIds.add(book.getBookId());
+                        } else {
+                            booksNotRemoved.put(book.getBookId(), book.getStudent().getStudentRollNo());
                         }
                     }
-                    if (!BooksNotremoved.isEmpty()) {
-                        openWindow.openDialogue("Message", "The Following Ids Were Not Removed\nThis Books Are Issued to Students/Faculty\n"+BooksNotremoved);
-                        return;
+                    if (!booksNotRemoved.isEmpty()) {
+                        openWindow.openDialogue("Message",
+                                "Can't Delete As they where issued\n" +
+                                        booksNotRemoved.entrySet().stream()
+                                                .map(entry -> "Book ID: " + entry.getKey() + ", Student Roll No: "
+                                                        + entry.getValue())
+                                                .collect(Collectors.joining("\n")));
                     }
-                }
-                if (rdBookcode.isSelected()) {
+                    if (!removedBookIds.isEmpty()) {
+                        openWindow.openDialogue("Deleted Books",
+                                " Book IDs:\n " +
+                                        removedBookIds.stream()
+                                                .map(Object::toString)
+                                                .collect(Collectors.joining(", ")));
+                    }
+                } else if (rdBookcode.isSelected()) {
+                    List<Integer> removedBookIds = new ArrayList<>();
                     List<Integer> validBookCodes = observableBookList.stream()
                             .filter(book -> book.getBookCode() != null)
                             .map(BooksEntity::getBookCode)
+                            .distinct()
                             .collect(Collectors.toList());
 
-                    if (validBookCodes.isEmpty()) {
-                        openWindow.openDialogue("Warning", "No valid book codes selected for removal.");
-                        return;
-                    }
-
                     for (Integer bookCode : validBookCodes) {
-                        booksService.deleteBookDetailsByCode(bookCode);
+                        List<BooksEntity> booksToDelete = booksService.getBooksByCode(bookCode);
+                        for (BooksEntity book : booksToDelete) {
+                            if (book.getStudent() == null) {
+                                booksService.deleteBook(book.getBookId());
+                                removedBookIds.add(book.getBookId());
+                            } else {
+                                booksNotRemoved.put(book.getBookId(), book.getStudent().getStudentRollNo());
+                            }
+                        }
+                        boolean allBooksNotBorrowed = booksToDelete.stream()
+                                .allMatch(book -> book.getStudent() == null);
+                        if (allBooksNotBorrowed) {
+                            booksService.deleteBookDetailsByCode(bookCode);
+                        }
+                    }
+                    if (!booksNotRemoved.isEmpty()) {
+                        openWindow.openDialogue("Message",
+                                "Can't Delete As they where issued \n" +
+                                        booksNotRemoved.entrySet().stream()
+                                                .map(entry -> "Book ID: " + entry.getKey() + ", Student Roll No: "
+                                                        + entry.getValue())
+                                                .collect(Collectors.joining("\n")));
+                    }
+                    if (!removedBookIds.isEmpty()) {
+                        openWindow.openDialogue("Deleted Books",
+                                " Book IDs: \n" +
+                                        removedBookIds.stream()
+                                                .map(Object::toString)
+                                                .collect(Collectors.joining(", ")));
                     }
                 }
-                observableBookList.clear();
-                removebooktable.getItems().clear();
-                openWindow.openDialogue("Info", "Books have been removed successfully.");
-                tfid_bookcode.clear();
+                clearTableAndData();
             } catch (Exception e) {
                 e.printStackTrace();
                 openWindow.openDialogue("Error", "An error occurred while removing books: " + e.getMessage());
             }
         }
+    }
+
+    private void clearTableAndData() {
+        observableBookList.clear();
+        removebooktable.getItems().clear();
+        tfid_bookcode.clear();
     }
 }

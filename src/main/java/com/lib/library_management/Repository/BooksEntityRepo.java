@@ -50,7 +50,7 @@ public interface BooksEntityRepo extends JpaRepository<BooksEntity, Integer> {
     List<BooksEntity> findBooksByBookDetailsEntity_BookCode(Integer bookCode);
 
     @Query("SELECT bd FROM BookDetailsEntity bd WHERE bd.BookCode = :bookCode")
-    List<BookDetailsEntity> findByBookCode(@Param("bookCode") int bookCode);
+    List<BooksEntity> findByBookCode(@Param("bookCode") int bookCode);
 
     @Modifying
     @Transactional
@@ -62,4 +62,5 @@ public interface BooksEntityRepo extends JpaRepository<BooksEntity, Integer> {
 
     @Query("SELECT b FROM BooksEntity b LEFT JOIN FETCH b.bookDetailsEntity bd WHERE b.BookId = :bookId")
     BooksEntity findBookByBookId(@Param("bookId") Integer bookId);
+
 }

@@ -7,30 +7,33 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lib.library_management.Entity.BookDetailsEntity;
 import com.lib.library_management.Entity.BooksEntity;
 import com.lib.library_management.Entity.StudentEntity;
- 
 import com.lib.library_management.Repository.BookDetailsRepo;
- 
 import com.lib.library_management.Repository.BooksEntityRepo;
-
-import javafx.collections.ObservableList;
 
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BooksEntityService {
 
     @Autowired
     BooksEntityRepo booksRepo;
+
     @Autowired
-    private BookDetailsRepo bookDetailsRepository;
+    BookDetailsRepo bookDetailsRepo;
 
     @Transactional
     public void deleteBookDetailsByCode(Integer bookCode) {
-        bookDetailsRepository.deleteByBookCode(bookCode);
+        List<BooksEntity> booksToDelete = getBooksByCode(bookCode);
+        for (BooksEntity book : booksToDelete) {
+            deleteBook(book.getBookId());
+        }
+        bookDetailsRepo.deleteById(bookCode);
+
     }
 
     BooksEntity booksEntity;
@@ -121,11 +124,13 @@ public class BooksEntityService {
             return (student != null) ? student.getStudentRollNo() : null;
         }).orElse(null);
     }
- 
 
     @Transactional(readOnly = true)
     public List<BookDetailsEntity> getBookDetailsByCode(int bookCode) {
-        return booksRepo.findByBookCode(bookCode);
+        List<BooksEntity> booksEntities = booksRepo.findByBookCode(bookCode);
+        return booksEntities.stream()
+                .map(BooksEntity::getBookDetailsEntity)
+                .collect(Collectors.toList());
     }
 
     @Transactional
@@ -160,5 +165,4 @@ public class BooksEntityService {
         return booksRepo.findBookByBookId(bookId);
     }
 
- 
 }
