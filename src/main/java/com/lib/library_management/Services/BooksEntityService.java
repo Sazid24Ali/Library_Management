@@ -57,7 +57,6 @@ public class BooksEntityService {
     public ArrayList<String> getBorrowedStudents(Integer bookCode) {
         ArrayList<String> data = booksRepo.getBorrowedStudents(bookCode);
         ArrayList<String> formattedData = new ArrayList<>();
-        int i = 0;
         for (int j = 0; j < data.size(); j++) {
             String pair = data.get(j).replace(",", " -> ");
             formattedData.add(pair);
