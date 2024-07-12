@@ -2,19 +2,41 @@ package com.lib.library_management.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.lib.library_management.Entity.BookDetailsEntity;
 import com.lib.library_management.Entity.BooksEntity;
+import com.lib.library_management.Entity.StudentEntity;
+import com.lib.library_management.Repository.BookDetailsRepo;
 import com.lib.library_management.Repository.BooksEntityRepo;
 
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BooksEntityService {
 
     @Autowired
-    private BooksEntityRepo booksRepo;
+    BooksEntityRepo booksRepo;
+
+    @Autowired
+    BookDetailsRepo bookDetailsRepo;
+
+    @Transactional
+    public void deleteBookDetailsByCode(Integer bookCode) {
+        List<BooksEntity> booksToDelete = getBooksByCode(bookCode);
+        for (BooksEntity book : booksToDelete) {
+            deleteBook(book.getBookId());
+        }
+        bookDetailsRepo.deleteById(bookCode);
+
+    }
+
+    BooksEntity booksEntity;
 
     public long countTotalBooks(Integer bookCode) {
         return booksRepo.countTotalBooks(bookCode);
@@ -35,8 +57,9 @@ public class BooksEntityService {
     public ArrayList<String> getBorrowedStudents(Integer bookCode) {
         ArrayList<String> data = booksRepo.getBorrowedStudents(bookCode);
         ArrayList<String> formattedData = new ArrayList<>();
-        for (String datum : data) {
-            String pair = datum.replace(",", " -> ");
+        int i = 0;
+        for (int j = 0; j < data.size(); j++) {
+            String pair = data.get(j).replace(",", " -> ");
             formattedData.add(pair);
         }
         return formattedData;
@@ -79,10 +102,6 @@ public class BooksEntityService {
         return booksRepo.existsById(bookId);
     }
 
-    public List<BooksEntity> getBooksByCode(Integer bookCode) {
-        return booksRepo.findBooksByBookDetailsEntity_BookCode(bookCode);
-    }
-
     public boolean isBookAlreadyBorrowed(Integer bookId) {
         BooksEntity book = booksRepo.findById(bookId).orElse(null);
         return book != null && book.getStatus().equals("Borrowed");
@@ -96,4 +115,54 @@ public class BooksEntityService {
         List<BooksEntity> booksToSaveOrUpdate = new ArrayList<>(observableBookList);
         booksRepo.saveAll(booksToSaveOrUpdate);
     }
+
+    public String getBorrowerRollNo(Integer bookId) {
+
+        Optional<BooksEntity> bookOptional = booksRepo.findById(bookId);
+        return bookOptional.map(book -> {
+            StudentEntity student = book.getStudent();
+            return (student != null) ? student.getStudentRollNo() : null;
+        }).orElse(null);
+    }
+
+    @Transactional(readOnly = true)
+    public List<BookDetailsEntity> getBookDetailsByCode(int bookCode) {
+        List<BooksEntity> booksEntities = booksRepo.findByBookCode(bookCode);
+        return booksEntities.stream()
+                .map(BooksEntity::getBookDetailsEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<BooksEntity> getBooksByCode(Integer bookCode) {
+        List<BooksEntity> books = booksRepo.findBooksByBookCode(bookCode);
+
+        // if (books.isEmpty()) {
+        // // No books found in BooksEntity, check BookDetailsEntity
+        // List<BooksEntity> bookDetails =
+        // bookDetailsRepository.findByBookCode(bookCode);
+        // if (bookDetails != null) {
+        // BooksEntity book = new BooksEntity();
+        // // Assuming bookDetails has a single book reference, adjust as per your
+        // entity
+        // // structure
+        // BookDetailsEntity bookDetailsEntity=book.getBookDetailsEntity()
+        // book.setBookId(book.getBookId()); // Assuming BookDetailsEntity has a
+        // reference to BooksEntity
+        // book.setBookCode(book.getBookCode());
+        // book.setBookName(book.getBookName());
+        // book.setAuthor(book.getAuthor());
+        // book.setEdition(book.getEdition());
+        // book.setSubjectCategory(book.getSubjectCategory());
+        // books.add(book);
+        // }
+        // }
+
+        return books;
+    }
+
+    public BooksEntity getBookById(Integer bookId) {
+        return booksRepo.findBookByBookId(bookId);
+    }
+
 }

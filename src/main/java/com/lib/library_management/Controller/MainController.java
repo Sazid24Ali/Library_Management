@@ -397,6 +397,9 @@ public class MainController {
         String Year = Student_Year_Field.getText();
         initialState();
         VisibilitySetter(false);
+        Student_Year_Field.setDisable(false);
+        Student_RollNo_Field.setDisable(false);
+        Student_Search_Btn.setDisable(false);
         if (scope == "Faculty") {
             Fact_Add_Btn.setVisible(false);
             Student_Course_CBox.setValue(scope);
