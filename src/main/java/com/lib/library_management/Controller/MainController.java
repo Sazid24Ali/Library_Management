@@ -374,7 +374,8 @@ public class MainController {
         try {
             Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
         } catch (Exception e) {
-            // TODO: handle exception
+            System.out.println("An Error Raised  : \n" + e);
+            openWindow.openDialogue("Error ", e.toString());
         }
         Student_Course_CBox.setItems(observableCourses);
     }
