@@ -13,7 +13,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lib.library_management.Controller.RemoveRecordsController">
    <center>
       <VBox alignment="CENTER" BorderPane.alignment="CENTER">
@@ -28,7 +27,7 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="tfid_bookcode">
+                  <TextField fx:id="tfid_bookcode" onAction="#onclickcontentsvisible">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>

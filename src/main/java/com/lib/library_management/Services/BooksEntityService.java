@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lib.library_management.Entity.BookDetailsEntity;
 import com.lib.library_management.Entity.BooksEntity;
 import com.lib.library_management.Entity.StudentEntity;
-
+import com.lib.library_management.Repository.BookDetailsRepo;
 import com.lib.library_management.Repository.BooksEntityRepo;
 
 import javafx.collections.ObservableList;
@@ -23,12 +23,17 @@ public class BooksEntityService {
     @Autowired
     BooksEntityRepo booksRepo;
 
+    @Autowired
+    BookDetailsRepo bookDetailsRepo;
+
     @Transactional
     public void deleteBookDetailsByCode(Integer bookCode) {
         List<BooksEntity> booksToDelete = getBooksByCode(bookCode);
         for (BooksEntity book : booksToDelete) {
             deleteBook(book.getBookId());
         }
+        bookDetailsRepo.deleteById(bookCode);
+
     }
 
     BooksEntity booksEntity;

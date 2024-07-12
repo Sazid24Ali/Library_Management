@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import com.lib.library_management.Entity.BookDetailsEntity;
 import com.lib.library_management.Entity.BooksEntity;
+import com.lib.library_management.Repository.BookDetailsRepo;
+import com.lib.library_management.Services.BookDetailsService;
 import com.lib.library_management.Services.BooksEntityService;
 import com.lib.library_management.Utility.OpenWindow;
 
@@ -31,6 +33,9 @@ public class RemoveRecordsController {
 
     @Autowired
     private BooksEntityService booksService;
+
+    @Autowired
+    private BookDetailsRepo bookDetailsRepo;
 
     @Autowired
     private OpenWindow openWindow;
@@ -235,7 +240,7 @@ public class RemoveRecordsController {
                     }
                     if (!booksNotRemoved.isEmpty()) {
                         openWindow.openDialogue("Message",
-                                "Can't Delete As they where issued" +
+                                "Can't Delete As they where issued \n" +
                                         booksNotRemoved.entrySet().stream()
                                                 .map(entry -> "Book ID: " + entry.getKey() + ", Student Roll No: "
                                                         + entry.getValue())
