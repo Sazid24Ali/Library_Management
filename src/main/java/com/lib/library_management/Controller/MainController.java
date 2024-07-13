@@ -374,7 +374,8 @@ public class MainController {
         try {
             Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
         } catch (Exception e) {
-            // TODO: handle exception
+            System.out.println("An Error Raised  : \n" + e);
+            openWindow.openDialogue("Error ", e.toString());
         }
         Student_Course_CBox.setItems(observableCourses);
     }
@@ -397,6 +398,9 @@ public class MainController {
         String Year = Student_Year_Field.getText();
         initialState();
         VisibilitySetter(false);
+        Student_Year_Field.setDisable(false);
+        Student_RollNo_Field.setDisable(false);
+        Student_Search_Btn.setDisable(false);
         if (scope == "Faculty") {
             Fact_Add_Btn.setVisible(false);
             Student_Course_CBox.setValue(scope);
@@ -683,11 +687,16 @@ public class MainController {
         // if the edit is clicked and then the issue is clicked then the felids are
         // forever in edit mode
         // edit_Student_Data(false);
-        String course = Student_Course_CBox.getValue();
-        String RollNo = 1007 + Student_Year_Field.getText() + course.substring(1, 4)
-                + Student_RollNo_Field.getText();
+        String scope = Student_Course_CBox.getValue();
+        String RollNo;
+        if (scope == "Faculty") {
+            RollNo = Student_RollNo_Field.getText();
+        } else {
+            RollNo = 1007 + Student_Year_Field.getText() + scope.substring(1, 4)
+                    + Student_RollNo_Field.getText();
+        }
         Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        openWindow.openScene("Issue", "Issue Books", primaryStage, RollNo,this);
+        openWindow.openScene("Issue", "Issue Books", primaryStage, RollNo, this);
 
         setIssuedbooks(RollNo);
         // Added this to clear the selection from the table and reset the return button

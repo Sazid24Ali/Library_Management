@@ -7,96 +7,111 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="428.0" prefWidth="586.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lib.library_management.Controller.RemoveRecordsController">
-   <children>
-      <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <padding>
-            <Insets top="10.0" />
-         </padding>
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lib.library_management.Controller.RemoveRecordsController">
+   <center>
+      <VBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Remove Records" wrappingWidth="165.5116958618164">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-               <VBox.margin>
-                  <Insets left="225.0" top="10.0" />
-               </VBox.margin>
-            </Text>
-            <HBox prefHeight="50.0" prefWidth="600.0">
+            <HBox alignment="CENTER" spacing="15.0">
                <children>
-                  <Label prefHeight="27.0" prefWidth="147.0" text=" Enter the ID/Book Code">
+                  <Label text=" Enter the Book ID/Book Code">
                      <HBox.margin>
-                        <Insets left="30.0" top="10.0" />
+                        <Insets />
                      </HBox.margin>
                      <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="tfid_bookcode" prefHeight="26.0" prefWidth="178.0">
+                  <TextField fx:id="tfid_bookcode" onAction="#onclickcontentsvisible">
                      <HBox.margin>
-                        <Insets left="20.0" top="10.0" />
+                        <Insets />
                      </HBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
                   </TextField>
-                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+                  <VBox alignment="CENTER_LEFT" spacing="15.0">
                      <children>
-                        <RadioButton fx:id="rdBookid" mnemonicParsing="false" text="Book Id">
+                        <RadioButton fx:id="rdBookid" mnemonicParsing="false" selected="true" text="Book Id">
                            <font>
-                              <Font name="System Bold" size="12.0" />
+                              <Font name="System Bold" size="15.0" />
                            </font>
                         </RadioButton>
                         <RadioButton fx:id="rdBookcode" mnemonicParsing="false" text="Book Code">
                            <font>
-                              <Font name="System Bold" size="12.0" />
+                              <Font name="System Bold" size="15.0" />
                            </font>
                         </RadioButton>
                      </children>
                      <HBox.margin>
-                        <Insets left="40.0" />
+                        <Insets />
                      </HBox.margin>
-                     <padding>
-                        <Insets top="5.0" />
-                     </padding>
                   </VBox>
                </children>
                <VBox.margin>
-                  <Insets top="20.0" />
+                  <Insets />
                </VBox.margin>
             </HBox>
-            <Button fx:id="searchbtn" mnemonicParsing="false" onAction="#onclickcontentsvisible" prefHeight="43.0" prefWidth="122.0" text="Search">
+            <Button fx:id="searchbtn" mnemonicParsing="false" onAction="#onclickcontentsvisible" prefHeight="43.0" prefWidth="91.0" text="Search">
                <VBox.margin>
-                  <Insets left="225.0" top="10.0" />
+                  <Insets bottom="15.0" top="15.0" />
                </VBox.margin>
                <font>
-                  <Font name="System Bold Italic" size="13.0" />
+                  <Font name="System Bold Italic" size="18.0" />
                </font>
             </Button>
-            <TableView prefHeight="144.0" prefWidth="600.0">
+            <TableView fx:id="removebooktable" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
               <columns>
-                <TableColumn fx:id="colBookcode" prefWidth="77.60003662109375" text="Book Code" />
-                <TableColumn fx:id="colbookname" prefWidth="217.5999755859375" text=" Book Name" />
-                  <TableColumn fx:id="colauthor" prefWidth="94.4000244140625" text=" Author" />
-                  <TableColumn fx:id="coledition" prefWidth="83.20001220703125" text="Edition" />
-                  <TableColumn fx:id="colsubject" prefWidth="124.79998779296875" text=" Subject" />
+                <TableColumn fx:id="colBookcode" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="100.0" text="Book Code" />
+                  <TableColumn fx:id="colbookid" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="100.0" text=" Book id" />
+                <TableColumn fx:id="colbookname" maxWidth="1.7976931348623157E308" prefWidth="224.00001525878906" text=" Book Name" />
+                  <TableColumn fx:id="colauthor" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="117.60000610351562" text=" Author" />
+                  <TableColumn fx:id="coledition" maxWidth="1.7976931348623157E308" prefWidth="71.20001220703125" text="Edition" />
+                  <TableColumn fx:id="colsubject" maxWidth="1.7976931348623157E308" prefWidth="94.39996337890625" text=" Subject" />
               </columns>
                <VBox.margin>
-                  <Insets top="20.0" />
+                  <Insets />
                </VBox.margin>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
-            <Button fx:id="remove" mnemonicParsing="false" onAction="#removebooksonclick" prefHeight="46.0" prefWidth="137.0" text="Remove">
-               <VBox.margin>
-                  <Insets left="225.0" top="20.0" />
-               </VBox.margin>
-               <font>
-                  <Font name="System Bold Italic" size="13.0" />
-               </font>
-            </Button>
          </children>
       </VBox>
-   </children>
-</AnchorPane>
+   </center>
+   <top>
+      <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Remove Records" wrappingWidth="163.91165924072266">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Text>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" top="10.0" />
+         </BorderPane.margin>
+      </VBox>
+   </top>
+   <bottom>
+      <Button fx:id="remove" contentDisplay="CENTER" mnemonicParsing="false" onAction="#removebooksonclick" text="Remove" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold Italic" size="23.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="15.0" top="15.0" />
+         </BorderPane.margin>
+      </Button>
+   </bottom>
+   <padding>
+      <Insets bottom="5.0" left="25.0" right="25.0" top="5.0" />
+   </padding>
+</BorderPane>

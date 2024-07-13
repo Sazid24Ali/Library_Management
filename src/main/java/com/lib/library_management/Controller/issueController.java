@@ -65,12 +65,12 @@ public class issueController {
     private TableColumn<BooksEntity, Integer> takenBookCode;
     @FXML
     private TableView<BooksEntity> Tableviewdemo;
-    // @FXML
-    // private Button removebtn;
+
     private StudentEntity student;
 
     private ObservableList<BooksEntity> observableBookList = FXCollections.observableArrayList();
     private List<Integer> addedBookIds = new ArrayList<>();
+
     private MainController mainController;
 
     @FXML
@@ -134,14 +134,18 @@ public class issueController {
             boolean isBookAlreadyAdded = observableBookList.stream()
                     .anyMatch(book -> book.getBookId().equals(bookId));
             if (isBookAlreadyAdded) {
-                openWindow.openDialogue("Warning", "Book ID " + bookId + " is already added.");
+                openWindow.openDialogue("Warning", "Book ID " + bookId + " is already borrowed.");
+
                 clearFields();
                 return;
             }
 
             if (booksEntityService.checkBookExistsById(bookId)) {
                 if (booksEntityService.isBookAlreadyBorrowed(bookId)) {
-                    openWindow.openDialogue("Warning", "Book ID " + bookId + " is already borrowed.");
+                    String borrowerRollNo = booksEntityService.getBorrowerRollNo(bookId);
+                    openWindow.openDialogue("Warning",
+                            "Book ID " + bookId + " is already borrowed by student with Roll No: " + borrowerRollNo);
+
                     clearFields();
                     return;
                 }
