@@ -134,7 +134,7 @@ public class issueController {
             boolean isBookAlreadyAdded = observableBookList.stream()
                     .anyMatch(book -> book.getBookId().equals(bookId));
             if (isBookAlreadyAdded) {
-                openWindow.openDialogue("Warning", "Book ID " + bookId + " is already borrowed.");
+                openWindow.openDialogue("Warning", "Book ID " + bookId + " is already Added To List.");
 
                 clearFields();
                 return;
@@ -189,7 +189,7 @@ public class issueController {
         }
         try {
             LocalDate issueDate = LocalDate.now();
-            boolean confirm = openWindow.openConfirmation("Confirmation", "Do you want to add these books?");
+            boolean confirm = openWindow.openConfirmation("Confirmation", "Do you want to add the books?");
             if (confirm && student != null) {
                 for (BooksEntity book : observableBookList) {
                     if (addedBookIds.contains(book.getBookId())) {
@@ -218,10 +218,10 @@ public class issueController {
                 }
 
                 booksEntityService.saveOrUpdateBooks(observableBookList);
-
-                observableBookList.clear();
-                addedBookIds.clear();
-                refreshTable();
+                // observableBookList.clear();
+                // addedBookIds.clear();
+                // refreshTable();
+                initialize();
             } else {
                 System.out.println("Book addition canceled by user.");
             }
@@ -233,17 +233,17 @@ public class issueController {
         }
     }
 
-    private void refreshTable() {
-        List<BooksEntity> filteredBooks = new ArrayList<>();
-        for (BooksEntity book : observableBookList) {
-            if (addedBookIds.contains(book.getBookId())) {
-                filteredBooks.add(book);
-            }
-        }
-        ObservableList<BooksEntity> filteredObservableList = FXCollections.observableArrayList(filteredBooks);
-        Tableviewdemo.setItems(filteredObservableList);
-        mainController.getStudentData(null);
+    // private void refreshTable() {
+    //     List<BooksEntity> filteredBooks = new ArrayList<>();
+    //     for (BooksEntity book : observableBookList) {
+    //         if (addedBookIds.contains(book.getBookId())) {
+    //             filteredBooks.add(book);
+    //         }
+    //     }
+    //     ObservableList<BooksEntity> filteredObservableList = FXCollections.observableArrayList(filteredBooks);
+    //     Tableviewdemo.setItems(filteredObservableList);
+    //     mainController.getStudentData(null);
 
-    }
+    // }
 
 }
