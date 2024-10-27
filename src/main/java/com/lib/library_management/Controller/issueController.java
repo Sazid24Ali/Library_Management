@@ -220,7 +220,7 @@ public class issueController {
                 booksEntityService.saveOrUpdateBooks(observableBookList);
                 // observableBookList.clear();
                 // addedBookIds.clear();
-                // refreshTable();
+                refreshTable();
                 initialize();
             } else {
                 System.out.println("Book addition canceled by user.");
@@ -233,17 +233,17 @@ public class issueController {
         }
     }
 
-    // private void refreshTable() {
-    //     List<BooksEntity> filteredBooks = new ArrayList<>();
-    //     for (BooksEntity book : observableBookList) {
-    //         if (addedBookIds.contains(book.getBookId())) {
-    //             filteredBooks.add(book);
-    //         }
-    //     }
-    //     ObservableList<BooksEntity> filteredObservableList = FXCollections.observableArrayList(filteredBooks);
-    //     Tableviewdemo.setItems(filteredObservableList);
-    //     mainController.getStudentData(null);
+    private void refreshTable() {
+        List<BooksEntity> filteredBooks = new ArrayList<>();
+        for (BooksEntity book : observableBookList) {
+            if (addedBookIds.contains(book.getBookId())) {
+                filteredBooks.add(book);
+            }
+        }
+        ObservableList<BooksEntity> filteredObservableList = FXCollections.observableArrayList(filteredBooks);
+        Tableviewdemo.setItems(filteredObservableList);
+        mainController.getStudentData(null);
 
-    // }
+    }
 
 }
