@@ -75,6 +75,13 @@ public class AvailableBooksController {
     @FXML
     private TableColumn<BookDetailsEntity, Integer> publishYearColumn;
 
+    @FXML
+    private TableColumn<BookDetailsEntity, String> callNoColumn;
+
+    @FXML
+    private TableColumn<BookDetailsEntity, String> isbnColumn;
+
+
     private FilteredList<BookDetailsEntity> filteredList;
 
     public class CustomHeightTableCell<S, T> extends TableCell<S, T> {
@@ -139,6 +146,8 @@ public class AvailableBooksController {
         publishYearColumn.setCellValueFactory(new PropertyValueFactory<>("publishing_year"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         borrowedByColumn.setCellValueFactory(new PropertyValueFactory<>("borrowedStudents"));
+        isbnColumn.setCellValueFactory(new PropertyValueFactory<>("ISBN_no"));
+        callNoColumn.setCellValueFactory(new PropertyValueFactory<>("Call_no"));
 
         // Apply custom TableCell to columns
         bookCodeColumn.setCellFactory(column -> new CustomHeightTableCell<>());
@@ -155,6 +164,8 @@ public class AvailableBooksController {
         publishYearColumn.setCellFactory(column -> new CustomHeightTableCell<>());
         priceColumn.setCellFactory(column -> new CustomHeightTableCell<>());
         borrowedByColumn.setCellFactory(column -> new CustomHeightTableCell<>());
+        isbnColumn.setCellFactory(column -> new CustomHeightTableCell<>());
+        callNoColumn.setCellFactory(column -> new CustomHeightTableCell<>());
         loadBookData();
         setupFiltering();
     }
@@ -170,6 +181,8 @@ public class AvailableBooksController {
             book.setBorrowedBooks(booksService.countBorrowedBooks(bookCode));
             book.setBookIds(booksService.getBookIds(bookCode));
             book.setBorrowedStudents(booksService.getBorrowedStudents(bookCode));
+            book.setCall_no(booksService.getCallNO(bookCode));
+            book.setISBN_no(booksService.getISBN_no(bookCode));
         });
         System.out.println("Book Details \n"+observableBookList);
 
@@ -199,7 +212,11 @@ public class AvailableBooksController {
                                 && book.getSubjectCategory().toLowerCase().contains(lowerCaseFilter))
                         || (book.getBookIds() != null && book.getBookIds().toString().contains(lowerCaseFilter))
                         || (book.getBorrowedStudents() != null
-                                && book.getBorrowedStudents().toString().contains(lowerCaseFilter));
+                                && book.getBorrowedStudents().toString().contains(lowerCaseFilter))
+                        || (book.getISBN_no() != null
+                                && book.getISBN_no().toString().contains(lowerCaseFilter))
+                        || (book.getCall_no() != null
+                                && book.getCall_no().toString().contains(lowerCaseFilter));
                 // the below line are commented Because we don't want to filter the books based
                 // on the Number of books available , borrowed and available.
                 // || (book.getTotalBooks() != null &&

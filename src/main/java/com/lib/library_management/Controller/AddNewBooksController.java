@@ -52,6 +52,12 @@ public class AddNewBooksController {
     private TextField tfyear;
 
     @FXML
+    private TextField tfisbnNo;
+
+    @FXML
+    private TextField tfcallNo;
+
+    @FXML
     void initialize() {
         // utilityClass.setIntegerLimiter(tfAuthor, 50);
         utilityClass.setIntegerLimiter(tfbookcode, 5);
@@ -73,6 +79,8 @@ public class AddNewBooksController {
             Integer price = Integer.parseInt(tfprice.getText());
             String place_publisher = tfplaceandpublisher.getText();
             String SubjectCategory = tfsubjectcategory.getText();
+            String IsbnNo = tfisbnNo.getText();
+            String callNo = tfcallNo.getText();
             tfbookcode.clear();
             tfAuthor.clear();
             tfbookname.clear();
@@ -82,23 +90,25 @@ public class AddNewBooksController {
             tfprice.clear();
             tfsubjectcategory.clear();
             tfyear.clear();
+            tfisbnNo.clear();
+            tfcallNo.clear();
             // if (bookDetailsService.checkBookCodeIsExist(BookCode)) {
-            //     openWindow.openDialogue("Warning", " BookCode is Already Exist ");
+            // openWindow.openDialogue("Warning", " BookCode is Already Exist ");
             // } else {
-                BookDetailsEntity newBookData = new BookDetailsEntity(BookName, Author, SubjectCategory,
-                        Edition, pages, place_publisher, publishing_year, price);
-                if (openWindow.openConfirmation("Add New Book?", "Do you want save the book data?")) {
-                    System.out.println(newBookData);
-                    Integer bookCode = bookDetailsService.addBooksData(newBookData);
-                    if (bookCode==-1) {
-                        
-                        openWindow.openDialogue("Error", "Failed to Add Book Data");
-                        
-                    } else {
-                        openWindow.openDialogue("Successful:",
-                                "Successfully Added the Book with the BookName \" " + BookName + " \" and BookCode \" "
-                                        + bookCode + " \" ");
-                        // Clear fields or perform any other necessary actions
+            BookDetailsEntity newBookData = new BookDetailsEntity(price, BookName, Author, SubjectCategory,
+                    Edition, pages, place_publisher, publishing_year, price, IsbnNo, callNo);
+            if (openWindow.openConfirmation("Add New Book?", "Do you want save the book data?")) {
+                System.out.println(newBookData);
+                Integer bookCode = bookDetailsService.addBooksData(newBookData);
+                if (bookCode == -1) {
+
+                    openWindow.openDialogue("Error", "Failed to Add Book Data");
+
+                } else {
+                    openWindow.openDialogue("Successful:",
+                            "Successfully Added the Book with the BookName \" " + BookName + " \" and BookCode \" "
+                                    + bookCode + " \" ");
+                    // Clear fields or perform any other necessary actions
                     // }
                 }
             }

@@ -23,13 +23,16 @@ public class BookDetailsEntity {
     String place_publisher;
     Integer publishing_year;
     Integer price;
+    String ISBN_no;
+    String Call_no;
 
     public BookDetailsEntity() {
 
     }
 
     public BookDetailsEntity(Integer bookCode, String bookName, String author, String subjectCategory, String edition,
-            Integer pages, String place_publisher, Integer publishing_year, Integer price) {
+            Integer pages, String place_publisher, Integer publishing_year, Integer price, String ISBN_no,
+            String Call_no) {
         BookCode = bookCode;
         BookName = bookName;
         Author = author;
@@ -39,8 +42,9 @@ public class BookDetailsEntity {
         this.place_publisher = place_publisher;
         this.publishing_year = publishing_year;
         this.price = price;
+        this.Call_no = Call_no;
+        this.ISBN_no = ISBN_no;
     }
-    
 
     public BookDetailsEntity(String bookName, String author, String subjectCategory, String edition, Integer pages,
             String place_publisher, Integer publishing_year, Integer price) {
@@ -53,7 +57,6 @@ public class BookDetailsEntity {
         this.publishing_year = publishing_year;
         this.price = price;
     }
-
 
     @Transient
     Long totalBooks;

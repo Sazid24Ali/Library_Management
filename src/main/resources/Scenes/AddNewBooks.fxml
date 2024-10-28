@@ -63,6 +63,8 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label prefHeight="19.0" prefWidth="74.0" text="BookCode" visible="false">
@@ -119,6 +121,18 @@
             <TextField fx:id="tfyear" layoutX="310.0" layoutY="187.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <TextField fx:id="tfpages" layoutX="310.0" layoutY="221.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <TextField fx:id="tfprice" layoutX="310.0" layoutY="256.0" prefHeight="5.0" prefWidth="276.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <TextField fx:id="tfisbnNo" prefHeight="5.0" prefWidth="276.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <TextField fx:id="tfcallNo" prefHeight="5.0" prefWidth="276.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <Label text="ISBN NO" GridPane.rowIndex="9">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label text="CALL NO" GridPane.rowIndex="10">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
          </children>
          <BorderPane.margin>
             <Insets bottom="30.0" left="100.0" right="100.0" top="20.0" />

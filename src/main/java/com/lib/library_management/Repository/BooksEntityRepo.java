@@ -51,6 +51,11 @@ public interface BooksEntityRepo extends JpaRepository<BooksEntity, Integer> {
 
     @Query("SELECT bd FROM BookDetailsEntity bd WHERE bd.BookCode = :bookCode")
     List<BooksEntity> findByBookCode(@Param("bookCode") int bookCode);
+    @Query("SELECT bd.ISBN_no FROM BookDetailsEntity bd WHERE bd.BookCode = :bookCode")
+    String findISBN_noByBookCode(Integer bookCode);
+
+    @Query("SELECT bd.Call_no FROM BookDetailsEntity bd WHERE bd.BookCode = :bookCode")
+    String findCall_noByBookCode(Integer bookCode);
 
     @Modifying
     @Transactional

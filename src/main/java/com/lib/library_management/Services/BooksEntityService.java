@@ -123,7 +123,7 @@ public class BooksEntityService {
             return (student != null) ? student.getStudentRollNo() : null;
         }).orElse(null);
     }
-
+    
     @Transactional(readOnly = true)
     public List<BookDetailsEntity> getBookDetailsByCode(int bookCode) {
         List<BooksEntity> booksEntities = booksRepo.findByBookCode(bookCode);
@@ -162,6 +162,14 @@ public class BooksEntityService {
 
     public BooksEntity getBookById(Integer bookId) {
         return booksRepo.findBookByBookId(bookId);
+    }
+
+    public String getCallNO(Integer bookCode) {
+        return booksRepo.findCall_noByBookCode(bookCode);
+    }
+
+    public String getISBN_no(Integer bookCode) {
+        return booksRepo.findISBN_noByBookCode(bookCode);
     }
 
 }
