@@ -374,7 +374,7 @@ public class MainController {
         try {
             Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
         } catch (Exception e) {
-            System.out.println("An Error Raised  : \n" + e);
+            // System.out.println("An Error Raised  : \n" + e);
             openWindow.openDialogue("Error ", e.toString());
         }
         Student_Course_CBox.setItems(observableCourses);
@@ -444,7 +444,7 @@ public class MainController {
         // System.out.println("Add New Student Fact value is " + isEditing);
         isEditing = false;
 
-        System.out.println(newData);
+        // System.out.println(newData);
         // System.out.println("\n\n\n" + newStudentData.toString());
         if (studentService.addStudentData(newData)) {
             openWindow.openDialogue("Success", " Added " + fact_stud + " Data Successfully " + newData);
@@ -523,7 +523,7 @@ public class MainController {
             VisibilitySetter(true);
             newStudent(false);
             returnBook_Btn.setDisable(true);
-            System.out.println("\n\n\n\n" + data.getYearOfPassing());
+            // System.out.println("\n\n\n\n" + data.getYearOfPassing());
             Stu_Name_La_Field.setText(data.getStudentName());
             Stu_PhNo_La_Field.setText(String.valueOf(data.getPhoneNumber()));
             Stu_YOP_La_Field.setText(String.valueOf(data.getYearOfPassing()));
@@ -542,7 +542,7 @@ public class MainController {
 
         StudentEntity data = studentService.getStudentDataByRollNo(RollNo);
         if (data != null) {
-            System.out.println("Set Faculty Data Got data");
+            // System.out.println("Set Faculty Data Got data");
             VisibilitySetter(true);
             newFaculty(false);
             returnBook_Btn.setDisable(true);

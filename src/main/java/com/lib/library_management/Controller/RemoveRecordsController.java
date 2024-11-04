@@ -39,7 +39,7 @@ public class RemoveRecordsController {
     private TableColumn<BooksEntity, Integer> colBookcode;
 
     @FXML
-    private TableColumn<BooksEntity, Integer> colbookid;
+    private TableColumn<BooksEntity, String> colbookid;
 
     @FXML
     private TableColumn<BooksEntity, String> colbookname;
@@ -72,7 +72,7 @@ public class RemoveRecordsController {
     private TableView<BooksEntity> removebooktable;
 
     private ObservableList<BooksEntity> observableBookList = FXCollections.observableArrayList();
-    private Map<Integer, String> booksNotRemoved = new HashMap<>();
+    private Map<String, String> booksNotRemoved = new HashMap<>();
 
     private ToggleGroup toggleGroup = new ToggleGroup();
 
@@ -116,7 +116,8 @@ public class RemoveRecordsController {
 
         try {
             if (rdBookid.isSelected()) {
-                Integer bookId = Integer.parseInt(input);
+                // Integer bookId = Integer.parseInt(input);
+                String bookId = input.toUpperCase();
                 if (observableBookList.stream().anyMatch(book -> book.getBookId() == bookId)) {
                     openWindow.openDialogue("Warning", "Book ID " + bookId + " already exists in the table.");
                     clearTableAndData();
@@ -185,7 +186,7 @@ public class RemoveRecordsController {
         if (confirm) {
             try {
                 if (rdBookid.isSelected()) {
-                    List<Integer> removedBookIds = new ArrayList<>();
+                    List<String> removedBookIds = new ArrayList<>();
                     for (BooksEntity book : observableBookList) {
                         if (book.getStudent() == null) {
                             booksService.deleteBook(book.getBookId());
@@ -210,7 +211,7 @@ public class RemoveRecordsController {
                                                 .collect(Collectors.joining(", ")));
                     }
                 } else if (rdBookcode.isSelected()) {
-                    List<Integer> removedBookIds = new ArrayList<>();
+                    List<String> removedBookIds = new ArrayList<>();
                     List<Integer> validBookCodes = observableBookList.stream()
                             .filter(book -> book.getBookCode() != null)
                             .map(BooksEntity::getBookCode)

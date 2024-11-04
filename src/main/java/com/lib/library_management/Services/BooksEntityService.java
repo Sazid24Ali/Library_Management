@@ -76,7 +76,7 @@ public class BooksEntityService {
         booksRepo.save(booksEntity);
     }
 
-    public BooksEntity getBookDataByBookId(Integer bookId) {
+    public BooksEntity getBookDataByBookId(String bookId) {
         try {
             return booksRepo.findById(bookId).orElse(null);
         } catch (Exception e) {
@@ -97,16 +97,17 @@ public class BooksEntityService {
         return booksRepo.findAll();
     }
 
-    public boolean checkBookExistsById(Integer bookId) {
+    public boolean checkBookExistsById(String bookId) {
         return booksRepo.existsById(bookId);
     }
 
-    public boolean isBookAlreadyBorrowed(Integer bookId) {
+    public boolean isBookAlreadyBorrowed(String bookId) {
         BooksEntity book = booksRepo.findById(bookId).orElse(null);
         return book != null && book.getStatus().equals("Borrowed");
     }
 
-    public void deleteBook(Integer bookId) {
+    public void deleteBook(String bookId) {
+        //Changed the argument from Integer
         booksRepo.deleteById(bookId);
     }
 
@@ -115,7 +116,7 @@ public class BooksEntityService {
         booksRepo.saveAll(booksToSaveOrUpdate);
     }
 
-    public String getBorrowerRollNo(Integer bookId) {
+    public String getBorrowerRollNo(String bookId) {
 
         Optional<BooksEntity> bookOptional = booksRepo.findById(bookId);
         return bookOptional.map(book -> {
@@ -123,7 +124,7 @@ public class BooksEntityService {
             return (student != null) ? student.getStudentRollNo() : null;
         }).orElse(null);
     }
-    
+
     @Transactional(readOnly = true)
     public List<BookDetailsEntity> getBookDetailsByCode(int bookCode) {
         List<BooksEntity> booksEntities = booksRepo.findByBookCode(bookCode);
@@ -160,7 +161,7 @@ public class BooksEntityService {
         return books;
     }
 
-    public BooksEntity getBookById(Integer bookId) {
+    public BooksEntity getBookById(String bookId) {
         return booksRepo.findBookByBookId(bookId);
     }
 
@@ -170,6 +171,10 @@ public class BooksEntityService {
 
     public String getISBN_no(Integer bookCode) {
         return booksRepo.findISBN_noByBookCode(bookCode);
+    }
+
+    public String getremarks(Integer bookCode) {
+        return booksRepo.findRemarksByBookCode(bookCode);
     }
 
 }

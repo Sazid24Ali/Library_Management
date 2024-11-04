@@ -15,7 +15,7 @@ import lombok.Data;
 public class BooksEntity {
 
     @Id
-    Integer BookId;
+    String BookId; // Changed from Integer
 
     @ManyToOne
     @JoinColumn(name = "BookCode", nullable = false)

@@ -52,7 +52,7 @@ public class issueController {
     private TextField studentId;
 
     @FXML
-    private TableColumn<BooksEntity, Integer> takenBookId;
+    private TableColumn<BooksEntity, String> takenBookId;
     @FXML
     private TableColumn<BooksEntity, String> takenBookTitle;
     @FXML
@@ -69,7 +69,7 @@ public class issueController {
     private StudentEntity student;
 
     private ObservableList<BooksEntity> observableBookList = FXCollections.observableArrayList();
-    private List<Integer> addedBookIds = new ArrayList<>();
+    private List<String> addedBookIds = new ArrayList<>();
 
     private MainController mainController;
 
@@ -108,7 +108,7 @@ public class issueController {
         // addedBookIds.clear();
 
         Tableviewdemo.setPlaceholder(new Label("Requested Data is Not Available"));
-        utilityClass.setIntegerLimiter(addingBookId, 7);
+        // utilityClass.setIntegerLimiter(addingBookId, 7);
         takenBookId.setCellValueFactory(new PropertyValueFactory<>("BookId"));
         takenBookTitle.setCellValueFactory(new PropertyValueFactory<>("BookName"));
         takenBookEdition.setCellValueFactory(new PropertyValueFactory<>("Edition"));
@@ -130,7 +130,8 @@ public class issueController {
     @FXML
     void addBook(ActionEvent event) {
         try {
-            Integer bookId = Integer.parseInt(addingBookId.getText());
+            // Integer bookId = Integer.parseInt(addingBookId.getText());
+            String bookId  = addingBookId.getText().toUpperCase();
             boolean isBookAlreadyAdded = observableBookList.stream()
                     .anyMatch(book -> book.getBookId().equals(bookId));
             if (isBookAlreadyAdded) {
@@ -223,7 +224,8 @@ public class issueController {
                 refreshTable();
                 initialize();
             } else {
-                System.out.println("Book addition canceled by user.");
+                // System.out.println("Book addition canceled by user.");
+                openWindow.openDialogue("Cancel", "Book Addition Cancelled By User");
             }
         } catch (NumberFormatException e) {
             openWindow.openDialogue("Error", "Please enter valid integers for Book IDs.");

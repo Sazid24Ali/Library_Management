@@ -25,6 +25,7 @@ public class BookDetailsEntity {
     Integer price;
     String ISBN_no;
     String Call_no;
+    String Remarks;
 
     public BookDetailsEntity() {
 
@@ -32,7 +33,7 @@ public class BookDetailsEntity {
 
     public BookDetailsEntity(Integer bookCode, String bookName, String author, String subjectCategory, String edition,
             Integer pages, String place_publisher, Integer publishing_year, Integer price, String ISBN_no,
-            String Call_no) {
+            String Call_no,String Remarks) {
         BookCode = bookCode;
         BookName = bookName;
         Author = author;
@@ -44,6 +45,7 @@ public class BookDetailsEntity {
         this.price = price;
         this.Call_no = Call_no;
         this.ISBN_no = ISBN_no;
+        this.Remarks = Remarks;
     }
 
     public BookDetailsEntity(String bookName, String author, String subjectCategory, String edition, Integer pages,

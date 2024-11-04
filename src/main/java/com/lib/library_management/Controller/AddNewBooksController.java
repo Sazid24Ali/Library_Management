@@ -56,6 +56,9 @@ public class AddNewBooksController {
 
     @FXML
     private TextField tfcallNo;
+    
+    @FXML
+    private TextField tfremarks;
 
     @FXML
     void initialize() {
@@ -67,6 +70,20 @@ public class AddNewBooksController {
         // utilityClass.setIntegerLimiter(tfsubjectcategory, 50);
     }
 
+    void clearFields(){
+        tfbookcode.clear();
+        tfAuthor.clear();
+        tfbookname.clear();
+        tfedition.clear();
+        tfpages.clear();
+        tfplaceandpublisher.clear();
+        tfprice.clear();
+        tfsubjectcategory.clear();
+        tfyear.clear();
+        tfisbnNo.clear();
+        tfcallNo.clear();
+        tfremarks.clear();
+    }
     @FXML
     void onclicksave(ActionEvent event) {
         try {
@@ -81,24 +98,15 @@ public class AddNewBooksController {
             String SubjectCategory = tfsubjectcategory.getText();
             String IsbnNo = tfisbnNo.getText();
             String callNo = tfcallNo.getText();
-            tfbookcode.clear();
-            tfAuthor.clear();
-            tfbookname.clear();
-            tfedition.clear();
-            tfpages.clear();
-            tfplaceandpublisher.clear();
-            tfprice.clear();
-            tfsubjectcategory.clear();
-            tfyear.clear();
-            tfisbnNo.clear();
-            tfcallNo.clear();
+            String remarks = tfremarks.getText();
+            clearFields();
             // if (bookDetailsService.checkBookCodeIsExist(BookCode)) {
             // openWindow.openDialogue("Warning", " BookCode is Already Exist ");
             // } else {
             BookDetailsEntity newBookData = new BookDetailsEntity(price, BookName, Author, SubjectCategory,
-                    Edition, pages, place_publisher, publishing_year, price, IsbnNo, callNo);
+                    Edition, pages, place_publisher, publishing_year, price, IsbnNo, callNo,remarks);
             if (openWindow.openConfirmation("Add New Book?", "Do you want save the book data?")) {
-                System.out.println(newBookData);
+                // System.out.println(newBookData);
                 Integer bookCode = bookDetailsService.addBooksData(newBookData);
                 if (bookCode == -1) {
 

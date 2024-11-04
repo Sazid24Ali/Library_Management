@@ -97,9 +97,11 @@ public class AppendBooksController {
         BookCode.setCellValueFactory(new PropertyValueFactory<BookDetailsEntity, Integer>("BookCode"));
         sub_category.setCellValueFactory(new PropertyValueFactory<BookDetailsEntity, String>("SubjectCategory"));
         pagesColumn.setCellValueFactory(new PropertyValueFactory<BookDetailsEntity, Integer>("pages"));
-        placeAndPublisherColumn.setCellValueFactory(new PropertyValueFactory<BookDetailsEntity, String>("place_publisher"));
+        placeAndPublisherColumn
+                .setCellValueFactory(new PropertyValueFactory<BookDetailsEntity, String>("place_publisher"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<BookDetailsEntity, Integer>("price"));
-        publishingYearColumn.setCellValueFactory(new PropertyValueFactory<BookDetailsEntity, Integer>("publishing_year"));
+        publishingYearColumn
+                .setCellValueFactory(new PropertyValueFactory<BookDetailsEntity, Integer>("publishing_year"));
         // For Inter Only input
         utilityClass.setIntegerLimiter(bookCode, 5);
 
@@ -150,53 +152,28 @@ public class AppendBooksController {
                 return;
 
             }
-            Boolean boolForInvalidRange = false;
+            // Boolean boolForInvalidRange = false;
             if (!userGivenIds.contains(",")) {
                 userGivenIds = userGivenIds + ",";
             }
             String[] idsSplitByComma = userGivenIds.split(",");
             ArrayList<String> idsWithoutLastCharAdded = new ArrayList<>();
             for (String idSplitByComma : idsSplitByComma)
-                idsWithoutLastCharAdded.add(idSplitByComma);
+                idsWithoutLastCharAdded.add(idSplitByComma.toUpperCase());
             // idsWithoutLastCharAdded.remove(idsWithoutLastCharAdded.size()-1);
-            ArrayList<Integer> Ids = new ArrayList<>();
-            for (String idOrRangeOfIds : idsWithoutLastCharAdded) {
-                try {
-                    if (idOrRangeOfIds.contains("-")) {
-                        String rangeOfIds[] = idOrRangeOfIds.split("-");
-                        int lowerRangeOfId = Integer.parseInt(rangeOfIds[0]),
-                                upperRangeOfId = Integer.parseInt(rangeOfIds[1]);
-                        if (lowerRangeOfId >= upperRangeOfId) {
-                            openWindow.openDialogue("Warning", "The given range of Ids is Invalid. Please edit. ");
-                            boolForInvalidRange = true;
-                            inputOfBookIds.requestFocus();
-                            break;
-                        } else {
-                            while (upperRangeOfId >= lowerRangeOfId) {
-                                Ids.add(upperRangeOfId);
-                                upperRangeOfId--;
-                            }
-                        }
-                    } else {
-                        Ids.add(Integer.parseInt(idOrRangeOfIds));
-                    }
-                } catch (Exception e) {
-                    openWindow.openDialogue("Warning",
-                            "The given inputs or the given input format is invalid.\n\n Please check if the input are only numbers in the \n\nmentioned format below the textBox.");
-                    boolForInvalidInput = true;
-                    inputOfBookIds.requestFocus();
-                    break;
-                }
-            }
-            Set<Integer> IdSet=new LinkedHashSet<>();
+            ArrayList<String> Ids = idsWithoutLastCharAdded;
+
+            // System.out.println("DEBUG  ::: " + idsWithoutLastCharAdded + "\n" + Ids);
+            Set<String> IdSet = new LinkedHashSet<>();
             IdSet.addAll(Ids);
             Ids.clear();
             Ids.addAll(IdSet);
+            // System.out.println("DEBUG :: " + Ids + "\nID SET :: " + IdSet);
             ArrayList<BooksEntity> booksToAdd = new ArrayList<BooksEntity>();
-            ArrayList<Integer> idsNotAdded = new ArrayList<>();
-            ArrayList<Integer> idsAdded = new ArrayList<>();
+            ArrayList<String> idsNotAdded = new ArrayList<>();
+            ArrayList<String> idsAdded = new ArrayList<>();
             Boolean boolForNonUniqueIds = false;
-            if (!boolForInvalidRange && !boolForInvalidInput) {
+            if (!boolForInvalidInput) {
                 for (int i = 0; i < Ids.size(); i++) {
                     if (booksEntityRepo.getBookIds().contains(Ids.get(i))) {
                         boolForNonUniqueIds = true;
@@ -244,96 +221,116 @@ public class AppendBooksController {
         }
     }
 }
-// String inputIds=inputOfBookIds.getText();
-// String[] ArrayOfIds;
-// ArrayList<Integer> Ids=new ArrayList<>();
-// Boolean boolForValidRange=false;
-// if(inputIds.contains(",") && inputIds.contains("-")){
-// ArrayOfIds = inputIds.split(",");
-// for(String myStr: ArrayOfIds){
-// if(myStr.contains("-")){
-// String s[]=myStr.split("-");
-// int
-// lowerRangeOfId=Integer.parseInt(s[0]),upperRangeOfId=Integer.parseInt(s[1]);
-// if(lowerRangeOfId>=upperRangeOfId){
-// boolForValidRange=true;
+
+// With the Range Function THing is in this
+// @FXML
+// public void getBookId(MouseEvent event) {
+// if (bookDetailsEntity != null && bookCode.getLength() != 0) {
+// Boolean boolForInvalidInput = false;
+// // inputOfBookIds.setText(bookCode.getText());
+// String userGivenIds = inputOfBookIds.getText().trim();
+// if (userGivenIds.isEmpty()) {
+// openWindow.openDialogue("Warning", "Enter the Book Ids");
+// inputOfBookIds.requestFocus();
+// return;
+
 // }
-// else{
-// for(int i=lowerRangeOfId;i<upperRangeOfId+1;i++)
-// Ids.add(i);
+// Boolean boolForInvalidRange = false;
+// if (!userGivenIds.contains(",")) {
+// userGivenIds = userGivenIds + ",";
+// }
+// String[] idsSplitByComma = userGivenIds.split(",");
+// ArrayList<String> idsWithoutLastCharAdded = new ArrayList<>();
+// for (String idSplitByComma : idsSplitByComma)
+// idsWithoutLastCharAdded.add(idSplitByComma);
+// // idsWithoutLastCharAdded.remove(idsWithoutLastCharAdded.size()-1);
+// ArrayList<Integer> Ids = new ArrayList<>();
+// for (String idOrRangeOfIds : idsWithoutLastCharAdded) {
+// try {
+// if (idOrRangeOfIds.contains("-")) {
+// String rangeOfIds[] = idOrRangeOfIds.split("-");
+// int lowerRangeOfId = Integer.parseInt(rangeOfIds[0]),
+// upperRangeOfId = Integer.parseInt(rangeOfIds[1]);
+// if (lowerRangeOfId >= upperRangeOfId) {
+// openWindow.openDialogue("Warning", "The given range of Ids is Invalid. Please
+// edit. ");
+// boolForInvalidRange = true;
+// inputOfBookIds.requestFocus();
+// break;
+// } else {
+// while (upperRangeOfId >= lowerRangeOfId) {
+// Ids.add(upperRangeOfId);
+// upperRangeOfId--;
 // }
 // }
-// else{
-// Ids.add(Integer.parseInt(myStr));
+// } else {
+// Ids.add(Integer.parseInt(idOrRangeOfIds));
 // }
-// }
-// }
-// else if(inputIds.contains("-")){
-// String s[]=inputIds.split("-");
-// int
-// lowerRangeOfId=Integer.parseInt(s[0]),upperRangeOfId=Integer.parseInt(s[1]);
-// if(lowerRangeOfId>=upperRangeOfId){
-// boolForValidRange=true;
-// }
-// else{
-// for(int i=lowerRangeOfId;i<upperRangeOfId+1;i++)
-// Ids.add(i);
-// }
-// }
-// else if(inputIds.contains(",")){
-// ArrayOfIds = inputIds.split(",");
-// for(String s:ArrayOfIds)
-// Ids.add(Integer.parseInt(s));
-// }
-// else{
-// Ids.add(Integer.parseInt(inputIds));
-// }
-// ArrayList<BooksEntity> booksToAdd=new ArrayList<BooksEntity>();
-// ArrayList<Integer> idsNotAdded=new ArrayList<>();
-// Boolean boolean2=false;
-// for(Integer id:Ids){
-// if(booksEntityRepo.getBookIds().contains(id)){
-// boolean2=openWindow.openConfirmation("Warning", "You have entered an Id:
-// "+id+" which is already in records. Do you want to ignore the Id and add
-// other Ids or edit the Id to add into database? Choose Yes to edit or No to
-// ignore." );
-// if(boolean2){
-// idsNotAdded.add(id);
-// Ids.remove(id);
-// }
-// else{
+// } catch (Exception e) {
+// openWindow.openDialogue("Warning",
+// "The given inputs or the given input format is invalid.\n\n Please check if
+// the input are only numbers in the \n\nmentioned format below the textBox.");
+// boolForInvalidInput = true;
 // inputOfBookIds.requestFocus();
 // break;
 // }
 // }
-// else if(boolForValidRange){
-// openWindow.openDialogue("Warning", "You have entered invalid range of Ids.");
-// inputOfBookIds.requestFocus();
-// break;
-// }
-// else{
-// BooksEntity booksEntity=new BooksEntity();
-// booksEntity.setBookId(id);
+// Set<Integer> IdSet = new LinkedHashSet<>();
+// IdSet.addAll(Ids);
+// Ids.clear();
+// Ids.addAll(IdSet);
+// ArrayList<BooksEntity> booksToAdd = new ArrayList<BooksEntity>();
+// ArrayList<Integer> idsNotAdded = new ArrayList<>();
+// ArrayList<Integer> idsAdded = new ArrayList<>();
+// Boolean boolForNonUniqueIds = false;
+// if (!boolForInvalidRange && !boolForInvalidInput) {
+// for (int i = 0; i < Ids.size(); i++) {
+// if (booksEntityRepo.getBookIds().contains(Ids.get(i))) {
+// boolForNonUniqueIds = true;
+// idsNotAdded.add(Ids.get(i));
+// } else {
+// BooksEntity booksEntity = new BooksEntity();
+// booksEntity.setBookId(Ids.get(i));
 // booksEntity.setStatus("Available");
 // booksEntity.setDateOfAllotment(null);
 // booksEntity.setBookDetailsEntity(bookDetailsEntity);
 // booksToAdd.add(booksEntity);
+// idsAdded.add(Ids.get(i));
 // }
 // }
-// if(boolean2){
-// openWindow.openDialogue("Info", "The id's: "+Ids+" are successfully being
-// able to add into database within "+bookCode.getText()+" Book code.\nThe Ids
-// "+idsNotAdded+" are not being able to be added into database as there exists
-// books with Ids given. Do you want to proceed?\n\n\nNote: You can view the
-// added books with Book Ids through Available books option by searching with
-// Book Ids or Book Code.");
-// if(boolean1){
+// if (!boolForNonUniqueIds) {
+// Collections.sort(idsAdded);
+// Boolean boolForEntryRequest = openWindow.openConfirmation("Info",
+// "The id's: \n" + idsAdded + " \n\n Will be assigned to " + bookCode.getText()
+// + " Book code.\n\n Do you want to proceed?\n");
+// if (boolForEntryRequest) {
+// try {
 // bookEntityService.addBooks(booksToAdd);
-// //bookCode.clear();
 // inputOfBookIds.clear();
-// //tableToShowBook.getItems().clear();
+// openWindow.openDialogue("Info",
+// "The Id's : \n " + idsAdded + " \n\n were successfully Added ");// into
+// // the
+// // database.");
+// bookDetailsEntity = null;
+// // bookCode.setText(null);
+// } catch (Exception e) {
+// openWindow.openDialogue("Issue", "There is some issue with the server.");
 // }
-// }
-// else{
+// } else {
 // inputOfBookIds.requestFocus();
+// }
+// } else {
+// Collections.sort(idsNotAdded);
+// openWindow.openDialogue("Warning", "You have entered Ids: " + idsNotAdded
+// + " which are already in records.\n\nNote: You can view the added books with
+// Book Ids through Available books option by searching with Book Ids or Book
+// Code.");
+// inputOfBookIds.requestFocus();
+// }
+// }
+// } else {
+// openWindow.openDialogue("Warning", "Please enter the Book code and click on
+// search Button.");
+// }
+// }
 // }

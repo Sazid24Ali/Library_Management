@@ -15,7 +15,7 @@ import com.lib.library_management.Entity.BookDetailsEntity;
 import com.lib.library_management.Entity.BooksEntity;
 
 @Repository
-public interface BooksEntityRepo extends JpaRepository<BooksEntity, Integer> {
+public interface BooksEntityRepo extends JpaRepository<BooksEntity, String> {
 
     @Query("SELECT COUNT(b) FROM BooksEntity b WHERE b.bookDetailsEntity.BookCode = :bookCode")
     long countTotalBooks(@Param("bookCode") Integer bookCode);
@@ -38,19 +38,20 @@ public interface BooksEntityRepo extends JpaRepository<BooksEntity, Integer> {
     List<BooksEntity> findBooksEntitiesByStudent_StudentRollNo(String StudentRollNo);
 
     @Query("SELECT b.BookId FROM BooksEntity b")
-    ArrayList<Integer> getBookIds();
+    ArrayList<String> getBookIds();
 
     @Query("SELECT b.student.StudentRollNo,b.BookId FROM BooksEntity b WHERE b.bookDetailsEntity.BookCode = :bookCode and b.student.StudentRollNo IS NOT NULL")
     ArrayList<String> getBorrowedStudents(Integer bookCode);
 
     @Query("SELECT b.bookDetailsEntity FROM BooksEntity b WHERE b.BookId = :bookId")
-    BookDetailsEntity findBookDetailsByBookId(@Param("bookId") Integer bookId);
+    BookDetailsEntity findBookDetailsByBookId(@Param("bookId") String bookId);
 
     @Query("SELECT b FROM BooksEntity b WHERE b.bookDetailsEntity.BookCode = :bookCode")
     List<BooksEntity> findBooksByBookDetailsEntity_BookCode(Integer bookCode);
 
     @Query("SELECT bd FROM BookDetailsEntity bd WHERE bd.BookCode = :bookCode")
     List<BooksEntity> findByBookCode(@Param("bookCode") int bookCode);
+
     @Query("SELECT bd.ISBN_no FROM BookDetailsEntity bd WHERE bd.BookCode = :bookCode")
     String findISBN_noByBookCode(Integer bookCode);
 
@@ -66,6 +67,9 @@ public interface BooksEntityRepo extends JpaRepository<BooksEntity, Integer> {
     List<BooksEntity> findBooksByBookCode(Integer bookCode);
 
     @Query("SELECT b FROM BooksEntity b LEFT JOIN FETCH b.bookDetailsEntity bd WHERE b.BookId = :bookId")
-    BooksEntity findBookByBookId(@Param("bookId") Integer bookId);
+    BooksEntity findBookByBookId(@Param("bookId") String bookId);
+
+    @Query("SELECT bd.Remarks FROM BookDetailsEntity bd WHERE bd.BookCode = :bookCode")
+    String findRemarksByBookCode(Integer bookCode);
 
 }
