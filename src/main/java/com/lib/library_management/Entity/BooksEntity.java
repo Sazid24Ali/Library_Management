@@ -36,7 +36,7 @@ public class BooksEntity {
     @Transient
     String SubjectCategory;
     @Transient
-    Integer BookCode;
+    Long BookCode;
     @Transient
     String Author;
     @Transient

@@ -56,21 +56,21 @@ public class AddNewBooksController {
 
     @FXML
     private TextField tfcallNo;
-    
+
     @FXML
     private TextField tfremarks;
 
     @FXML
     void initialize() {
-        // utilityClass.setIntegerLimiter(tfAuthor, 50);
-        utilityClass.setIntegerLimiter(tfbookcode, 5);
+
+        // utilityClass.setIntegerLimiter(tfbookcode, 5);
         utilityClass.setIntegerLimiter(tfyear, 4);
         utilityClass.setIntegerLimiter(tfprice, 10000);
         utilityClass.setIntegerLimiter(tfpages, 10000);
         // utilityClass.setIntegerLimiter(tfsubjectcategory, 50);
     }
 
-    void clearFields(){
+    void clearFields() {
         tfbookcode.clear();
         tfAuthor.clear();
         tfbookname.clear();
@@ -84,30 +84,36 @@ public class AddNewBooksController {
         tfcallNo.clear();
         tfremarks.clear();
     }
+
     @FXML
     void onclicksave(ActionEvent event) {
         try {
             // Integer BookCode = Integer.parseInt(tfbookcode.getText());
-            String Author = tfAuthor.getText();
             String BookName = tfbookname.getText();
-            String Edition = tfedition.getText();
+            String Author = tfAuthor.getText();
+            String Edition = tfedition.getText().isBlank() ? "None" : tfedition.getText();
             Integer pages = Integer.parseInt(tfpages.getText());
             Integer publishing_year = Integer.parseInt(tfyear.getText());
             Integer price = Integer.parseInt(tfprice.getText());
             String place_publisher = tfplaceandpublisher.getText();
             String SubjectCategory = tfsubjectcategory.getText();
-            String IsbnNo = tfisbnNo.getText();
-            String callNo = tfcallNo.getText();
-            String remarks = tfremarks.getText();
-            clearFields();
+            String IsbnNo = tfisbnNo.getText().isBlank() ? "None" : tfisbnNo.getText();
+            String callNo = tfcallNo.getText().isBlank() ? "None" : tfcallNo.getText();
+            String remarks = tfremarks.getText().isBlank() ? "None" : tfremarks.getText();
+
+            if (BookName.isBlank() | Author.isBlank() | place_publisher.isBlank() | SubjectCategory.isBlank()) {
+                // System.out.println("Raise ");
+                throw new Exception();
+            }
+
             // if (bookDetailsService.checkBookCodeIsExist(BookCode)) {
             // openWindow.openDialogue("Warning", " BookCode is Already Exist ");
             // } else {
-            BookDetailsEntity newBookData = new BookDetailsEntity(price, BookName, Author, SubjectCategory,
-                    Edition, pages, place_publisher, publishing_year, price, IsbnNo, callNo,remarks);
+            BookDetailsEntity newBookData = new BookDetailsEntity(BookName, Author, SubjectCategory,
+                    Edition, pages, place_publisher, publishing_year, price, IsbnNo, callNo, remarks);
             if (openWindow.openConfirmation("Add New Book?", "Do you want save the book data?")) {
                 // System.out.println(newBookData);
-                Integer bookCode = bookDetailsService.addBooksData(newBookData);
+                Long bookCode = bookDetailsService.addBooksData(newBookData);
                 if (bookCode == -1) {
 
                     openWindow.openDialogue("Error", "Failed to Add Book Data");
@@ -116,12 +122,15 @@ public class AddNewBooksController {
                     openWindow.openDialogue("Successful:",
                             "Successfully Added the Book with the BookName \" " + BookName + " \" and BookCode \" "
                                     + bookCode + " \" ");
+
                     // Clear fields or perform any other necessary actions
+                    clearFields();
                     // }
                 }
             }
-        } catch (NumberFormatException e) {
-            openWindow.openDialogue("Error", "Invalid Input");
+        } catch (Exception e) {
+            openWindow.openDialogue("Error",
+                    "Invalid Input\nFollowing Details are required \nBookName,Author,Subject Category,Place and Publisher, pages,price,Year of Publish ");
         }
 
     }

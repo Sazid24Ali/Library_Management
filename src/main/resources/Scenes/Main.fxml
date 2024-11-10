@@ -27,7 +27,7 @@
                </font>
             </Label>
             <Button fx:id="Admin_AddNewBook_Btn" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addNewBook" prefWidth="150.0" text="Add New Book" VBox.vgrow="ALWAYS" />
-            <Button fx:id="Admin_AddNewBookIds_Btn" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addNewBookIDs" prefWidth="150.0" text="Add New Books Id's" VBox.vgrow="ALWAYS" />
+            <Button fx:id="Admin_AddNewBookIds_Btn" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addNewBookIDs" prefWidth="150.0" text="Add Accesion Numbers" VBox.vgrow="ALWAYS" />
             <Button fx:id="Admin_RemoveBooks_Btn" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeBooks" prefWidth="150.0" text="Remove Books" VBox.vgrow="ALWAYS" />
             <Button fx:id="Admin_AvailableBooks_Btn" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#availableBooks" prefWidth="150.0" text="Available Books" VBox.vgrow="ALWAYS" />
          </children>
@@ -128,8 +128,8 @@
             <TableView id="styleForSelection" fx:id="Stu_BooksDisplay_Table" onMouseClicked="#selectedBook" prefHeight="200.0" stylesheets="@styleSheetForCellSelection.css" tableMenuButtonVisible="true" visible="false" VBox.vgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="bookCodeColumn" editable="false" prefWidth="75.20001602172852" text="Book Code" />
-                  <TableColumn fx:id="bookIdColumn" editable="false" prefWidth="84.0" text="Book Id" />
-                  <TableColumn fx:id="authorColumn" editable="false" prefWidth="93.60002136230469" text="Author" />
+                  <TableColumn fx:id="bookIdColumn" editable="false" prefWidth="116.79997253417969" text="Accession Number" />
+                  <TableColumn fx:id="authorColumn" editable="false" prefWidth="91.20001220703125" text="Author" />
                   <TableColumn fx:id="BookNameColumn" editable="false" prefWidth="149.5999755859375" text="Book Name" />
                   <TableColumn fx:id="editionColumn" editable="false" prefWidth="61.5999755859375" text="Edition" />
                   <TableColumn fx:id="DateOfAllotmentColumn" editable="false" prefWidth="114.39990234375" text="Date Of Allotment" />

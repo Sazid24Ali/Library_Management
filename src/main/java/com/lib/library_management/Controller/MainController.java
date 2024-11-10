@@ -15,7 +15,9 @@ import com.lib.library_management.Services.StudentService;
 import com.lib.library_management.Utility.OpenWindow;
 import com.lib.library_management.Utility.utilityClass;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -174,7 +176,7 @@ public class MainController {
     private TableColumn<BooksEntity, String> authorColumn;
 
     @FXML
-    private TableColumn<BooksEntity, Integer> bookCodeColumn;
+    private TableColumn<BooksEntity, Long> bookCodeColumn;
 
     @FXML
     private TableColumn<BooksEntity, String> bookIdColumn;
@@ -312,7 +314,7 @@ public class MainController {
 
         bookCodeColumn.setCellValueFactory(cellData -> {
             BooksEntity booksEntity = cellData.getValue();
-            return new SimpleIntegerProperty(booksEntity.getBookDetailsEntity().getBookCode()).asObject();
+            return new SimpleLongProperty(booksEntity.getBookDetailsEntity().getBookCode()).asObject();
         });
         bookIdColumn.setCellValueFactory(new PropertyValueFactory<>("BookId"));
         authorColumn.setCellValueFactory(cellData -> {
@@ -374,7 +376,7 @@ public class MainController {
         try {
             Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
         } catch (Exception e) {
-            // System.out.println("An Error Raised  : \n" + e);
+            // System.out.println("An Error Raised : \n" + e);
             openWindow.openDialogue("Error ", e.toString());
         }
         Student_Course_CBox.setItems(observableCourses);

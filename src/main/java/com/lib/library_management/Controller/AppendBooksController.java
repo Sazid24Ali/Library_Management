@@ -111,7 +111,7 @@ public class AppendBooksController {
     void searchForBook(ActionEvent event) {
         Boolean condition = bookCode.getLength() != 0;
         if (condition) {
-            Integer Bcode = Integer.parseInt(bookCode.getText());
+            Long Bcode = Long.parseLong(bookCode.getText());
             bookDetailsEntity = bookDetailsService.getBookDetailsByBookCode(Bcode);
             if (bookDetailsEntity != null) {
                 display(bookDetailsEntity);
@@ -147,7 +147,7 @@ public class AppendBooksController {
             // inputOfBookIds.setText(bookCode.getText());
             String userGivenIds = inputOfBookIds.getText().trim();
             if (userGivenIds.isEmpty()) {
-                openWindow.openDialogue("Warning", "Enter the Book Ids");
+                openWindow.openDialogue("Warning", "Enter the Accession Numbers");
                 inputOfBookIds.requestFocus();
                 return;
 
@@ -212,7 +212,7 @@ public class AppendBooksController {
                 } else {
                     Collections.sort(idsNotAdded);
                     openWindow.openDialogue("Warning", "You have entered Ids: " + idsNotAdded
-                            + " which are already in records.\n\nNote: You can view the added books with Book Ids through Available books option by searching with Book Ids or Book Code.");
+                            + " which are already in records.\n\nNote: You can view the added books with Accession Numbers through Available books option by searching with Accession Numbers or Book Code.");
                     inputOfBookIds.requestFocus();
                 }
             }

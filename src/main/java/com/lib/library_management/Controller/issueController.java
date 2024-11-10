@@ -135,7 +135,7 @@ public class issueController {
             boolean isBookAlreadyAdded = observableBookList.stream()
                     .anyMatch(book -> book.getBookId().equals(bookId));
             if (isBookAlreadyAdded) {
-                openWindow.openDialogue("Warning", "Book ID " + bookId + " is already Added To List.");
+                openWindow.openDialogue("Warning", "Accession Number " + bookId + " is already Added To List.");
 
                 clearFields();
                 return;
@@ -145,7 +145,7 @@ public class issueController {
                 if (booksEntityService.isBookAlreadyBorrowed(bookId)) {
                     String borrowerRollNo = booksEntityService.getBorrowerRollNo(bookId);
                     openWindow.openDialogue("Warning",
-                            "Book ID " + bookId + " is already borrowed by student with Roll No: " + borrowerRollNo);
+                            "Accession Number " + bookId + " is already borrowed by student with Roll No: " + borrowerRollNo);
 
                     clearFields();
                     return;
@@ -164,14 +164,14 @@ public class issueController {
                     addedBookIds.add(bookId);
                     clearFields();
                 } else {
-                    openWindow.openDialogue("Error", "Failed to retrieve book details for Book ID: " + bookId);
+                    openWindow.openDialogue("Error", "Failed to retrieve book details for Accession Number: " + bookId);
                 }
             } else {
-                openWindow.openDialogue("Information", "Book ID does not exist.");
+                openWindow.openDialogue("Information", "Accession Number does not exist.");
                 clearFields();
             }
         } catch (NumberFormatException e) {
-            openWindow.openDialogue("Error", "Please enter a valid integer for Book ID.");
+            openWindow.openDialogue("Error", "Please enter a  Accession Number.");
         } catch (Exception e) {
             e.printStackTrace();
             openWindow.openDialogue("Error", "An error occurred: " + e.getMessage());
@@ -206,12 +206,12 @@ public class issueController {
                                 book.setBookDetailsEntity(details);
                             } else {
                                 openWindow.openDialogue("Error",
-                                        "Failed to retrieve book details for Book ID: " + book.getBookId());
+                                        "Failed to retrieve book details for Accession Number: " + book.getBookId());
                                 return;
                             }
                         } else {
                             openWindow.openDialogue("Error",
-                                    "Failed to retrieve book details for Book ID: " + book.getBookId());
+                                    "Failed to retrieve book details for Accession Number: " + book.getBookId());
                             return;
                         }
 
@@ -228,7 +228,7 @@ public class issueController {
                 openWindow.openDialogue("Cancel", "Book Addition Cancelled By User");
             }
         } catch (NumberFormatException e) {
-            openWindow.openDialogue("Error", "Please enter valid integers for Book IDs.");
+            openWindow.openDialogue("Error", "Please enter valid  Accession Numbers.");
         } catch (Exception e) {
             e.printStackTrace();
             openWindow.openDialogue("Error", "An error occurred: " + e.getMessage());

@@ -22,21 +22,21 @@ public class BookDetailsService {
         return bookDetailsRepository.findAll();
     }
 
-    public Integer addBooksData(BookDetailsEntity BooksData) {
+    public Long addBooksData(BookDetailsEntity BooksData) {
         try {
-            Integer bookCode = bookDetailsRepository.save(BooksData).getBookCode();
+            Long bookCode = bookDetailsRepository.save(BooksData).getBookCode();
             return bookCode;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return -1;
+        return (long) -1;
     }
 
-    public BookDetailsEntity getBookDetailsEntity(Integer bookId) {
+    public BookDetailsEntity getBookDetailsEntity(Long bookId) {
         return bookDetailsRepository.findById(bookId).get();
     }
 
-    public boolean checkBookCodeIsExist(Integer bookcode) {
+    public boolean checkBookCodeIsExist(Long bookcode) {
         return bookDetailsRepository.existsById(bookcode);
     }
 }

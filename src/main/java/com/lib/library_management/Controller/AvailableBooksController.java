@@ -179,7 +179,7 @@ public class AvailableBooksController {
         ObservableList<BookDetailsEntity> observableBookList = FXCollections.observableArrayList(bookList);
 
         observableBookList.forEach(book -> {
-            Integer bookCode = book.getBookCode();
+            Long bookCode = book.getBookCode();
             book.setTotalBooks(booksService.countTotalBooks(bookCode));
             book.setAvailableBooks(booksService.countAvailableBooks(bookCode));
             book.setBorrowedBooks(booksService.countBorrowedBooks(bookCode));
