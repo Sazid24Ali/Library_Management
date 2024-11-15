@@ -40,6 +40,14 @@ public class BooksEntityService {
 
     BooksEntity booksEntity;
 
+    public Integer getAllBooksCount(){
+        return booksRepo.countAllBooks();
+    }
+
+    public Integer getAllAvailableBooksCount(){
+        return booksRepo.countAllAvailableBooks();
+    }
+
     public long countTotalBooks(Long bookCode) {
         return booksRepo.countTotalBooks(bookCode);
     }

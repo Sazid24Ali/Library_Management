@@ -15,7 +15,6 @@ import com.lib.library_management.Services.StudentService;
 import com.lib.library_management.Utility.OpenWindow;
 import com.lib.library_management.Utility.utilityClass;
 
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -202,6 +201,15 @@ public class MainController {
     @FXML
     private Button Stu_Cancel_Edit_Btn;
 
+    @FXML
+    private Label totalAvailableCount;
+
+    @FXML
+    private Label totalBooksCount;
+
+    @FXML
+    private Label totalBorrowedCount;
+
     private Stage primaryStage;
     private boolean isEditing = false;
 
@@ -369,6 +377,7 @@ public class MainController {
         initializeComboBox();
         // setting the fields length
         setFelidLengths();
+        setBooksCount();
 
     }
 
@@ -390,6 +399,15 @@ public class MainController {
 
         utilityClass.setIntegerLimiter(Fact_PhNo_La_Field, 10);
 
+    }
+
+    public void setBooksCount() {
+        Integer totalBooks = booksService.getAllBooksCount();
+        Integer AvailableBooks = booksService.getAllAvailableBooksCount();
+        Integer BorrowedBooks = totalBooks - AvailableBooks;
+        totalBooksCount.setText(totalBooks.toString());
+        totalAvailableCount.setText(AvailableBooks.toString());
+        totalBorrowedCount.setText(BorrowedBooks.toString());
     }
 
     @FXML
@@ -430,7 +448,7 @@ public class MainController {
     void addNewBook(ActionEvent event) {
         defaultSettings();
         Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        openWindow.openScene("AddNewBooks", "Add New Books ", primaryStage);
+        openWindow.openScene("AddNewBooks", "Add New Books ", primaryStage,this);
 
     }
 
@@ -438,7 +456,7 @@ public class MainController {
     void addNewBookIDs(ActionEvent event) {
         defaultSettings();
         Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        openWindow.openScene("AppendBooks", "Append New Books ", primaryStage);
+        openWindow.openScene("AppendBooks", "Add Accession Numbers", primaryStage,this);
 
     }
 
@@ -506,7 +524,7 @@ public class MainController {
     void availableBooks(ActionEvent event) {
         defaultSettings();
         Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        openWindow.openScene("AvailableBooks", "Available Books", primaryStage);
+        openWindow.openScene("AvailableBooks", "Available Books", primaryStage,this);
 
     }
 
@@ -587,6 +605,7 @@ public class MainController {
         // System.out.println(booksData);
         ObservableList<BooksEntity> observableBooksList = FXCollections.observableArrayList(booksData);
         Stu_BooksDisplay_Table.setItems(observableBooksList);
+        setBooksCount();
     }
 
     @FXML
@@ -712,7 +731,8 @@ public class MainController {
     void removeBooks(ActionEvent event) {
         defaultSettings();
         Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        openWindow.openScene("RemoveRecords", "Remove Books ", primaryStage);
+        openWindow.openScene("RemoveRecords", "Remove Books ", primaryStage,this);
+        setBooksCount();
 
     }
 
@@ -788,6 +808,7 @@ public class MainController {
         // to disable
         Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
         returnBook_Btn.setDisable(true);
+        setBooksCount();
     }
 
     public void refreshTable() {

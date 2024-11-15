@@ -17,6 +17,12 @@ import com.lib.library_management.Entity.BooksEntity;
 @Repository
 public interface BooksEntityRepo extends JpaRepository<BooksEntity, String> {
 
+    @Query("SELECT COUNT(b) FROM BooksEntity b")
+    Integer countAllBooks();
+
+    @Query("SELECT COUNT(b) FROM BooksEntity b WHERE b.status = 'Available'")
+    Integer countAllAvailableBooks();
+    
     @Query("SELECT COUNT(b) FROM BooksEntity b WHERE b.bookDetailsEntity.BookCode = :bookCode")
     long countTotalBooks(@Param("bookCode") Long bookCode);
 

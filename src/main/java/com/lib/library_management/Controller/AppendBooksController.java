@@ -202,6 +202,7 @@ public class AppendBooksController {
                             // the
                             // database.");
                             bookDetailsEntity = null;
+                            
                             // bookCode.setText(null);
                         } catch (Exception e) {
                             openWindow.openDialogue("Issue", "There is some issue with the server.");
