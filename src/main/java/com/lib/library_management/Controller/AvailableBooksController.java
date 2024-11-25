@@ -75,6 +75,15 @@ public class AvailableBooksController {
     @FXML
     private TableColumn<BookDetailsEntity, Integer> publishYearColumn;
 
+    @FXML
+    private TableColumn<BookDetailsEntity, String> callNoColumn;
+
+    @FXML
+    private TableColumn<BookDetailsEntity, String> isbnColumn;
+
+    @FXML
+    private TableColumn<BookDetailsEntity, String> remarksColumn;
+
     private FilteredList<BookDetailsEntity> filteredList;
 
     public class CustomHeightTableCell<S, T> extends TableCell<S, T> {
@@ -139,6 +148,9 @@ public class AvailableBooksController {
         publishYearColumn.setCellValueFactory(new PropertyValueFactory<>("publishing_year"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         borrowedByColumn.setCellValueFactory(new PropertyValueFactory<>("borrowedStudents"));
+        isbnColumn.setCellValueFactory(new PropertyValueFactory<>("ISBN_no"));
+        callNoColumn.setCellValueFactory(new PropertyValueFactory<>("Call_no"));
+        remarksColumn.setCellValueFactory(new PropertyValueFactory<>("Remarks"));
 
         // Apply custom TableCell to columns
         bookCodeColumn.setCellFactory(column -> new CustomHeightTableCell<>());
@@ -155,6 +167,9 @@ public class AvailableBooksController {
         publishYearColumn.setCellFactory(column -> new CustomHeightTableCell<>());
         priceColumn.setCellFactory(column -> new CustomHeightTableCell<>());
         borrowedByColumn.setCellFactory(column -> new CustomHeightTableCell<>());
+        isbnColumn.setCellFactory(column -> new CustomHeightTableCell<>());
+        callNoColumn.setCellFactory(column -> new CustomHeightTableCell<>());
+        remarksColumn.setCellFactory(column -> new CustomHeightTableCell<>());
         loadBookData();
         setupFiltering();
     }
@@ -164,14 +179,17 @@ public class AvailableBooksController {
         ObservableList<BookDetailsEntity> observableBookList = FXCollections.observableArrayList(bookList);
 
         observableBookList.forEach(book -> {
-            Integer bookCode = book.getBookCode();
+            Long bookCode = book.getBookCode();
             book.setTotalBooks(booksService.countTotalBooks(bookCode));
             book.setAvailableBooks(booksService.countAvailableBooks(bookCode));
             book.setBorrowedBooks(booksService.countBorrowedBooks(bookCode));
             book.setBookIds(booksService.getBookIds(bookCode));
             book.setBorrowedStudents(booksService.getBorrowedStudents(bookCode));
+            book.setCall_no(booksService.getCallNO(bookCode));
+            book.setISBN_no(booksService.getISBN_no(bookCode));
+            // book.setRemarks(booksService.getremarks(bookCode));
         });
-        System.out.println("Book Details \n"+observableBookList);
+        // System.out.println("Book Details \n" + observableBookList);
 
         filteredList = new FilteredList<>(observableBookList, p -> true);
         // To add the functionality of Sorting the value in columns
@@ -186,29 +204,69 @@ public class AvailableBooksController {
     private void setupFiltering() {
         Search_AvailBooks_TextField.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredList.setPredicate(book -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
+                if (newValue == null || newValue.trim().isEmpty()) {
+                    return true; // If the filter is empty, display all books
                 }
-                String lowerCaseFilter = newValue.toLowerCase();
 
-                return (book.getBookCode() != null && book.getBookCode().toString().contains(lowerCaseFilter))
-                        || (book.getBookName() != null && book.getBookName().toLowerCase().contains(lowerCaseFilter))
-                        || (book.getAuthor() != null && book.getAuthor().toLowerCase().contains(lowerCaseFilter))
-                        || (book.getEdition() != null && book.getEdition().toLowerCase().contains(lowerCaseFilter))
-                        || (book.getSubjectCategory() != null
-                                && book.getSubjectCategory().toLowerCase().contains(lowerCaseFilter))
-                        || (book.getBookIds() != null && book.getBookIds().toString().contains(lowerCaseFilter))
-                        || (book.getBorrowedStudents() != null
-                                && book.getBorrowedStudents().toString().contains(lowerCaseFilter));
-                // the below line are commented Because we don't want to filter the books based
-                // on the Number of books available , borrowed and available.
-                // || (book.getTotalBooks() != null &&
-                // book.getTotalBooks().toString().contains(lowerCaseFilter))
-                // || (book.getAvailableBooks() != null
-                // && book.getAvailableBooks().toString().contains(lowerCaseFilter))
-                // || (book.getBorrowedBooks() != null
-                // && book.getBorrowedBooks().toString().contains(lowerCaseFilter))
+                String lowerCaseFilter = newValue.trim().toLowerCase();
+
+                // Concatenate all relevant fields, handling nulls safely
+                String combinedFields = 
+                        (book.getBookCode() != null ? book.getBookCode().toString() : "") + " " +
+                        (book.getBookName() != null ? book.getBookName() : "") + " " +
+                        (book.getAuthor() != null ? book.getAuthor() : "") + " " +
+                        (book.getEdition() != null ? book.getEdition() : "") + " " +
+                        (book.getSubjectCategory() != null ? book.getSubjectCategory() : "") + " " +
+                        (book.getBookIds() != null ? book.getBookIds().toString() : "") + " " +
+                        (book.getBorrowedStudents() != null ? book.getBorrowedStudents().toString() : "") + " " +
+                        (book.getISBN_no() != null ? book.getISBN_no().toString() : "") + " " +
+                        (book.getCall_no() != null ? book.getCall_no().toString() : "") + " " +
+                        (book.getRemarks() != null ? book.getRemarks() : "");
+
+                // Convert to lowercase and check if it contains the filter text
+                return combinedFields.toLowerCase().contains(lowerCaseFilter);
             });
         });
     }
 }
+
+// Search_AvailBooks_TextField.textProperty().addListener((observable, oldValue,
+// newValue) -> {
+// filteredList.setPredicate(book -> {
+// if (newValue == null || newValue.isEmpty()) {
+// return true;
+// }
+// String lowerCaseFilter = newValue.toLowerCase();
+
+// return (book.getBookCode() != null &&
+// book.getBookCode().toString().contains(lowerCaseFilter))
+// || (book.getBookName() != null &&
+// book.getBookName().toLowerCase().contains(lowerCaseFilter))
+// || (book.getAuthor() != null &&
+// book.getAuthor().toLowerCase().contains(lowerCaseFilter))
+// || (book.getEdition() != null &&
+// book.getEdition().toLowerCase().contains(lowerCaseFilter))
+// || (book.getSubjectCategory() != null
+// && book.getSubjectCategory().toLowerCase().contains(lowerCaseFilter))
+// || (book.getBookIds() != null &&
+// book.getBookIds().toString().contains(lowerCaseFilter))
+// || (book.getBorrowedStudents() != null
+// && book.getBorrowedStudents().toString().contains(lowerCaseFilter))
+// || (book.getISBN_no() != null
+// && book.getISBN_no().toString().contains(lowerCaseFilter))
+// || (book.getCall_no() != null
+// && book.getCall_no().toString().contains(lowerCaseFilter))
+// || (book.getRemarks() != null
+// && book.getRemarks().toString().contains(lowerCaseFilter));
+// the below line are commented Because we don't want to filter the books based
+// on the Number of books available , borrowed and available.
+// || (book.getTotalBooks() != null &&
+// book.getTotalBooks().toString().contains(lowerCaseFilter))
+// || (book.getAvailableBooks() != null
+// && book.getAvailableBooks().toString().contains(lowerCaseFilter))
+// || (book.getBorrowedBooks() != null
+// && book.getBorrowedBooks().toString().contains(lowerCaseFilter))
+// });
+// });
+// }
+// }

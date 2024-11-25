@@ -48,10 +48,11 @@ public class OpenWindow {
 
     }
 
-    public void openScene(String FileName, String Title, Stage parent) {
+    public void openScene(String FileName, String Title, Stage parent, MainController mainControllerObj) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/" + FileName + ".fxml"));
             Stage stage = initializeTheStage(loader, parent, Title);
+            stage.setOnHiding(e -> mainControllerObj.setBooksCount());
 
             stage.show();
 
@@ -60,7 +61,8 @@ public class OpenWindow {
         }
     }
 
-    public void openScene(String FileName, String Title, Stage parent, String RollNo,MainController mainControllerObj) {
+    public void openScene(String FileName, String Title, Stage parent, String RollNo,
+            MainController mainControllerObj) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Scenes/" + FileName + ".fxml"));
             Stage stage = initializeTheStage(loader, parent, Title);
@@ -69,7 +71,8 @@ public class OpenWindow {
             controller.setRollNo(RollNo);
             controller.setMainController(mainControllerObj);
 
-            // Remove this comments if we want the issue book window size to be  not fully maximized
+            // Remove this comments if we want the issue book window size to be not fully
+            // maximized
             // stage.setMaxWidth(650);
             // stage.setMaxHeight(350);
             stage.show();

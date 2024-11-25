@@ -26,8 +26,51 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
+            <GridPane alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.5999755859375" minWidth="10.0" prefWidth="84.199951171875" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="71.4000244140625" minWidth="10.0" prefWidth="69.800048828125" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Total Books ">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="totalBooksCount" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Available " GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="totalAvailableCount" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Borrowed" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="totalBorrowedCount" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
             <Button fx:id="Admin_AddNewBook_Btn" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addNewBook" prefWidth="150.0" text="Add New Book" VBox.vgrow="ALWAYS" />
-            <Button fx:id="Admin_AddNewBookIds_Btn" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addNewBookIDs" prefWidth="150.0" text="Add New Books Id's" VBox.vgrow="ALWAYS" />
+            <Button fx:id="Admin_AddNewBookIds_Btn" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addNewBookIDs" prefWidth="150.0" text="Add Accesion Numbers" VBox.vgrow="ALWAYS" />
             <Button fx:id="Admin_RemoveBooks_Btn" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeBooks" prefWidth="150.0" text="Remove Books" VBox.vgrow="ALWAYS" />
             <Button fx:id="Admin_AvailableBooks_Btn" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#availableBooks" prefWidth="150.0" text="Available Books" VBox.vgrow="ALWAYS" />
          </children>
@@ -128,8 +171,8 @@
             <TableView id="styleForSelection" fx:id="Stu_BooksDisplay_Table" onMouseClicked="#selectedBook" prefHeight="200.0" stylesheets="@styleSheetForCellSelection.css" tableMenuButtonVisible="true" visible="false" VBox.vgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="bookCodeColumn" editable="false" prefWidth="75.20001602172852" text="Book Code" />
-                  <TableColumn fx:id="bookIdColumn" editable="false" prefWidth="84.0" text="Book Id" />
-                  <TableColumn fx:id="authorColumn" editable="false" prefWidth="93.60002136230469" text="Author" />
+                  <TableColumn fx:id="bookIdColumn" editable="false" prefWidth="116.79997253417969" text="Accession Number" />
+                  <TableColumn fx:id="authorColumn" editable="false" prefWidth="91.20001220703125" text="Author" />
                   <TableColumn fx:id="BookNameColumn" editable="false" prefWidth="149.5999755859375" text="Book Name" />
                   <TableColumn fx:id="editionColumn" editable="false" prefWidth="61.5999755859375" text="Edition" />
                   <TableColumn fx:id="DateOfAllotmentColumn" editable="false" prefWidth="114.39990234375" text="Date Of Allotment" />

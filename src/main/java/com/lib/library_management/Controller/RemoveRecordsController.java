@@ -11,8 +11,6 @@ import org.springframework.stereotype.Component;
 
 import com.lib.library_management.Entity.BookDetailsEntity;
 import com.lib.library_management.Entity.BooksEntity;
-import com.lib.library_management.Repository.BookDetailsRepo;
-import com.lib.library_management.Services.BookDetailsService;
 import com.lib.library_management.Services.BooksEntityService;
 import com.lib.library_management.Utility.OpenWindow;
 
@@ -35,16 +33,13 @@ public class RemoveRecordsController {
     private BooksEntityService booksService;
 
     @Autowired
-    private BookDetailsRepo bookDetailsRepo;
-
-    @Autowired
     private OpenWindow openWindow;
 
     @FXML
     private TableColumn<BooksEntity, Integer> colBookcode;
 
     @FXML
-    private TableColumn<BooksEntity, Integer> colbookid;
+    private TableColumn<BooksEntity, String> colbookid;
 
     @FXML
     private TableColumn<BooksEntity, String> colbookname;
@@ -77,7 +72,7 @@ public class RemoveRecordsController {
     private TableView<BooksEntity> removebooktable;
 
     private ObservableList<BooksEntity> observableBookList = FXCollections.observableArrayList();
-    private Map<Integer, String> booksNotRemoved = new HashMap<>();
+    private Map<String, String> booksNotRemoved = new HashMap<>();
 
     private ToggleGroup toggleGroup = new ToggleGroup();
 
@@ -97,7 +92,7 @@ public class RemoveRecordsController {
         rdBookid.setToggleGroup(toggleGroup);
         toggleGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
             if (newToggle == rdBookid) {
-                tfid_bookcode.setPromptText("Enter Book ID");
+                tfid_bookcode.setPromptText("Enter Accession Number");
             } else if (newToggle == rdBookcode) {
                 tfid_bookcode.setPromptText("Enter Book Code");
             }
@@ -110,21 +105,22 @@ public class RemoveRecordsController {
         String input = tfid_bookcode.getText().trim();
 
         if (!rdBookid.isSelected() && !rdBookcode.isSelected()) {
-            openWindow.openDialogue("Warning", "Please select either Book ID or Book Code.");
+            openWindow.openDialogue("Warning", "Please select either Accession Number or Book Code.");
             return;
         }
 
         if (input.isEmpty()) {
-            openWindow.openDialogue("Warning", "Please enter a book ID or code.");
+            openWindow.openDialogue("Warning", "Please enter a Accession Number or Book code.");
             return;
         }
 
         try {
             if (rdBookid.isSelected()) {
-                Integer bookId = Integer.parseInt(input);
-                if (observableBookList.stream().anyMatch(book -> book.getBookId() == bookId)) {
-                    openWindow.openDialogue("Warning", "Book ID " + bookId + " already exists in the table.");
-                    clearTableAndData();
+                // Integer bookId = Integer.parseInt(input);
+                String bookId = input.toUpperCase();
+                if (observableBookList.stream().anyMatch(book -> book.getBookId().equals(bookId))) {
+                    openWindow.openDialogue("Warning", "Accession Number " + bookId + " already exists in the table.");
+                    tfid_bookcode.clear();
                     return;
                 }
                 BooksEntity bookDetailsOptional = booksService.getBookDataByBookId(bookId);
@@ -140,20 +136,31 @@ public class RemoveRecordsController {
                     book.setStudent(bookDetailsOptional.getStudent());
                     observableBookList.add(book);
                 } else {
-                    openWindow.openDialogue("Warning", "Book ID " + bookId + " does not exist.");
+                    openWindow.openDialogue("Warning", "Accession Number " + bookId + " does not exist.");
                 }
             } else if (rdBookcode.isSelected()) {
-                Integer bookCode = Integer.parseInt(input);
-
+                Long bookCode = Long.parseLong(input);
                 if (observableBookList.stream().anyMatch(book -> book.getBookCode() == bookCode)) {
                     openWindow.openDialogue("Warning", "Book Code " + bookCode + " already exists in the table.");
                     clearTableAndData();
                     return;
                 }
-
+                String response = booksService.getISBN_no(bookCode);
+                // System.out.println("The response from ISBN : "+response);
                 List<BooksEntity> books = booksService.getBooksByCode(bookCode);
                 if (books.isEmpty()) {
-                    openWindow.openDialogue("Warning", "No books found with Book Code " + bookCode);
+                    if (response != null) {
+                        boolean confirm = openWindow.openConfirmation("Warning",
+                                "No Books Are Present\nDo you want to Remove the Book Details ");
+                        if (confirm) {
+                            booksService.deleteBookDetailsByCode(bookCode);
+                            openWindow.openDialogue("Message", "Removed the Book Details Of Book Code : " + bookCode);
+                        } else {
+                            openWindow.openDialogue("Message", "User Cancelled The Operation");
+                        }
+                    } else {
+                        openWindow.openDialogue("Warning", "Book Code '" + bookCode + "' Not Found ");
+                    }
                 } else {
                     for (BooksEntity bookDetailsOptional : books) {
                         BookDetailsEntity details = bookDetailsOptional.getBookDetailsEntity();
@@ -182,6 +189,7 @@ public class RemoveRecordsController {
     void removebooksonclick(ActionEvent event) {
         booksNotRemoved.clear();
         if (observableBookList.isEmpty()) {
+
             openWindow.openDialogue("Warning", "No books selected for removal.");
             return;
         }
@@ -190,7 +198,7 @@ public class RemoveRecordsController {
         if (confirm) {
             try {
                 if (rdBookid.isSelected()) {
-                    List<Integer> removedBookIds = new ArrayList<>();
+                    List<String> removedBookIds = new ArrayList<>();
                     for (BooksEntity book : observableBookList) {
                         if (book.getStudent() == null) {
                             booksService.deleteBook(book.getBookId());
@@ -203,26 +211,27 @@ public class RemoveRecordsController {
                         openWindow.openDialogue("Message",
                                 "Can't Delete As they where issued\n" +
                                         booksNotRemoved.entrySet().stream()
-                                                .map(entry -> "Book ID: " + entry.getKey() + ", Student Roll No: "
+                                                .map(entry -> "Accession Number: " + entry.getKey()
+                                                        + ", Student Roll No: "
                                                         + entry.getValue())
                                                 .collect(Collectors.joining("\n")));
                     }
                     if (!removedBookIds.isEmpty()) {
                         openWindow.openDialogue("Deleted Books",
-                                " Book IDs:\n " +
+                                " Accession Numbers:\n " +
                                         removedBookIds.stream()
                                                 .map(Object::toString)
                                                 .collect(Collectors.joining(", ")));
                     }
                 } else if (rdBookcode.isSelected()) {
-                    List<Integer> removedBookIds = new ArrayList<>();
-                    List<Integer> validBookCodes = observableBookList.stream()
+                    List<String> removedBookIds = new ArrayList<>();
+                    List<Long> validBookCodes = observableBookList.stream()
                             .filter(book -> book.getBookCode() != null)
                             .map(BooksEntity::getBookCode)
                             .distinct()
                             .collect(Collectors.toList());
 
-                    for (Integer bookCode : validBookCodes) {
+                    for (Long bookCode : validBookCodes) {
                         List<BooksEntity> booksToDelete = booksService.getBooksByCode(bookCode);
                         for (BooksEntity book : booksToDelete) {
                             if (book.getStudent() == null) {
@@ -242,13 +251,14 @@ public class RemoveRecordsController {
                         openWindow.openDialogue("Message",
                                 "Can't Delete As they where issued \n" +
                                         booksNotRemoved.entrySet().stream()
-                                                .map(entry -> "Book ID: " + entry.getKey() + ", Student Roll No: "
+                                                .map(entry -> "Accession Number: " + entry.getKey()
+                                                        + ", Student Roll No: "
                                                         + entry.getValue())
                                                 .collect(Collectors.joining("\n")));
                     }
                     if (!removedBookIds.isEmpty()) {
                         openWindow.openDialogue("Deleted Books",
-                                " Book IDs: \n" +
+                                " Accession Numbers: \n" +
                                         removedBookIds.stream()
                                                 .map(Object::toString)
                                                 .collect(Collectors.joining(", ")));

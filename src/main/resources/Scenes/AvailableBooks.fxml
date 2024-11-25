@@ -41,18 +41,21 @@
                <columns>
                   <TableColumn fx:id="bookCodeColumn" editable="false" minWidth="2.0" prefWidth="79.2000053524971" text="Book Code" />
                   <TableColumn fx:id="bookNameColumn" editable="false" prefWidth="151.99998474121094" text="Book Name" />
-                  <TableColumn fx:id="authorColumn" editable="false" prefWidth="181.60003662109375" text="Author" />
-                  <TableColumn fx:id="editionColumn" editable="false" minWidth="0.0" prefWidth="66.39996337890625" text="Edition" />
+                  <TableColumn fx:id="authorColumn" editable="false" prefWidth="162.4000244140625" text="Author" />
+                  <TableColumn fx:id="editionColumn" editable="false" minWidth="0.0" prefWidth="85.5999755859375" text="Edition" />
                   <TableColumn fx:id="subjectCategoryColumn" editable="false" prefWidth="102.39996337890625" text="Subject Category" />
                   <TableColumn fx:id="totalBooksColumn" editable="false" prefWidth="76.7999267578125" text="Total Books" />
                   <TableColumn fx:id="availableBooksColumn" editable="false" prefWidth="69.60009765625" text="Available " />
                   <TableColumn fx:id="borrowedBooksColumn" editable="false" prefWidth="81.5999755859375" text="Borrowed" />
-                  <TableColumn fx:id="bookIDsColumn" editable="false" prefWidth="75.0" text="Books Ids" visible="false" />
+                  <TableColumn fx:id="bookIDsColumn" editable="false" minWidth="100.0" prefWidth="75.0" text="Accession No's" visible="false" />
+                  <TableColumn fx:id="isbnColumn" prefWidth="75.0" text="ISBN" />
+                  <TableColumn fx:id="callNoColumn" prefWidth="75.0" text="Call No" visible="false" />
                   <TableColumn fx:id="borrowedByColumn" editable="false" prefWidth="75.0" text="Borrowed By" visible="false" />
                   <TableColumn fx:id="pagesColumn" prefWidth="75.0" text="Pages" visible="false" />
                   <TableColumn fx:id="placeAndpublisherColumn" prefWidth="75.0" text="Place And Publisher" visible="false" />
                   <TableColumn fx:id="publishYearColumn" prefWidth="75.0" text="Year of Publish" visible="false" />
                   <TableColumn fx:id="priceColumn" prefWidth="75.0" text="Price of Book" visible="false" />
+                  <TableColumn fx:id="remarksColumn" prefWidth="75.0" text="Remarks" />
                </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

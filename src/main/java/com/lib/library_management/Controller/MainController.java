@@ -16,6 +16,7 @@ import com.lib.library_management.Utility.OpenWindow;
 import com.lib.library_management.Utility.utilityClass;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -174,7 +175,7 @@ public class MainController {
     private TableColumn<BooksEntity, String> authorColumn;
 
     @FXML
-    private TableColumn<BooksEntity, Integer> bookCodeColumn;
+    private TableColumn<BooksEntity, Long> bookCodeColumn;
 
     @FXML
     private TableColumn<BooksEntity, String> bookIdColumn;
@@ -199,6 +200,15 @@ public class MainController {
 
     @FXML
     private Button Stu_Cancel_Edit_Btn;
+
+    @FXML
+    private Label totalAvailableCount;
+
+    @FXML
+    private Label totalBooksCount;
+
+    @FXML
+    private Label totalBorrowedCount;
 
     private Stage primaryStage;
     private boolean isEditing = false;
@@ -312,7 +322,7 @@ public class MainController {
 
         bookCodeColumn.setCellValueFactory(cellData -> {
             BooksEntity booksEntity = cellData.getValue();
-            return new SimpleIntegerProperty(booksEntity.getBookDetailsEntity().getBookCode()).asObject();
+            return new SimpleLongProperty(booksEntity.getBookDetailsEntity().getBookCode()).asObject();
         });
         bookIdColumn.setCellValueFactory(new PropertyValueFactory<>("BookId"));
         authorColumn.setCellValueFactory(cellData -> {
@@ -367,6 +377,7 @@ public class MainController {
         initializeComboBox();
         // setting the fields length
         setFelidLengths();
+        setBooksCount();
 
     }
 
@@ -374,7 +385,8 @@ public class MainController {
         try {
             Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
         } catch (Exception e) {
-            // TODO: handle exception
+            // System.out.println("An Error Raised : \n" + e);
+            openWindow.openDialogue("Error ", e.toString());
         }
         Student_Course_CBox.setItems(observableCourses);
     }
@@ -387,6 +399,15 @@ public class MainController {
 
         utilityClass.setIntegerLimiter(Fact_PhNo_La_Field, 10);
 
+    }
+
+    public void setBooksCount() {
+        Integer totalBooks = booksService.getAllBooksCount();
+        Integer AvailableBooks = booksService.getAllAvailableBooksCount();
+        Integer BorrowedBooks = totalBooks - AvailableBooks;
+        totalBooksCount.setText(totalBooks.toString());
+        totalAvailableCount.setText(AvailableBooks.toString());
+        totalBorrowedCount.setText(BorrowedBooks.toString());
     }
 
     @FXML
@@ -427,7 +448,7 @@ public class MainController {
     void addNewBook(ActionEvent event) {
         defaultSettings();
         Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        openWindow.openScene("AddNewBooks", "Add New Books ", primaryStage);
+        openWindow.openScene("AddNewBooks", "Add New Books ", primaryStage,this);
 
     }
 
@@ -435,7 +456,7 @@ public class MainController {
     void addNewBookIDs(ActionEvent event) {
         defaultSettings();
         Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        openWindow.openScene("AppendBooks", "Append New Books ", primaryStage);
+        openWindow.openScene("AppendBooks", "Add Accession Numbers", primaryStage,this);
 
     }
 
@@ -443,7 +464,7 @@ public class MainController {
         // System.out.println("Add New Student Fact value is " + isEditing);
         isEditing = false;
 
-        System.out.println(newData);
+        // System.out.println(newData);
         // System.out.println("\n\n\n" + newStudentData.toString());
         if (studentService.addStudentData(newData)) {
             openWindow.openDialogue("Success", " Added " + fact_stud + " Data Successfully " + newData);
@@ -503,7 +524,7 @@ public class MainController {
     void availableBooks(ActionEvent event) {
         defaultSettings();
         Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        openWindow.openScene("AvailableBooks", "Available Books", primaryStage);
+        openWindow.openScene("AvailableBooks", "Available Books", primaryStage,this);
 
     }
 
@@ -522,7 +543,7 @@ public class MainController {
             VisibilitySetter(true);
             newStudent(false);
             returnBook_Btn.setDisable(true);
-            System.out.println("\n\n\n\n" + data.getYearOfPassing());
+            // System.out.println("\n\n\n\n" + data.getYearOfPassing());
             Stu_Name_La_Field.setText(data.getStudentName());
             Stu_PhNo_La_Field.setText(String.valueOf(data.getPhoneNumber()));
             Stu_YOP_La_Field.setText(String.valueOf(data.getYearOfPassing()));
@@ -541,7 +562,7 @@ public class MainController {
 
         StudentEntity data = studentService.getStudentDataByRollNo(RollNo);
         if (data != null) {
-            System.out.println("Set Faculty Data Got data");
+            // System.out.println("Set Faculty Data Got data");
             VisibilitySetter(true);
             newFaculty(false);
             returnBook_Btn.setDisable(true);
@@ -584,6 +605,7 @@ public class MainController {
         // System.out.println(booksData);
         ObservableList<BooksEntity> observableBooksList = FXCollections.observableArrayList(booksData);
         Stu_BooksDisplay_Table.setItems(observableBooksList);
+        setBooksCount();
     }
 
     @FXML
@@ -686,11 +708,16 @@ public class MainController {
         // if the edit is clicked and then the issue is clicked then the felids are
         // forever in edit mode
         // edit_Student_Data(false);
-        String course = Student_Course_CBox.getValue();
-        String RollNo = 1007 + Student_Year_Field.getText() + course.substring(1, 4)
-                + Student_RollNo_Field.getText();
+        String scope = Student_Course_CBox.getValue();
+        String RollNo;
+        if (scope == "Faculty") {
+            RollNo = Student_RollNo_Field.getText();
+        } else {
+            RollNo = 1007 + Student_Year_Field.getText() + scope.substring(1, 4)
+                    + Student_RollNo_Field.getText();
+        }
         Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        openWindow.openScene("Issue", "Issue Books", primaryStage, RollNo,this);
+        openWindow.openScene("Issue", "Issue Books", primaryStage, RollNo, this);
 
         setIssuedbooks(RollNo);
         // Added this to clear the selection from the table and reset the return button
@@ -704,7 +731,8 @@ public class MainController {
     void removeBooks(ActionEvent event) {
         defaultSettings();
         Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        openWindow.openScene("RemoveRecords", "Remove Books ", primaryStage);
+        openWindow.openScene("RemoveRecords", "Remove Books ", primaryStage,this);
+        setBooksCount();
 
     }
 
@@ -780,6 +808,7 @@ public class MainController {
         // to disable
         Stu_BooksDisplay_Table.getSelectionModel().clearSelection();
         returnBook_Btn.setDisable(true);
+        setBooksCount();
     }
 
     public void refreshTable() {

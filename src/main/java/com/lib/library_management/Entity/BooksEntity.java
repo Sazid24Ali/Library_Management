@@ -15,7 +15,7 @@ import lombok.Data;
 public class BooksEntity {
 
     @Id
-    Integer BookId;
+    String BookId; // Changed from Integer
 
     @ManyToOne
     @JoinColumn(name = "BookCode", nullable = false)
@@ -36,7 +36,7 @@ public class BooksEntity {
     @Transient
     String SubjectCategory;
     @Transient
-    Integer BookCode;
+    Long BookCode;
     @Transient
     String Author;
     @Transient

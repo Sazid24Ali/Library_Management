@@ -9,11 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lib.library_management.Entity.BookDetailsEntity;
 
 @Repository
-public interface BookDetailsRepo extends JpaRepository<BookDetailsEntity, Integer> {
+public interface BookDetailsRepo extends JpaRepository<BookDetailsEntity, Long> {
 
     @Transactional
     @Modifying
     @Query("DELETE FROM BookDetailsEntity b WHERE b.BookCode = :bookCode")
-    void deleteByBookCode(Integer bookCode);
+    void deleteByBookCode(Long bookCode);
 
 }

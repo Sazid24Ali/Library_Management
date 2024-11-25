@@ -17,7 +17,7 @@ public class BooksDetailsService {
         return bookDetailsRepo.findAll();
     }
 
-    public BookDetailsEntity getBookDetailsByBookCode(Integer bcode) {
+    public BookDetailsEntity getBookDetailsByBookCode(Long bcode) {
         try {
             BookDetailsEntity bookDetailsEntity = bookDetailsRepo.findById(bcode).get();
             return bookDetailsEntity;

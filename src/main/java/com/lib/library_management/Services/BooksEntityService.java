@@ -27,10 +27,12 @@ public class BooksEntityService {
     BookDetailsRepo bookDetailsRepo;
 
     @Transactional
-    public void deleteBookDetailsByCode(Integer bookCode) {
+    public void deleteBookDetailsByCode(Long bookCode) {
         List<BooksEntity> booksToDelete = getBooksByCode(bookCode);
-        for (BooksEntity book : booksToDelete) {
-            deleteBook(book.getBookId());
+        if (!booksToDelete.isEmpty()){    
+            for (BooksEntity book : booksToDelete) {
+                deleteBook(book.getBookId());
+            }
         }
         bookDetailsRepo.deleteById(bookCode);
 
@@ -38,26 +40,33 @@ public class BooksEntityService {
 
     BooksEntity booksEntity;
 
-    public long countTotalBooks(Integer bookCode) {
+    public Integer getAllBooksCount(){
+        return booksRepo.countAllBooks();
+    }
+
+    public Integer getAllAvailableBooksCount(){
+        return booksRepo.countAllAvailableBooks();
+    }
+
+    public long countTotalBooks(Long bookCode) {
         return booksRepo.countTotalBooks(bookCode);
     }
 
-    public long countAvailableBooks(Integer bookCode) {
+    public long countAvailableBooks(Long bookCode) {
         return booksRepo.countAvailableBooks(bookCode);
     }
 
-    public long countBorrowedBooks(Integer bookCode) {
+    public long countBorrowedBooks(Long bookCode) {
         return booksRepo.countBorrowedBooks(bookCode);
     }
 
-    public ArrayList<String> getBookIds(Integer bookCode) {
+    public ArrayList<String> getBookIds(Long bookCode) {
         return booksRepo.getBookIds(bookCode);
     }
 
-    public ArrayList<String> getBorrowedStudents(Integer bookCode) {
+    public ArrayList<String> getBorrowedStudents(Long bookCode) {
         ArrayList<String> data = booksRepo.getBorrowedStudents(bookCode);
         ArrayList<String> formattedData = new ArrayList<>();
-        int i = 0;
         for (int j = 0; j < data.size(); j++) {
             String pair = data.get(j).replace(",", " -> ");
             formattedData.add(pair);
@@ -77,7 +86,7 @@ public class BooksEntityService {
         booksRepo.save(booksEntity);
     }
 
-    public BooksEntity getBookDataByBookId(Integer bookId) {
+    public BooksEntity getBookDataByBookId(String bookId) {
         try {
             return booksRepo.findById(bookId).orElse(null);
         } catch (Exception e) {
@@ -98,16 +107,17 @@ public class BooksEntityService {
         return booksRepo.findAll();
     }
 
-    public boolean checkBookExistsById(Integer bookId) {
+    public boolean checkBookExistsById(String bookId) {
         return booksRepo.existsById(bookId);
     }
 
-    public boolean isBookAlreadyBorrowed(Integer bookId) {
+    public boolean isBookAlreadyBorrowed(String bookId) {
         BooksEntity book = booksRepo.findById(bookId).orElse(null);
         return book != null && book.getStatus().equals("Borrowed");
     }
 
-    public void deleteBook(Integer bookId) {
+    public void deleteBook(String bookId) {
+        // Changed the argument from Integer
         booksRepo.deleteById(bookId);
     }
 
@@ -116,7 +126,7 @@ public class BooksEntityService {
         booksRepo.saveAll(booksToSaveOrUpdate);
     }
 
-    public String getBorrowerRollNo(Integer bookId) {
+    public String getBorrowerRollNo(String bookId) {
 
         Optional<BooksEntity> bookOptional = booksRepo.findById(bookId);
         return bookOptional.map(book -> {
@@ -126,7 +136,7 @@ public class BooksEntityService {
     }
 
     @Transactional(readOnly = true)
-    public List<BookDetailsEntity> getBookDetailsByCode(int bookCode) {
+    public List<BookDetailsEntity> getBookDetailsByCode(Long bookCode) {
         List<BooksEntity> booksEntities = booksRepo.findByBookCode(bookCode);
         return booksEntities.stream()
                 .map(BooksEntity::getBookDetailsEntity)
@@ -134,7 +144,7 @@ public class BooksEntityService {
     }
 
     @Transactional
-    public List<BooksEntity> getBooksByCode(Integer bookCode) {
+    public List<BooksEntity> getBooksByCode(Long bookCode) {
         List<BooksEntity> books = booksRepo.findBooksByBookCode(bookCode);
 
         // if (books.isEmpty()) {
@@ -161,8 +171,20 @@ public class BooksEntityService {
         return books;
     }
 
-    public BooksEntity getBookById(Integer bookId) {
+    public BooksEntity getBookById(String bookId) {
         return booksRepo.findBookByBookId(bookId);
+    }
+
+    public String getCallNO(Long bookCode) {
+        return booksRepo.findCall_noByBookCode(bookCode);
+    }
+
+    public String getISBN_no(Long bookCode) {
+        return booksRepo.findISBN_noByBookCode(bookCode);
+    }
+
+    public String getremarks(Long bookCode) {
+        return booksRepo.findRemarksByBookCode(bookCode);
     }
 
 }
