@@ -372,7 +372,7 @@ public class MainController {
                 }
             }
         });
-        // VisibilitySetter(false);
+        defaultSettings();
         // Setting the Combo box
         initializeComboBox();
         // setting the fields length
