@@ -11,37 +11,45 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="623.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lib.library_management.Controller.AddNewBooksController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="623.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lib.library_management.Controller.AddNewBooksController">
    <top>
       <HBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets top="10.0" />
          </BorderPane.margin>
          <children>
-            <StackPane prefHeight="59.0" prefWidth="626.0">
+            <StackPane prefHeight="59.0" prefWidth="624.0" style="-fx-background-color: #DEE3E9; -fx-background-radius: 10 10 5 5;">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" stroke="BLACK" strokeType="INSIDE" width="147.0">
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" stroke="WHITE" strokeType="INSIDE" style="-fx-fill: #4D7A97;" width="147.0">
                      <StackPane.margin>
                         <Insets />
                      </StackPane.margin>
                   </Rectangle>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" ADD NEW BOOK">
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" ADD NEW BOOK">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Text>
                </children>
+               <HBox.margin>
+                  <Insets bottom="10.0" left="20.0" right="20.0" />
+               </HBox.margin>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
             </StackPane>
          </children>
       </HBox>
    </top>
    <bottom>
-      <Button fx:id="save" mnemonicParsing="false" onAction="#onclicksave" prefHeight="33.0" prefWidth="122.0" text="Save" BorderPane.alignment="CENTER">
+      <Button fx:id="save" mnemonicParsing="false" onAction="#onclicksave" prefHeight="33.0" prefWidth="122.0" style="-fx-background-color: #F8981D; -fx-font-size: 15; -fx-font-weight: 400; -fx-font-family: CerebriSans-Regular, -apple-system; -fx-font-size: 16; -fx-border-width: 2;" text="Save" BorderPane.alignment="CENTER">
          <font>
             <Font name="System Bold Italic" size="13.0" />
          </font>
@@ -51,6 +59,22 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0" startX="1.0" startY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
       </Button>
    </bottom>
    <center>
@@ -59,7 +83,7 @@
             <Insets bottom="30.0" left="100.0" right="100.0" top="20.0" />
          </BorderPane.margin>
          <children>
-            <GridPane alignment="CENTER_RIGHT" prefHeight="432.0" prefWidth="588.0" vgap="2.0">
+            <GridPane alignment="CENTER_RIGHT" hgap="2.0" prefHeight="432.0" prefWidth="588.0" vgap="20.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="247.20001220703125" minWidth="10.0" prefWidth="144.7999755859375" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="367.20001220703125" minWidth="10.0" prefWidth="278.4000244140625" />
@@ -126,16 +150,19 @@
                      </font>
                   </Label>
                   <TextField fx:id="tfbookcode" visible="false" GridPane.columnIndex="1" />
-                  <TextField fx:id="tfbookname" layoutX="310.0" layoutY="14.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="tfAuthor" layoutX="310.0" layoutY="49.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField fx:id="tfsubjectcategory" layoutX="310.0" layoutY="83.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextField fx:id="tfedition" layoutX="310.0" layoutY="118.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <TextField fx:id="tfplaceandpublisher" layoutX="310.0" layoutY="152.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <TextField fx:id="tfyear" layoutX="310.0" layoutY="187.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <TextField fx:id="tfpages" layoutX="310.0" layoutY="221.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <TextField fx:id="tfprice" layoutX="310.0" layoutY="256.0" prefHeight="5.0" prefWidth="276.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                  <TextField fx:id="tfisbnNo" prefHeight="5.0" prefWidth="276.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                  <TextField fx:id="tfcallNo" prefHeight="5.0" prefWidth="276.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                  <TextField fx:id="tfbookname" layoutX="310.0" layoutY="14.0" style="-fx-border-color: #4D7A97;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="tfAuthor" layoutX="310.0" layoutY="49.0" style="-fx-border-color: #4D7A97;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="tfsubjectcategory" layoutX="310.0" layoutY="83.0" style="-fx-border-color: #4D7A97;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="tfedition" layoutX="310.0" layoutY="118.0" style="-fx-border-color: #4D7A97;" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets></TextField>
+                  <TextField fx:id="tfplaceandpublisher" layoutX="310.0" layoutY="152.0" style="-fx-border-color: #4D7A97;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField fx:id="tfyear" layoutX="310.0" layoutY="187.0" style="-fx-border-color: #4D7A97;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <TextField fx:id="tfpages" layoutX="310.0" layoutY="221.0" style="-fx-border-color: #4D7A97;" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <TextField fx:id="tfprice" layoutX="310.0" layoutY="256.0" prefHeight="5.0" prefWidth="276.0" style="-fx-border-color: #4D7A97;" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <TextField fx:id="tfisbnNo" prefHeight="5.0" prefWidth="276.0" style="-fx-border-color: #4D7A97;" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <TextField fx:id="tfcallNo" prefHeight="5.0" prefWidth="276.0" style="-fx-border-color: #4D7A97;" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                   <Label text="ISBN NO" GridPane.rowIndex="9">
                      <font>
                         <Font name="System Bold" size="13.0" />
@@ -151,7 +178,7 @@
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="tfremarks" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                  <TextField fx:id="tfremarks" style="-fx-border-color: #4D7A97;" GridPane.columnIndex="1" GridPane.rowIndex="11" />
                </children>
             </GridPane>
          </children>

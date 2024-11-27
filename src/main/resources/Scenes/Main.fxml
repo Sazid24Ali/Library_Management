@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.effect.SepiaTone?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -17,11 +20,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane minHeight="600.0" minWidth="855.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lib.library_management.Controller.MainController">
+<BorderPane minHeight="600.0" minWidth="855.0" style="-fx-background-color: #D0E8C5; -fx-border-color: #6B4F3A; -fx-border-style: solid; -fx-borde-width: 10;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lib.library_management.Controller.MainController">
    <right>
-      <VBox alignment="TOP_CENTER" fillWidth="false" prefWidth="175.0" spacing="30.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" fillWidth="false" prefHeight="598.0" prefWidth="195.0" spacing="30.0" style="-fx-background-color: #DEE3E9;" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="Admin_Label" alignment="CENTER" text="Admin">
+            <Label fx:id="Admin_Label" alignment="CENTER" style="-fx-font-family: &quot;Bitter&quot;, serif; -fx-font-weight: bold; -fx-font-size: 30; -fx-text-fill: #4E4E4E;" text="Admin">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -46,6 +49,9 @@
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
+                     <effect>
+                        <SepiaTone />
+                     </effect>
                   </Label>
                   <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Available " GridPane.rowIndex="1">
                      <font>
@@ -56,6 +62,9 @@
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
+                     <effect>
+                        <Glow />
+                     </effect>
                   </Label>
                   <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Borrowed" GridPane.rowIndex="2">
                      <font>
@@ -69,10 +78,16 @@
                   </Label>
                </children>
             </GridPane>
-            <Button fx:id="Admin_AddNewBook_Btn" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addNewBook" prefWidth="150.0" text="Add New Book" VBox.vgrow="ALWAYS" />
-            <Button fx:id="Admin_AddNewBookIds_Btn" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addNewBookIDs" prefWidth="150.0" text="Add Accesion Numbers" VBox.vgrow="ALWAYS" />
-            <Button fx:id="Admin_RemoveBooks_Btn" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeBooks" prefWidth="150.0" text="Remove Books" VBox.vgrow="ALWAYS" />
-            <Button fx:id="Admin_AvailableBooks_Btn" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#availableBooks" prefWidth="150.0" text="Available Books" VBox.vgrow="ALWAYS" />
+            <Button fx:id="Admin_AddNewBook_Btn" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addNewBook" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #4D7A97; -fx-text-fill: #fff; -fx-font-weight: bold; -fx-font-size: 15; -fx-background-radius: 20; -fx-border-color: #fff; -fx-border-radius: 20;" text="Add New Book" VBox.vgrow="ALWAYS" />
+            <Button fx:id="Admin_AddNewBookIds_Btn" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addNewBookIDs" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #4D7A97; -fx-text-fill: #fff; -fx-font-weight: bold; -fx-background-radius: 20; -fx-border-color: #fff; -fx-border-radius: 20;" text="Add Accesion Numbers" VBox.vgrow="ALWAYS">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets></Button>
+            <Button fx:id="Admin_RemoveBooks_Btn" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeBooks" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #4D7A97; -fx-text-fill: #fff; -fx-font-weight: bold; -fx-font-size: 15; -fx-background-radius: 20; -fx-border-color: white; -fx-border-radius: 20;" text="Remove Books" VBox.vgrow="ALWAYS">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button fx:id="Admin_AvailableBooks_Btn" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#availableBooks" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #4D7A97; -fx-text-fill: white; -fx-font-size: 15; -fx-font-weight: bold; -fx-background-radius: 20; -fx-border-color: white; -fx-border-radius: 20;" text="Available Books" VBox.vgrow="ALWAYS" />
          </children>
          <padding>
             <Insets bottom="25.0" left="10.0" right="10.0" top="20.0" />
@@ -83,26 +98,32 @@
       </VBox>
    </right>
    <center>
-      <VBox prefWidth="700.0" spacing="20.0">
+      <VBox prefHeight="598.0" prefWidth="664.0" spacing="20.0" style="-fx-background-color: #FFFFFF;">
          <children>
-            <HBox alignment="CENTER" spacing="20.0">
+            <HBox alignment="CENTER" prefHeight="54.0" prefWidth="710.0" spacing="20.0" style="-fx-background-color: #4D7A97; -fx-border-radius: 30; -fx-border-color: #526E48; -fx-background-radius: 30;">
                <children>
-                  <HBox spacing="15.0" style="-fx-border-radius: 20; -fx-border-color: black; -fx-border-width: 2;">
+                  <HBox prefHeight="42.0" prefWidth="674.0" spacing="15.0">
                      <children>
                         <TextField fx:id="Student_Year_Field" prefHeight="35.0" prefWidth="70.0" promptText="Year" HBox.hgrow="SOMETIMES" />
                         <ComboBox fx:id="Student_Course_CBox" onAction="#setPane" prefHeight="35.0" prefWidth="294.0" promptText="Select the Course" />
                         <TextField fx:id="Student_RollNo_Field" onAction="#getStudentData" prefHeight="35.0" prefWidth="98.0" promptText="RollNo" HBox.hgrow="SOMETIMES" />
-                        <Button fx:id="Student_Search_Btn" mnemonicParsing="false" onAction="#getStudentData" prefHeight="35.0" prefWidth="128.0" text="Search" />
+                        <Button fx:id="Student_Search_Btn" mnemonicParsing="false" onAction="#getStudentData" prefHeight="35.0" prefWidth="128.0" style="-fx-text-fill: black; -fx-font-size: 13; -fx-font-weight: bold; -fx-border-color: #353833;" text="Search" />
                      </children>
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
                   </HBox>
                </children>
             </HBox>
-            <StackPane>
+            <StackPane prefHeight="214.0" prefWidth="675.0">
                <children>
-                  <GridPane fx:id="StudentPane" alignment="CENTER" hgap="20.0" style="-fx-alignment: center; -fx-border-color: black; -fx-border-width: 2;" vgap="10.0">
+                  <GridPane fx:id="StudentPane" alignment="CENTER" hgap="20.0" prefHeight="329.0" prefWidth="678.0" style="-fx-alignment: center; -fx-border-color: #4D7A97; -fx-border-width: 2; -fx-background-color: #fff;" vgap="20.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="139.20000305175782" minWidth="10.0" prefWidth="116.40003662109376" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.00000000000001" minWidth="10.0" prefWidth="100.59998779296876" />
@@ -115,24 +136,32 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label fx:id="Stu_Name_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Student Name" GridPane.columnIndex="1" />
-                        <TextField fx:id="Stu_Name_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" />
-                        <Label fx:id="Stu_PhNo_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Phone Number" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="Stu_PhNo_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="206.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <Label fx:id="Stu_YOP_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Year Of Passing" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="Stu_Name_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="27.0" prefWidth="122.0" style="-fx-text-fill: #353833; -fx-font-family: &quot;Georgia, serif&quot;; -fx-font-size: 12; -fx-font-weight: bold;" text="Student Name" GridPane.columnIndex="1" />
+                        <TextField fx:id="Stu_Name_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="236.0" style="-fx-background-color: #DEE3E39;" GridPane.columnIndex="2" />
+                        <Label fx:id="Stu_PhNo_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #353833; -fx-font-family: &quot;Georgia, serif&quot;; -fx-font-size: 12; -fx-font-weight: bold;" text="Phone Number" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="Stu_PhNo_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="194.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Label fx:id="Stu_YOP_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #353833; -fx-font-family: &quot;Georgia, serif&quot;; -fx-font-size: 12; -fx-font-weight: bold;" text="Year Of Passing" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <TextField fx:id="Stu_YOP_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <Button fx:id="Stu_Remove_Btn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeStudent" text="Remove Student" visible="false" GridPane.rowIndex="4" />
-                        <Button fx:id="Stu_Add_Btn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addStudent" text="Add Student" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                        <Button fx:id="Stu_EditDetails_Btn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editStudentData" text="Edit Details" visible="false" GridPane.columnIndex="3" />
-                        <Label fx:id="Stu_Dept_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Department" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <TextField fx:id="Stu_Dept_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                        <Button fx:id="Stu_Cancel_Edit_Btn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancelEdit" text="Cancel" visible="false" GridPane.rowIndex="3" />
+                        <Button fx:id="Stu_Remove_Btn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#removeStudent" prefHeight="0.0" prefWidth="115.0" style="-fx-text-fill: #4B4B4B; -fx-font-family: &quot;Georgia, serif&quot;; -fx-font-size: 12; -fx-font-weight: bold; -fx-background-color: #9EDF9C; -fx-border-color: #526E48;" text="Remove Student" visible="false" GridPane.rowIndex="5">
+                           <GridPane.margin>
+                              <Insets top="30.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button fx:id="Stu_Add_Btn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addStudent" style="-fx-background-color: #006769; -fx-font-family: &quot;Georgia, serif&quot;; -fx-font-size: 15; -fx-font-weight: bold; -fx-border-color: #fff; -fx-background-radius: 20; -fx-border-radius: 20; -fx-text-fill: #fff;" text="Add Student" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                        <Button fx:id="Stu_EditDetails_Btn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editStudentData" style="-fx-background-color: #006769; -fx-font-family: &quot;Georgia, serif&quot;; -fx-text-fill: #fff; -fx-font-weight: bold; -fx-font-size: 15; -fx-border-color: #fff; -fx-border-style: bold; -fx-background-radius: 30; -fx-border-radius: 30;" text="Edit Details" GridPane.columnIndex="3" />
+                        <Label fx:id="Stu_Dept_Label" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #353833; -fx-font-family: &quot;Georgia, serif&quot;; -fx-font-size: 12; -fx-font-weight: bold;" text="Department" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="Stu_Dept_La_Field" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <Button fx:id="Stu_Cancel_Edit_Btn" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancelEdit" style="-fx-text-fill: #FF4545; -fx-font-family: &quot;Georgia, serif&quot;; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-color: #fff; -fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: #FF4545;" text="Cancel" GridPane.rowIndex="3" />
                      </children>
                      <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        <Insets bottom="30.0" left="10.0" right="10.0" top="30.0" />
                      </padding>
+                     <StackPane.margin>
+                        <Insets bottom="10.0" />
+                     </StackPane.margin>
                   </GridPane>
                   <GridPane fx:id="FacultyPane" alignment="CENTER" hgap="20.0" style="-fx-alignment: center; -fx-border-color: black; -fx-border-width: 2;" vgap="10.0" visible="false">
                      <columnConstraints>
@@ -168,7 +197,7 @@
                   </GridPane>
                </children>
             </StackPane>
-            <TableView id="styleForSelection" fx:id="Stu_BooksDisplay_Table" onMouseClicked="#selectedBook" prefHeight="200.0" stylesheets="@styleSheetForCellSelection.css" tableMenuButtonVisible="true" visible="false" VBox.vgrow="ALWAYS">
+            <TableView id="styleForSelection" fx:id="Stu_BooksDisplay_Table" onMouseClicked="#selectedBook" prefHeight="200.0" style="-fx-background-color: #fff; -fx-border-color: #4D7A97; -fx-border-width: 2;" stylesheets="@styleSheetForCellSelection.css" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="bookCodeColumn" editable="false" prefWidth="75.20001602172852" text="Book Code" />
                   <TableColumn fx:id="bookIdColumn" editable="false" prefWidth="116.79997253417969" text="Accession Number" />
@@ -187,13 +216,13 @@
             </TableView>
             <HBox alignment="BOTTOM_CENTER" spacing="50.0">
                <children>
-                  <Button fx:id="issueBook_Btn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#issueBook" prefHeight="55.0" prefWidth="150.0" text="Issue New Book" textAlignment="CENTER" visible="false" />
+                  <Button fx:id="issueBook_Btn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#issueBook" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #DEE3E9; -fx-border-color: #4D7A97; -fx-background-radius: 30; -fx-border-radius: 30; -fx-text-fill: #353833; -fx-font-size: 15; -fx-font-weight: bold;" text="Issue New Book" textAlignment="CENTER" />
                   <Region HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets left="25.0" right="25.0" />
                      </HBox.margin>
                   </Region>
-                  <Button fx:id="returnBook_Btn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#returnBook" prefHeight="55.0" prefWidth="150.0" text="Return The Book" textAlignment="CENTER" visible="false" />
+                  <Button fx:id="returnBook_Btn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#returnBook" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: black; -fx-border-color: #fff; -fx-font-size: 15; -fx-font-weight: bold; -fx-background-radius: 20; -fx-border-radius: 20; -fx-text-fill: #fff;" text="Return The Book" textAlignment="CENTER" />
                </children>
                <padding>
                   <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
@@ -201,8 +230,14 @@
             </HBox>
          </children>
          <padding>
-            <Insets bottom="5.0" left="10.0" right="10.0" top="20.0" />
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
+         <opaqueInsets>
+            <Insets right="10.0" />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </VBox>
    </center>
 </BorderPane>
