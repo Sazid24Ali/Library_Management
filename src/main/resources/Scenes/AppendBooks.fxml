@@ -13,16 +13,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane minHeight="530.0" minWidth="766.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lib.library_management.Controller.AppendBooksController">
+<BorderPane minHeight="530.0" minWidth="766.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lib.library_management.Controller.AppendBooksController">
    <top>
-      <HBox alignment="CENTER" prefHeight="52.0" prefWidth="600.0" spacing="50.0" BorderPane.alignment="BOTTOM_CENTER">
+      <HBox alignment="CENTER" prefHeight="52.0" prefWidth="600.0" spacing="50.0" style="-fx-background-color: #4D7A9A;" BorderPane.alignment="BOTTOM_CENTER">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="26.0" prefWidth="106.0" text="Book Code">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="26.0" prefWidth="106.0" text="Book Code" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="bookCode" onAction="#searchForBook" prefHeight="34.0" prefWidth="160.0" />
+            <TextField fx:id="bookCode" onAction="#searchForBook" prefHeight="34.0" prefWidth="160.0" style="-fx-border-color: black;" />
          </children>
          <padding>
             <Insets left="20.0" right="20.0" top="10.0" />
@@ -32,7 +32,7 @@
    <center>
       <VBox alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="searchWithBookCode" mnemonicParsing="false" onAction="#searchForBook" prefHeight="35.0" prefWidth="127.0" text="Search">
+            <Button fx:id="searchWithBookCode" mnemonicParsing="false" onAction="#searchForBook" prefHeight="35.0" prefWidth="127.0" style="-fx-background-color: #8B4891; -fx-text-fill: #ffff; -fx-border-color: #fff; -fx-border-width: 0 3 2 0;" text="Search">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -53,14 +53,14 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <HBox alignment="CENTER" spacing="25.0" VBox.vgrow="SOMETIMES">
+            <HBox alignment="CENTER" spacing="25.0" style="-fx-background-color: #DEE3E9;" VBox.vgrow="SOMETIMES">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="78.0" prefWidth="178.0" text="Enter the Accession Numbers" textAlignment="CENTER" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #DEE3E39; -fx-text-fill: #353833;" text="Enter the Accession Numbers" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="inputOfBookIds" maxWidth="1.7976931348623157E308" promptText="Try with the format 1,3,5,7" HBox.hgrow="ALWAYS">
+                  <TextArea fx:id="inputOfBookIds" maxWidth="1.7976931348623157E308" prefHeight="172.0" prefWidth="509.0" promptText="Try with the format 1,3,5,7" style="-fx-border-color: #353833;" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="Arial Italic" size="13.0" />
                      </font>
@@ -85,12 +85,12 @@
    <bottom>
       <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <TextArea fx:id="disclaimer" editable="false" focusTraversable="false" mouseTransparent="true" prefHeight="91.0" prefWidth="726.0" text="Enter the accession numbers as individual (i.e.1,3,5,7) ✔&#10;Not Working Below stuff ⬇&#10;[or in a batch (2-10) which includes all books having Id' s 2 to 10. You can also give individual and batch of Id's both at a time (by giving 1,3,5,7,2-10).] ❌" wrapText="true">
+            <TextArea fx:id="disclaimer" editable="false" focusTraversable="false" mouseTransparent="true" prefHeight="91.0" prefWidth="726.0" style="-fx-background-color: #EEEEEF; -fx-font: #353833;" text="Enter the accession numbers as individual (i.e.1,3,5,7) ✔&#10;Not Working Below stuff ⬇&#10;[or in a batch (2-10) which includes all books having Id' s 2 to 10. You can also give individual and batch of Id's both at a time (by giving 1,3,5,7,2-10).] ❌" wrapText="true">
                <font>
                   <Font name="System Bold Italic" size="14.0" />
                </font>
             </TextArea>
-            <Button fx:id="saveButtonForScene" mnemonicParsing="false" onMouseClicked="#getBookId" prefHeight="53.0" prefWidth="140.0" text="Save">
+            <Button fx:id="saveButtonForScene" mnemonicParsing="false" onMouseClicked="#getBookId" prefHeight="53.0" prefWidth="140.0" style="-fx-background-color: #F8981D; -fx-text-fill: #253441;" text="Save">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
